@@ -3,13 +3,13 @@ import { UploadOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import './registrarPlatillo.css';
-
+import './EditarPlatillo.css';
+import { useParams } from 'react-router-dom';
 const { Title } = Typography;
 
 const { TextArea } = Input;
 
-function MyForm() {
+export const EditarPlatillo = () =>{
   const [imageUploaded, setImageUploaded] = useState(false);
   const [videoUploaded, setVideoUploaded] = useState(false);
   const [text, setText] = useState('');
@@ -18,6 +18,36 @@ function MyForm() {
   const [videoModalVisible, setVideoModalVisible] = useState(false);
   const [cancelModalVisible, setCancelModalVisible] = useState(false);
 
+  const {id} = useParams();
+  const [platilloData, setPlatilloData] = useState({
+    nombre: '',
+    descripcion: '',
+    video: '',
+    imagen: '',
+    identificador: '',
+  });
+
+  useEffect(() => {
+    console.log('realizando llamada');
+    axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${id}`)
+      .then((response) => {
+        console.log(response.data.respuesta);
+        const platillo = response.data.respuesta;
+        setText(platillo.nombre)
+        setText2(platillo.descripcion)
+        setPlatilloData({
+          nombre: platillo.nombre,
+          descripcion: platillo.descripcion,
+          imagen: platillo.imagen,
+          identificador: platillo.id,
+          video: platillo.video,
+        });
+
+      })
+      .catch((error) => {
+        console.error('Error al obtener el platillo:', error);
+      });
+  }, [id]);
   const showModal = () => {
     setCancelModalVisible(true);
   };
@@ -130,7 +160,7 @@ const onFinish = async (values) => {
 
   return (
     <Form onFinish={onFinish}>
-    <div className="titulo-formato">Registrar Platillo</div  >
+    <div className="titulo-formato">Editar Platillo</div  >
 
       <Form.Item className='componente-limite'
         label={ 
@@ -227,7 +257,7 @@ const onFinish = async (values) => {
         wrapperCol={{ span: 20 }} // Offset para mover el botón
       >
         <Button type="primary" htmlType="submit" className='button' style={{ marginRight: '20%', backgroundColor: '#7D0633' }}>
-          Registrar
+          Editar 
         </Button>
         <Button type="primary" htmlType="button" className='button' style={{backgroundColor: '#828282'}} onClick={showModal}>
           Cancelar
@@ -272,5 +302,4 @@ const onFinish = async (values) => {
     
   );
 }
-
-export default MyForm;
+export default EditarPlatillo;

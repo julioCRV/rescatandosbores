@@ -18,7 +18,7 @@ export const ModalConfirmation = ({id, nombre}) => {
       setConfirmLoading(true);
       try {
         // Realizar la solicitud fetch aquí (reemplaza la URL con tu endpoint)
-        const response = await fetch(`http://localhost:5000/eliminarPlatillo/${id}`, {
+        const response = await fetch(`http://18.116.106.247:3000/eliminarPlatillo/${id}`, {
           method: 'DELETE',
         });
   
