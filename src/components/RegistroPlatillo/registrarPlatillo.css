@@ -16,11 +16,7 @@ form {
   background-color: #fbdcc4;
   padding: 200px;
 }
-.ant-form{
-  width: 50%;
-  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
-  margin: 0 auto;
-}
+
 
 .menu {
   background-color: #7D0633;

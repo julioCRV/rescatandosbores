@@ -4,7 +4,7 @@ import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import Header from './components/MenuNavegacion/header'
-import App2 from './components/Plantilla/plantilla'
+import MenuNav from './components/sprint2/NavNavegacion/headerNav'
 import Footer from './components/Footer/Footer'
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
     <Router>
       <div className="App">
         <Header />
-        <App2 />
+        <MenuNav />
         <Footer />
       </div>
     </Router>

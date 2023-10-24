@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MenuItem from '../MenuItem/MenuItem';
 import '../MenuItem/MenuItem.css'
-
-export const ListaPlatillos=()=> {
+ const ListaPlatillos=()=> {
   const [platillos, setPlatillos] = useState([]);
 
   useEffect(() => {
@@ -40,3 +39,4 @@ export const ListaPlatillos=()=> {
     </div>
   );
 }
+export default ListaPlatillos;
