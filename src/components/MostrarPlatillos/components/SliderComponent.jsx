@@ -57,7 +57,7 @@ const SliderComponent = () => {
   };
 
   const navigateToPage = (pageNumber) => {
-    window.location.href = `http://localhost:5173/mostrar-platillo/page/${pageNumber}`;
+    window.location.href = `http://18.116.106.247:5173/mostrar-platillo/page/${pageNumber}`;
   };
 
   return (

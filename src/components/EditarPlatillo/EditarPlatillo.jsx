@@ -10,14 +10,15 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 export const EditarPlatillo = () =>{
-  const [imageUploaded, setImageUploaded] = useState(false);
-  const [videoUploaded, setVideoUploaded] = useState(false);
+  const [imageUploaded, setImageUploaded] = useState(true);
+  const [videoUploaded, setVideoUploaded] = useState(true);
   const [text, setText] = useState('');
   const [text2, setText2] = useState('');
   const [imageModalVisible, setImageModalVisible] = useState(false);
   const [videoModalVisible, setVideoModalVisible] = useState(false);
   const [cancelModalVisible, setCancelModalVisible] = useState(false);
-
+  const [urlImagen, setUrlImagen] = useState('')
+  const [urlVideo, setUrlVideo] = useState('')
   const {id} = useParams();
   const [platilloData, setPlatilloData] = useState({
     nombre: '',
@@ -35,6 +36,7 @@ export const EditarPlatillo = () =>{
         const platillo = response.data.respuesta;
         setText(platillo.nombre)
         setText2(platillo.descripcion)
+        console.log(text)
         setPlatilloData({
           nombre: platillo.nombre,
           descripcion: platillo.descripcion,
@@ -42,6 +44,8 @@ export const EditarPlatillo = () =>{
           identificador: platillo.id,
           video: platillo.video,
         });
+        setUrlImagen('http://18.116.106.247:3000/media/imagen/' + platilloData.imagen)
+        setUrlVideo('http://18.116.106.247:3000/media/video/' + platilloData.video)
 
       })
       .catch((error) => {
@@ -67,6 +71,14 @@ export const EditarPlatillo = () =>{
   };
 
   const verificarImagen = {
+    defaultFileList: [
+      {
+        uid: '2',
+        name: 'imagenPlatillo.png',
+        status: 'done',
+        url: urlImagen,
+      },
+    ],
     beforeUpload: (file) => {
 
       let extension = file.name.split('.');
@@ -93,6 +105,14 @@ export const EditarPlatillo = () =>{
   };
 
   const verificarVideo = {
+    defaultFileList: [
+      {
+        uid: '2',
+        name: 'videoPlatillo.mp4',
+        status: 'done',
+        url: urlVideo,
+      },
+    ],
     beforeUpload: (file) => {
       let extension = file.name.split('.');
       extension = extension[extension.length-1].toLowerCase();
@@ -139,7 +159,7 @@ const onFinish = async (values) => {
     formData.append('video', new Blob([videoFile], { type: videoFile.type }), videoFile.name);
 
     console.log('Realizando llamada');
-    const response = await axios.post('http://18.116.106.247:3000/registrarPlatillo', formData, {
+    const response = await axios.post(`http://18.116.106.247:3000/modificarPlatillo/${id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

@@ -16,7 +16,7 @@ function Router() {
             <Route path='/error' element={<Error/>}/>
             <Route path='/registrar-platillo' element={<MyForm/>}/>
             <Route path='/mostrar-platillo/page/:id' element={<MostrarPlatillos/>}/>
-            <Route path='/editar-platillo' element={<EditarPlatillos/>}/>
+            <Route path='/editar-platillo/:id' element={<EditarPlatillos/>}/>
         </Routes>
     );
 }

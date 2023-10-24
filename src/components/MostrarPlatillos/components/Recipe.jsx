@@ -73,7 +73,7 @@ const Recipe = () => {
             <div className='buttonn'>
               <Button type="primary"  className={location.pathname === '/editar-platillo' ? 'selected-menu-item' : ''} 
              onClick={() => console.log('Editar')}>
-              <Link to="/editar-platillo" className='menu-icon'>
+              <Link to={`/editar-platillo/${id}`} className='menu-icon'>
               <EditOutlined />
             </Link> 
               </Button>
