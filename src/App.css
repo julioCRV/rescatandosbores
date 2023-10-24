@@ -26,7 +26,8 @@ form {
 .header {
     background-color: #7D0633; 
     color: rgb(144, 32, 32);   
-
+    position: static;
+    top: 0;
   }
   
   .footer {
