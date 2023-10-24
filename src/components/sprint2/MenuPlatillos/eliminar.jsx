@@ -6,7 +6,6 @@ import './menuPlatillos.css'
 import { Link, useLocation } from 'react-router-dom';
 import Routes from '../NavNavegacion/Routes';
 import { Content } from 'antd/es/layout/layout';
-import { ListaPlatillos } from '../ListaPlatillos/ListaPlatillos';
 
 import { HistoryOutlined, SearchOutlined } from '@ant-design/icons';
 
@@ -22,16 +21,16 @@ const MenuPlatillos= () => {
     const [dataSource, setDataSource] = useState([]);
     const [loading, setLoading] = useState(false) //preview imagenes
     const [isSearchVisible, setSearchVisible] = useState(false);
-    const [isSearchVisibleB, setSearchVisibleB] = useState(true);
     const [platilloData, setPlatilloData] = useState({
       nombre: '',
     });
-    
+    const [showInput, setShowInput] = useState(false);
     const [totalPages, setTotalPages] = useState(1); 
     const [totalPages2, setTotalPages2] = useState(1); 
     const [searches, setSearches] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [searchValue, setSearchValue] = useState(""); 
+    const [isMensajeB, setMensajeB] = useState(false); 
   
 //MOSTRAR MENU
 let ver=1;  useEffect(() => {
@@ -141,7 +140,7 @@ let ver=1;  useEffect(() => {
     //para mostrar el mensaje en mejora
       const noDataMessage = (
         <span>
-      <div className='div-center' >
+       <div className='div-center' >
         <h1 className='texto'>Oops!</h1>
         <h2>No se ha encontrado ningún platillo</h2>
       </div>
@@ -172,8 +171,8 @@ let ver=1;  useEffect(() => {
     }));
   
 
-    const tit="Resultados de la búsqueda para:";
 
+const tit="Resultados de la búsqueda para:";
 
   return (
     <>
@@ -185,12 +184,12 @@ let ver=1;  useEffect(() => {
       options={options}
     >
       <Input
-        placeholder="Realiza una búsqueda"
+        placeholder="Buscar platillo"
         size="large"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onPressEnter={() => {
-          setSearchValue(inputValue);
+           
           handleSearch(inputValue);
           handleSearch2();
         }}
@@ -203,33 +202,42 @@ let ver=1;  useEffect(() => {
 
         <Button
             className="estilo-button"
-
             onClick={() => {
               if (isSearchVisible==false){
-                setSearchVisible(true); 
-                }else{ 
-                setSearchVisible(false);
-                }
+            setSearchVisible(true); 
+            }else{ 
+            setSearchVisible(false);
+            }
 
-             // Muestra el Input.Search al hacer clic en el botón
             }}
             icon={<SearchOutlined />}   
         ></Button>
-
-
-
-
-{ isSearchVisible && (
+  
+  { isSearchVisible && (
   <div className="platillos-container">
     <div className="div-center">
       <h2>{tit} {searchValue}</h2>
     </div>
   </div>
 )}
-        
-
-
-        <ListaPlatillos />
+<div>
+        <List
+          grid={{xs:1,sm:2,md:3,lg:4,xl:4,xxl:4}}// 4 ubicado img
+          dataSource={platillos}
+          locale={{ emptyText: noDataMessage }} 
+          renderItem={(platillo) => (
+            <List.Item>
+              <Card
+                hoverable
+                style={{ height: 300, margin: 12}}// Establece el ancho de la tarjeta
+                cover={<Image  style={{width: 260, height: 198, margin: 20}} src={uri + 'imagen/' + platillo.imagen} alt={`Imagen de ${platillo.nombre}`} />}
+              >
+                <Card.Meta style={{textAlign: 'center'}} title={platillo.nombre} />
+              </Card>
+            </List.Item>
+          )}
+        />
+      </div>
     </>
 
 

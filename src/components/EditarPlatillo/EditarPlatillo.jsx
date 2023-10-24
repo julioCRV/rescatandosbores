@@ -10,15 +10,14 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 export const EditarPlatillo = () =>{
-  const [imageUploaded, setImageUploaded] = useState(true);
-  const [videoUploaded, setVideoUploaded] = useState(true);
+  const [imageUploaded, setImageUploaded] = useState(false);
+  const [videoUploaded, setVideoUploaded] = useState(false);
   const [text, setText] = useState('');
   const [text2, setText2] = useState('');
   const [imageModalVisible, setImageModalVisible] = useState(false);
   const [videoModalVisible, setVideoModalVisible] = useState(false);
   const [cancelModalVisible, setCancelModalVisible] = useState(false);
-  const [urlImagen, setUrlImagen] = useState('')
-  const [urlVideo, setUrlVideo] = useState('')
+
   const {id} = useParams();
   const [platilloData, setPlatilloData] = useState({
     nombre: '',
@@ -32,15 +31,10 @@ export const EditarPlatillo = () =>{
     console.log('realizando llamada');
     axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${id}`)
       .then((response) => {
-        setUrlImagen('http://18.116.106.247:3000/media/imagen/' + platilloData.imagen)
         console.log(response.data.respuesta);
         const platillo = response.data.respuesta;
         setText(platillo.nombre)
         setText2(platillo.descripcion)
-
-        console.log(urlImagen);
-        setUrlVideo('http://18.116.106.247:3000/media/video/' + platilloData.video)
-        console.log(urlVideo);
         setPlatilloData({
           nombre: platillo.nombre,
           descripcion: platillo.descripcion,
@@ -48,12 +42,12 @@ export const EditarPlatillo = () =>{
           identificador: platillo.id,
           video: platillo.video,
         });
+
       })
       .catch((error) => {
         console.error('Error al obtener el platillo:', error);
       });
   }, [id]);
-
   const showModal = () => {
     setCancelModalVisible(true);
   };
@@ -73,14 +67,6 @@ export const EditarPlatillo = () =>{
   };
 
   const verificarImagen = {
-    defaultFileList: [
-      {
-        uid: '2',
-        name: 'imagenPlatillo.png',
-        status: 'done',
-        url: urlImagen,
-      },
-    ],
     beforeUpload: (file) => {
 
       let extension = file.name.split('.');
@@ -107,14 +93,6 @@ export const EditarPlatillo = () =>{
   };
 
   const verificarVideo = {
-    defaultFileList: [
-      {
-        uid: '2',
-        name: 'videoPlatillo.mp4',
-        status: 'done',
-        url: urlVideo,
-      },
-    ],
     beforeUpload: (file) => {
       let extension = file.name.split('.');
       extension = extension[extension.length-1].toLowerCase();
@@ -161,7 +139,7 @@ const onFinish = async (values) => {
     formData.append('video', new Blob([videoFile], { type: videoFile.type }), videoFile.name);
 
     console.log('Realizando llamada');
-    const response = await axios.post(`http://18.116.106.247:3000/modificarPlatillo/${id}`, formData, {
+    const response = await axios.post('http://18.116.106.247:3000/registrarPlatillo', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

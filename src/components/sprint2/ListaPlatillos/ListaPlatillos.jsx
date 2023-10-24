@@ -25,7 +25,6 @@ export const ListaPlatillos=()=> {
 
   return (
     <div className="menuPlatillo">
-      <h1 className="menuTitle">Platillos Tradicionales</h1>
       <div className="menuList">
         {platillos.map((menuItem, key) => {
           return (
