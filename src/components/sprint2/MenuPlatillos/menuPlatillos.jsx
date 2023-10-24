@@ -7,6 +7,7 @@ import './menuPlatillos.css'
 import { Link, useLocation } from 'react-router-dom';
 import Routes from '../NavNavegacion/Routes';
 import { Content } from 'antd/es/layout/layout';
+import { ListaPlatillos } from '../ListaPlatillos/ListaPlatillos';
 
 const { Search } = Input;
 const uri = 'http://18.116.106.247:3000/media/';
@@ -167,23 +168,7 @@ let ver=1;  useEffect(() => {
             }}
             icon={<SearchOutlined />}   
         ></Button>
-      <div className="platillos-container">
-        <List
-          grid={{xs:1,sm:2,md:3,lg:4,xl:4,xxl:4}}// 4 ubicado img
-          dataSource={platillos}
-          renderItem={(platillo) => (
-            <List.Item>
-              <Card
-                hoverable
-                style={{ height: 300, margin: 12}}// Establece el ancho de la tarjeta
-                cover={<Image  style={{width: 260, height: 198, margin: 20}} src={uri + 'imagen/' + platillo.imagen} alt={`Imagen de ${platillo.nombre}`} />}
-              >
-                <Card.Meta style={{textAlign: 'center'}} title={platillo.nombre} />
-              </Card>
-            </List.Item>
-          )}
-        />
-      </div>
+        <ListaPlatillos />
     </>
 
 
