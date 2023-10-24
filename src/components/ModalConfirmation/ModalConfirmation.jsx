@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, message, Space,notification, Tooltip, Popover } from 'antd';
 import {DeleteOutlined,  ExclamationCircleOutlined, CheckCircleOutlined, InfoCircleOutlined} from '@ant-design/icons'
-
-
+import './ModalConfirmacion.css'
+import { Link } from 'react-router-dom';
 
 export const ModalConfirmation = ({id, nombre}) => {
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
-    const [modalText, setModalText] = useState(`¿Esta seguro de eliminar el platillo ${nombre}?`);
+    const [modalText, setModalText] = useState(``);
     const [messageApi, contextHolder] = message.useMessage();
     const showModal = () => {
       setOpen(true);
     };
     
+    useEffect(() => {
+      setModalText(`Esta seguro que desea eliminar ${nombre}`)
+    }, [id]);
     const handleOk = async () => {
       setModalText('Eliminando platillo... ');
       setConfirmLoading(true);
@@ -26,7 +29,6 @@ export const ModalConfirmation = ({id, nombre}) => {
           setOpen(false);
           setConfirmLoading(false);
           mostrarNotificacionExito();
-          window.location.reload();
         } else {
           mostrarNotificacionError("Error de conexion");
         }
@@ -92,10 +94,11 @@ export const ModalConfirmation = ({id, nombre}) => {
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
         footer={[
-          <Button onClick={handleCancel}>Cancelar</Button>,
-          <Button onClick={handleOk} danger type='primary'>Eliminar</Button>,
+          <Button onClick={handleCancel} style={{height: '45px', width:'225px'}}>Cancelar</Button>,
+          <Link to="/mostrar-platillo/page/1"><Button onClick={handleOk} danger type='primary' style={{height:'45px', width:'225px'}}>Eliminar</Button></Link>,
         ]}
       >
+        <ExclamationCircleOutlined style={{ color: 'red' }} />
         <p>{modalText}</p>
       </Modal>
     </>
