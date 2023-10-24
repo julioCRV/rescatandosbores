@@ -36,7 +36,7 @@ const SliderComponent = () => {
    
       {/* Agregar controles de navegación */}
       <div className="slider-controls">
-        <Link to={`/mostrar-platillos/page/${Number(id) - 1}`}>
+        <Link to={`/mostrar-platillo/page/${Number(id) - 1}`}>
           <Button disabled={Number(id) === 1} type="primary" icon={<LeftOutlined />} size="large" />
         </Link>
 
