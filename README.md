@@ -76,14 +76,19 @@ Debe estar en el directorio del proyecto
     ```bash
     npm install axios
     ```
-1. instalar ant desing [Ant Design](https://ant.design/docs/react/introduce), ejecutar:
+2. instalar ant desing [Ant Design](https://ant.design/docs/react/introduce), ejecutar:
     ```bash
     npm install antd --save
     ```
-1. instalar Ant Design Icon, ejecutar:
+3. instalar Ant Design Icon, ejecutar:
     ```bash
     npm install @ant-design/icons --save
     ```
+3. instalar React Player, ejecutar:
+    ```bash
+    npm i react-player
+    ```
+
 ### Ejecucion de la aplicacion
 Para la ejecucion de la aplicacion, previamente leer el README.md de la direccion: ./api/README.md, para la instalacion de la api. Posteriormente ejecutar el siguiente comando: 
     ```  
