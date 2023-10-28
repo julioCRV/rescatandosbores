@@ -177,6 +177,7 @@ const onFinish = async (values) => {
 
 
   return (
+    <div className='form-contenedor'>
     <Form onFinish={onFinish}>
     
     <div className="titulo-formato">Editar Platillo</div  >
@@ -330,7 +331,7 @@ const onFinish = async (values) => {
         Al cancelar, se perdera toda la informacion que no se haya registrado.
       </Modal>
     </Form>
-    
+    </div>
   );
 }
 

@@ -9,6 +9,12 @@
   align-items: center;
 }
 
+.form-contenedor{
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 30px;
+}
+
 .TituloPrincipalEditar{
   margin: 15px;
   font-size: 25px;
