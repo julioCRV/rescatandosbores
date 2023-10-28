@@ -25,6 +25,7 @@
     border-radius: 15px;
     width: 90%;
     margin: 20px ;
+    overflow: hidden;
     box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
   }
   .menuItem:hover {
@@ -43,7 +44,9 @@
     background-size: cover;
   }
   .menuItemImagen:hover{
-    transform: scale(1.1);
+    
+    transform: scale(1.5, 1.1);
+    transition: 0.3s ease-in;
   }
   
   .menuItemTitulo:hover{

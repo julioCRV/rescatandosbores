@@ -12,6 +12,7 @@ export const ListaPlatillos=()=> {
         if (response.ok) {
           const data = await response.json();
           setPlatillos(data.result);
+          console.log(data.result);
         } else {
           console.error('Error al obtener platillos');
         }

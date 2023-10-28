@@ -58,9 +58,7 @@ const App2 = () => {
             </Menu.Item>
           </SubMenu>
           <Menu.Item key="Buscar platillo" className={location.pathname === '/mostrar-resultados' ? 'selected-menu-item' : ''}>
-            <Link to="/mostrar-resultados" className='menu-icon'>
-              <Buscar />
-            </Link> 
+
           </Menu.Item>
         </Menu>
       </Header>

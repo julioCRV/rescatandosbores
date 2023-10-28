@@ -105,7 +105,7 @@ const onFinish = async (values) => {
     const videoFile = values.video.file;
 
     // Agrega los archivos al FormData con su nombre y tipo
-    formData.append('imagen', new Blob([imagenFile], { type: imagenFile.type }), imagenFile.name);
+    formData.append('imagen', new Blob([imagenFile], { type: imagenFile.type }), imagenFile.name.replace(/ /g, ""));
     formData.append('video', new Blob([videoFile], { type: videoFile.type }), videoFile.name);
 
     console.log('Realizando llamada');
