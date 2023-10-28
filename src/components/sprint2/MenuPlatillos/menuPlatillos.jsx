@@ -6,10 +6,9 @@ import './menuPlatillos.css'
 import { Link, useLocation } from 'react-router-dom';
 import Routes from '../NavNavegacion/Routes';
 import { Content } from 'antd/es/layout/layout';
-import { ListaPlatillos } from '../ListaPlatillos/ListaPlatillos';
-
+import '../MenuItem/MenuItem.css'
 import { HistoryOutlined, SearchOutlined } from '@ant-design/icons';
-
+import Listaaa from '../ListaPlatillos/ListaPlatillos'
 
 const uri = 'http://18.116.106.247:3000/media/';
 let currentPage = 1; 
@@ -23,6 +22,8 @@ const MenuPlatillos= () => {
     const [loading, setLoading] = useState(false) //preview imagenes
     const [isSearchVisible, setSearchVisible] = useState(false);
     const [isSearchVisibleB, setSearchVisibleB] = useState(true);
+    const [mostrarLista, setLista] = useState(true);
+    const [mostrarLista2, setLista2] = useState(false);
     const [platilloData, setPlatilloData] = useState({
       nombre: '',
     });
@@ -102,13 +103,7 @@ let ver=1;  useEffect(() => {
         for (let i=1; i <= currentPage2-2; i++) { 
           const response = await axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${i}`);
           const platillo = response.data.respuesta;
-
-
-
-          console.log(platillo.nombre,'dfiiiiiiiiiiiiiiiiiii',searchedText,i);
           const contienePalabra = (platillo.nombre).includes(searchedText);
-
-          
           if (contienePalabra) {
             console.log('Al menos una letra es igual en ambas palabras.');
             requests.push(axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${i}`));
@@ -210,7 +205,8 @@ let ver=1;  useEffect(() => {
                 }else{ 
                 setSearchVisible(false);
                 }
-
+                setLista(false)
+                setLista2(true)
              // Muestra el Input.Search al hacer clic en el botón
             }}
             icon={<SearchOutlined />}   
@@ -220,16 +216,36 @@ let ver=1;  useEffect(() => {
 
 
 { isSearchVisible && (
-  <div className="platillos-container">
-    <div className="div-center">
-      <h2>{tit} {searchValue}</h2>
+  <div className="menuPlatillo">
+    <div className='div-center' >
+      <h2 >{tit} {searchValue}</h2>
     </div>
   </div>
 )}
         
-
-
-        <ListaPlatillos />
+        <div>
+      {mostrarLista2 && (  <List
+          grid={{xs:1,sm:2,md:3,lg:4,xl:4,xxl:4}}// 4 ubicado img
+          dataSource={platillos}
+          locale={{ emptyText: noDataMessage }} 
+          renderItem={(platillo) => (
+            <List.Item>
+              <Card className="menuItem"
+                hoverable
+                style={{ height: 300, margin: 12}}// Establece el ancho de la tarjeta
+                cover={<Image  style={{width: 260, height: 198, margin: 20}} src={uri + 'imagen/' + platillo.imagen} alt={`Imagen de ${platillo.nombre}`} />}
+              >
+                <Card.Meta style={{textAlign: 'center'}} title={platillo.nombre} />
+              </Card>
+            </List.Item>
+          )}
+        />
+      )}
+      </div>
+      <div>
+        {mostrarLista && (<Listaaa/>)}
+      </div>
+   
     </>
 
 
