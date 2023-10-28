@@ -55,7 +55,6 @@ const App2 = () => {
                 Mostrar Platillo
               </Link> 
             </Menu.Item>
-            
           </SubMenu>
           
           </div>
