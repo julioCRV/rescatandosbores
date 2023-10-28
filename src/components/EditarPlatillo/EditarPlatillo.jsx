@@ -182,8 +182,9 @@ const onFinish = async (values) => {
     <Form onFinish={onFinish}>
     
     <div className="titulo-formato">Editar Platillo</div  >
+    {isLoading  &&  <Spin size='large' className='ant-spin'/>}
 
-      {isLoading && <Spin size="large" style={{ position: 'absolute', top: '50%', left: '50%' }} /> } {/* Interfaz de carga */}
+{/*       {isLoading && <Spin size="large" style={{ position: 'absolute', top: '50%', left: '50%' }} /> } */} {/* Interfaz de carga */}
 
       <Form.Item className='componente-limite'
         label={ 
