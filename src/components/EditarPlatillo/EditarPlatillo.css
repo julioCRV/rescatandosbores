@@ -14,7 +14,8 @@
   border-radius: 8px;
   padding: 30px;
   width: 50%;
-
+  margin: auto;
+  box-sizing: border-box;
 }
 
 .TituloPrincipalEditar{
