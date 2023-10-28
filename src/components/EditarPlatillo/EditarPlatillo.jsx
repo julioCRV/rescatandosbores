@@ -142,7 +142,7 @@ export const EditarPlatillo = () =>{
 
   //Se ejecuta cuando se da a actualizar
 const onFinish = async (values) => {
-  setIsLoading(true);
+  setIsLoading(true); //Activa la interfaz de carga
   try {
     //Cargo los datos de los inputs para poder subirlo a la bd
     const formData = new FormData();
@@ -171,7 +171,8 @@ const onFinish = async (values) => {
     message.error('Error con la actualizacion');
     console.log(err);
   } finally{
-    setIsLoading(false);
+    setIsLoading(false); //Desactiva la interfaz de carga
+    
   }
 };
 
@@ -181,7 +182,9 @@ const onFinish = async (values) => {
     <Form onFinish={onFinish}>
     
     <div className="titulo-formato">Editar Platillo</div  >
-      {isLoading && <Spin size="large" style={{ position: 'absolute', top: '50%', left: '50%' }} />}
+
+      {isLoading && <Spin size="large" style={{ position: 'absolute', top: '50%', left: '50%' }} /> } {/* Interfaz de carga */}
+
       <Form.Item className='componente-limite'
         label={ 
             <span className='item-txt'>Título:</span>
@@ -220,11 +223,11 @@ const onFinish = async (values) => {
         }
         name="imagen"
         colon={false}
-        rules={[{ required: false, message: 'No se ha subido ninguna imagen' }]}
+        rules={[{ required: true, message: 'No se ha subido ninguna imagen' }]}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 24 }}
       >
-        <Upload {...verificarImagen} maxCount={1} defaultFileList={imageUploaded ? [{ /* Aquí colocas la información de tu imagen precargada */ }] : []}>
+        <Upload {...verificarImagen} maxCount={1}>
           <Button style={buttonStyle} icon={<UploadOutlined />} className='sms'>Subir Imagen</Button>
           {imageUploaded }
           {!imageUploaded && <span className='mensaje-transparenteI'> No se ha seleccionado ningún archivo</span>}
@@ -268,7 +271,7 @@ const onFinish = async (values) => {
           <span className='item-txt' onClick={(e)=>{e.preventDefault()}}>Video:</span>}
         name="video"
         colon={false}
-        rules={[{ required: false, message: 'No se ha subido ningun video' }]}
+        rules={[{ required: true, message: 'No se ha subido ningun video' }]}
         labelCol={{ span: 6 }} 
         wrapperCol={{ span: 24 }} 
       >

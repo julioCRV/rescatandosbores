@@ -13,9 +13,7 @@ import { Link } from 'react-router-dom';
 import { Content } from 'antd/es/layout/layout';
 import '../../sprint2/NavNavegacion/headerNav.css'
 
-
 const uri = 'http://18.116.106.247:3000/media/';
-
 
 const Recipe = () => {
   const {id} = useParams();
