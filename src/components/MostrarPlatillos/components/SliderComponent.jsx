@@ -19,34 +19,34 @@ const SliderComponent = () => {
     slidesToScroll: 1,
   };*/}
   const { id } = useParams();
-  const [platilloData, setPlatilloData] = useState({
-    nombre: '',
-    descripcion: '',
-    video: '',
-    imagen: '',
-    identificador: '',
-  });
-
-  useEffect(() => {
-    // Realiza una solicitud HTTP para obtener los platillos desde tu servidor
-    // Asegúrate de que la ruta y el método de solicitud sean los correctos
-    axios.get(`http://localhost:5000/mostrarPlatillos/page/${id}`)
-      .then((response) => {
-        console.log("Respuesta ", response.data.respuesta);
-        const platillo = response.data.respuesta;
-        setPlatilloData({
-          nombre: platillo.nombre,
-          descripcion: platillo.descripcion,
-          imagen: platillo.imagen,
-          identificador: platillo.id,
-          // TODO Recuperamos el URL del video simplemente, ya que es una cadena
-          video: platillo.video
-        });
-      })
-      .catch((error) => {
-        console.error('Error al obtener el platillo:', error);
-      });
-  }, [id]);
+//  const [platilloData, setPlatilloData] = useState({
+//    nombre: '',
+//    descripcion: '',
+//    video: '',
+//    imagen: '',
+//    identificador: '',
+//  });
+//
+//  useEffect(() => {
+//    // Realiza una solicitud HTTP para obtener los platillos desde tu servidor
+//    // Asegúrate de que la ruta y el método de solicitud sean los correctos
+//    axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/1`)
+//      .then((response) => {
+//        console.log("Respuesta ", response.data.respuesta);
+//        const platillo = response.data.respuesta;
+//        setPlatilloData({
+//          nombre: platillo.nombre,
+//          descripcion: platillo.descripcion,
+//          imagen: platillo.imagen,
+//          identificador: platillo.id,
+//          // TODO Recuperamos el URL del video simplemente, ya que es una cadena
+//          video: platillo.video
+//        });
+//      })
+//      .catch((error) => {
+//        console.error('Error al obtener el platillo:', error);
+//      });
+//  }, [id]);
 
   const settings = {
     dots: true,
@@ -57,16 +57,16 @@ const SliderComponent = () => {
   };
 
   const navigateToPage = (pageNumber) => {
-    window.location.href = `http://localhost:5173/mostrar-platillo/page/${pageNumber}`;
+    window.location.href = `http://18.116.106.247:5173/mostrar-platillo/page/${pageNumber}`;
   };
 
   return (
     <div className="slider-container">
       <Slider {...settings}>
-        {
-        /*
-        <Recipe platillo={platilloData} />
+       {
+        /*platillo={platilloData} 
         */
+        /*<Recipe />*/
         }
       </Slider>
 

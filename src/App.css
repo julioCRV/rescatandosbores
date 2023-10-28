@@ -25,10 +25,11 @@ form {
 
 .header {
     background-color: #7D0633; 
-    color: rgb(144, 32, 32);   
-    position:sticky;
-    top:0;
-    z-index: 100;
+    color: rgb(144, 32, 32);  
+    position: sticky;
+    top: 0;
+    z-index: 100; 
+
   }
   
   .footer {

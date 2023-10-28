@@ -19,7 +19,9 @@
   border: 1px solid #828282;
   border-radius: 12px;
   padding: 20px 0;
+  width: 50%;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
 }
 .FormularioGeneral{
   margin: 15px;
@@ -178,3 +180,17 @@
   }
 }
 
+@media only screen and (max-width:769px) {
+  .ant-form{
+
+    width: 70%;
+
+  }
+}
+@media only screen and (max-width:500px) {
+  .ant-form{
+
+    width: 100%;
+
+  }
+}

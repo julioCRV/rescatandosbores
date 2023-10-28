@@ -11,7 +11,7 @@ const { TextArea } = Input;
 
 export const EditarPlatillo = () =>{
   const [imageUploaded, setImageUploaded] = useState(true);
-  const [videoUploaded, setVideoUploaded] = useState(false);
+  const [videoUploaded, setVideoUploaded] = useState(true);
   const [text, setText] = useState('');
   const [text2, setText2] = useState('');
   const [imageModalVisible, setImageModalVisible] = useState(false);
@@ -36,8 +36,7 @@ export const EditarPlatillo = () =>{
         const platillo = response.data.respuesta;
         setText(platillo.nombre)
         setText2(platillo.descripcion)
-        setUrlImagen('http://18.116.106.247:3000/media/imagen/' + platilloData.imagen)
-        console.log(urlImagen);
+        console.log(text)
         setPlatilloData({
           nombre: platillo.nombre,
           descripcion: platillo.descripcion,
@@ -45,12 +44,14 @@ export const EditarPlatillo = () =>{
           identificador: platillo.id,
           video: platillo.video,
         });
+        setUrlImagen('http://18.116.106.247:3000/media/imagen/' + platilloData.imagen)
+        setUrlVideo('http://18.116.106.247:3000/media/video/' + platilloData.video)
 
       })
       .catch((error) => {
         console.error('Error al obtener el platillo:', error);
       });
-  }, [ id]);
+  }, [id]);
   const showModal = () => {
     setCancelModalVisible(true);
   };
@@ -75,7 +76,7 @@ export const EditarPlatillo = () =>{
         uid: '2',
         name: 'imagenPlatillo.png',
         status: 'done',
-        url: 'http://18.116.106.247:3000/media/imagen/16989182765981plato.jpeg',
+        url: urlImagen,
       },
     ],
     beforeUpload: (file) => {
@@ -109,7 +110,7 @@ export const EditarPlatillo = () =>{
         uid: '2',
         name: 'videoPlatillo.mp4',
         status: 'done',
-        url: 'http://18.116.106.247:3000/media/video/169858633738301_Presentaci%C3%83%C2%B3n%20del%20curso.mp4',
+        url: urlVideo,
       },
     ],
     beforeUpload: (file) => {
@@ -215,7 +216,7 @@ const onFinish = async (values) => {
         }
         name="imagen"
         colon={false}
-rules={[{ required: true, message: 'No se ha subido ninguna imagen' }]}
+        rules={[{ required: true, message: 'No se ha subido ninguna imagen' }]}
         labelCol={{ span: 6 }} // Configura el ancho de la etiqueta
         wrapperCol={{ span: 24 }} // Configura el ancho del campo de entrada
       >
@@ -321,4 +322,4 @@ rules={[{ required: true, message: 'No se ha subido ninguna imagen' }]}
     
   );
 }
-
+export default EditarPlatillo;
