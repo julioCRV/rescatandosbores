@@ -21,7 +21,6 @@
 
 .banner-contenedor-titulo{
     width: 100%;
-    font-size: 36px;
     line-height: 40px;
     font-family: sans-serif;
     color: #333;
@@ -29,8 +28,10 @@
     display: flex;
     margin: 0 auto;
     justify-content: center;
+    font-size: 45px;
 }
 .banner-titulo{
+    font-size: 3em;
     font-weight: 600;
     overflow: hidden;
     height: 40px;

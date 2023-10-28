@@ -21,7 +21,7 @@
 
 .banner-contenedor-titulo{
     width: 100%;
-    font-size: 36px;
+    font-size: 45px;
     line-height: 40px;
     font-family: sans-serif;
     color: #333;
@@ -114,6 +114,12 @@
     
   }
 
+  @media only screen and (max-width: 900px) {
+    .banner-contenedor-titulo{
+        font-size: 36px;
+    }
+
+  }
   @media only screen and (max-width: 769px) {
     .banner-contenedor-titulo{
         font-size: 32px;
