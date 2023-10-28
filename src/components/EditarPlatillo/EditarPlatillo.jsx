@@ -24,7 +24,7 @@ export const EditarPlatillo = () =>{
   const [bandDescripcion, setBandDescripcion] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const {id} = useParams();
+  const {id} = useParams(); //Obtengo el id con el useParams
 
   const [platilloData, setPlatilloData] = useState({
     nombre: '',
@@ -35,11 +35,12 @@ export const EditarPlatillo = () =>{
   });
 
 
-
+  //El useEffect se ejecuta cuando ni bien la pagina carga
   useEffect(() => {
-    setBandTitulo(false);
-    setBandDescripcion(false);
-    
+    setBandTitulo(false); //Bandera que me ayudan a evitar que me pidan de entrada titulo cuando este ya esta definido por default
+    setBandDescripcion(false); //Bandera que me ayudan a evitar que me pidan de entrada descripcion cuando este ya esta definido por default
+
+    //Obtengo el platillo con el id indicado
     axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${id}`)
       .then((response) => {
         console.log(response.data.respuesta);
@@ -138,9 +139,12 @@ export const EditarPlatillo = () =>{
     height: '30px', // Tamaño en píxeles
   };
 
+
+  //Se ejecuta cuando se da a actualizar
 const onFinish = async (values) => {
   setIsLoading(true);
   try {
+    //Cargo los datos de los inputs para poder subirlo a la bd
     const formData = new FormData();
     formData.append('nombre', values.titulo ?? text);
     formData.append('descripcion', values.descripcion ?? text2);
