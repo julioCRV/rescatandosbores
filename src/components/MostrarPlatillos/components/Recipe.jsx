@@ -7,15 +7,18 @@ import './Recipe.css';
 import { Button } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import {ModalConfirmation} from '../../ModalConfirmation/ModalConfirmation';
-
+import Routes from '../../sprint2/NavNavegacion/Routes';
 import {Img} from 'react-image';
+import { Link } from 'react-router-dom';
+import { Content } from 'antd/es/layout/layout';
+import '../../sprint2/NavNavegacion/headerNav.css'
 
 
-const uri = 'http://localhost:5000/media/';
+const uri = 'http://18.116.106.247:3000/media/';
 
 
 const Recipe = () => {
-    const {id} = useParams();
+  const {id} = useParams();
   const [platilloData, setPlatilloData] = useState({
     nombre: '',
     descripcion: '',
@@ -26,8 +29,8 @@ const Recipe = () => {
   const [platillos, setPlatillos] = useState([]);
 
   useEffect(() => {
-    console.log('realizando llamada');
-    axios.get(`http://localhost:5000/mostrarPlatillos/page/${id}`)
+    
+    axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${id}`)
       .then((response) => {
         console.log(response.data.respuesta);
         const platillo = response.data.respuesta;
@@ -40,6 +43,7 @@ const Recipe = () => {
         });
       })
       .catch((error) => {
+        console.log('Algun problema muy malevolo me hicieron:v')
         console.error('Error al obtener el platillo:', error);
       });
   }, [id]);
@@ -48,6 +52,7 @@ const Recipe = () => {
   return (
     
       <div className='reciForma'>
+ 
         <h2 className="formato-titulo">{platilloData.nombre}</h2>   {/*modificacion cambio de nombre*/}
         <div className="recipe-content">
 
@@ -66,7 +71,11 @@ const Recipe = () => {
 
           <div className="recipe-buttons">
             <div className='buttonn'>
-              <Button type="primary" icon={<EditOutlined />} onClick={() => console.log('Editar')}>
+              <Button type="primary"  className={location.pathname === '/editar-platillo' ? 'selected-menu-item' : ''} 
+             onClick={() => console.log('Editar')}>
+              <Link to={`/editar-platillo/${id}`} className='menu-icon'>
+              <EditOutlined />
+            </Link> 
               </Button>
             </div>
             <ModalConfirmation id={platilloData.identificador} nombre={platilloData.nombre} />
@@ -78,8 +87,11 @@ const Recipe = () => {
             <ReactPlayer url={uri + 'video/' + platilloData.video} controls={true} width="100%" height="100%" playing={true} /> {/*Se modifico el width y borro el width ademas de que se subio los botoenes */}
           </div>
         </div>
-        
+     
       </div>
+      <Content className='content'>
+        <Routes/>
+      </Content>
     </div>
 
   );

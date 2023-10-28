@@ -1,0 +1,58 @@
+.selected-menu-item {
+  background-color: #31112C !important;
+  color: #fff !important;
+}
+
+.submenu-platillos {
+  background-color: #173111 !important;
+  color: #fff !important;
+}
+
+.menu-icon {
+  color: #fff !important;
+}
+
+.menu-search-container {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Empuja el Input.Search al lado derecho del menú */
+}
+.white-text {
+  color: white;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+  background-color: #FBDCC4;
+  padding: 30px;
+}
+
+
+
+
+/*PARTE RESPONSIVE*/
+@media (min-width: 320px) and (max-width: 481px){
+  .menu {
+    font-size: 10px;
+    margin-left: -30px;
+    height: 40px;
+   
+  }
+
+  .header {
+      height: 40px;
+  }
+
+  .menu-item{
+      line-height: 40px;
+      font-size: 10px;
+  }
+
+}
