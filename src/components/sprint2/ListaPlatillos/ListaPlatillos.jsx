@@ -3,7 +3,6 @@ import MenuItem from '../MenuItem/MenuItem';
 import '../MenuItem/MenuItem.css'
  const ListaPlatillos=()=> {
   const [platillos, setPlatillos] = useState([]);
-
   useEffect(() => {
     async function fetchPlatillos() {
       try {
@@ -11,6 +10,7 @@ import '../MenuItem/MenuItem.css'
         if (response.ok) {
           const data = await response.json();
           setPlatillos(data.result);
+
         } else {
           console.error('Error al obtener platillos');
         }
@@ -21,6 +21,7 @@ import '../MenuItem/MenuItem.css'
 
     fetchPlatillos();
   }, []);
+
 
   return (
     <div className="menuPlatillo">
