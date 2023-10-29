@@ -1,0 +1,18 @@
+.estilo-search{
+
+}
+
+.estilo-autocompletable{
+    position: absolute;
+    width: 40%;
+    margin-top: -80px;
+    margin-left: 54%;
+}
+
+.estilo-button{
+    position: absolute  ;
+    width: 20%;
+    height: 37px;
+    margin-top: -80px;
+    margin-left: 91.6%;
+}
