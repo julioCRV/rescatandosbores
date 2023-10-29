@@ -18,6 +18,7 @@ export const EditarPlatillo = () =>{
   const [imageModalVisible, setImageModalVisible] = useState(false);
   const [videoModalVisible, setVideoModalVisible] = useState(false);
   const [cancelModalVisible, setCancelModalVisible] = useState(false);
+  const [irModalEditar, setModalEditar] = useState(false);
   //Implementados por mi
   const [bandTitulo, setBandTitulo] = useState(false);
   const [bandDescripcion, setBandDescripcion] = useState(false);
@@ -78,6 +79,11 @@ export const EditarPlatillo = () =>{
   const showModal = () => {
     setCancelModalVisible(true);
   };
+
+  const showModalEditar = () => {
+    setModalEditar(true);
+  };
+
   const cancelOk = () => {
     // aqui viene el redireccionamiento
     setCancelModalVisible(false);
@@ -104,7 +110,7 @@ export const EditarPlatillo = () =>{
         return true;
       }else if (file.size > 6000000) {
         message.error('El tamaño de la imagen no puede exceder 6MB');
-      }else if(file.size < 100000){
+      }else if(file.size < 1000){
         message.error('El tamaño de la imagen no puede ser menor a 100 KB');
       }else {
         setImageUploaded(true);
@@ -175,7 +181,7 @@ const onFinish = async (values) => {
     console.log('Llega la llamada');
     console.log(response);
     if (response.status === 200) {
-      message.success('Platillo actualizado correctamente');
+      /* message.success('Platillo actualizado correctamente'); */
     } else {
       message.error('Error al actualizar el platillo');
     }
@@ -184,16 +190,17 @@ const onFinish = async (values) => {
     console.log(err);
   } finally{
     setIsLoading(false); //Desactiva la interfaz de carga
+    showModalEditar();
   }
 };
 
 
   return (
     <div className='form-contenedor'>
+    {isLoading  &&  <Spin size='large' className='ant-spin'/>}
     <Form onFinish={onFinish}>
     
     <div className="titulo-formato">Editar Platillo</div  >
-    {isLoading  &&  <Spin size='large' className='ant-spin'/>}
 
       <Form.Item className='componente-limite'
         label={ 
@@ -301,11 +308,12 @@ const onFinish = async (values) => {
       >
         <Button type="primary" htmlType="submit" className='button' style={{ marginRight: '20%', backgroundColor: '#7D0633' }}>
           Actualizar
-        </Button>
+        </Button> 
 
         <Button type="primary" htmlType="button" className='button' style={{backgroundColor: '#828282'}} onClick={showModal}>
           Cancelar
         </Button>
+
       </Form.Item>
 
       <Modal
@@ -327,7 +335,22 @@ const onFinish = async (values) => {
       >
         El archivo de video excede el límite de tamaño permitido (150MB).
       </Modal>
-      
+
+      <Modal
+        title="Se actualizo correctamente,¿Desea ver los cambios?"
+        visible={irModalEditar}
+        onCancel={() => setCancelModalVisible(false)}
+        footer={[
+          <Link to={`/mostrar-platillo/page/${id}`} key="cancel" className='button-link' onClick={() => setModalEditar(false)}>
+           Si
+          </Link>,
+          <Button key="ok" className='button-link' onClick={() => setModalEditar(false)}>
+          No
+          </Button>,
+        ]}
+      > </Modal>
+
+
       <Modal
         title="¿Está seguro que desea cancelar?"
         visible={cancelModalVisible}
