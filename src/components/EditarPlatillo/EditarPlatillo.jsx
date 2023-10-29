@@ -39,7 +39,6 @@ export const EditarPlatillo = () =>{
   useEffect(() => {
     setBandTitulo(false); //Bandera que me ayudan a evitar que me pidan de entrada titulo cuando este ya esta definido por default
     setBandDescripcion(false); //Bandera que me ayudan a evitar que me pidan de entrada descripcion cuando este ya esta definido por default
-
     //Obtengo el platillo con el id indicado
     axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${id}`)
       .then((response) => {
@@ -148,18 +147,19 @@ const onFinish = async (values) => {
     const formData = new FormData();
     formData.append('nombre', values.titulo ?? text);
     formData.append('descripcion', values.descripcion ?? text2);
-    formData.append('id', platilloData.identificador)
+    formData.append('id', platilloData.identificador);
     const imagenFile = values.imagen.file;
     const videoFile = values.video.file;
     formData.append('imagen', new Blob([imagenFile], { type: imagenFile.type }), imagenFile.name);
     formData.append('video', new Blob([videoFile], { type: videoFile.type }), videoFile.name);
-    
+    console.log(formData);
     console.log('Realizando llamada');
+    /*
     const response = await axios.put(`http://18.116.106.247:3000/modificarPlatillo/${platilloData.identificador}`,formData,{
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-    });
+    });*/
     console.log('Llega la llamada');
     console.log(response);
     if (response.status === 200) {
@@ -227,7 +227,7 @@ const onFinish = async (values) => {
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 24 }}
       >
-        <Upload {...verificarImagen} maxCount={1}>
+        <Upload {...verificarImagen} maxCount={1} >
           <Button style={buttonStyle} icon={<UploadOutlined />} className='sms'>Subir Imagen</Button>
           {imageUploaded }
           {!imageUploaded && <span className='mensaje-transparenteI'> No se ha seleccionado ningún archivo</span>}
@@ -323,7 +323,7 @@ const onFinish = async (values) => {
         visible={cancelModalVisible}
         onCancel={() => setCancelModalVisible(false)}
         footer={[
-          <Link to='/mostrar-platillo/page/1' key="cancel" className='button-link' onClick={() => setCancelModalVisible(false)}>
+          <Link to={`/mostrar-platillo/page/${id}`} key="cancel" className='button-link' onClick={() => setCancelModalVisible(false)}>
            OK
           </Link>,
           <Button key="ok" className='button-link' onClick={() => setCancelModalVisible(false)}>
