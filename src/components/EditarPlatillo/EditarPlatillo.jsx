@@ -12,7 +12,7 @@ const { TextArea } = Input;
 
 export const EditarPlatillo = () =>{
   const [imageUploaded, setImageUploaded] = useState(true);
-  const [videoUploaded, setVideoUploaded] = useState(false);
+  const [videoUploaded, setVideoUploaded] = useState(true);
   const [text, setText] = useState('');
   const [text2, setText2] = useState('');
   const [imageModalVisible, setImageModalVisible] = useState(false);
@@ -111,7 +111,7 @@ export const EditarPlatillo = () =>{
         return true;
       }else if (file.size > 6000000) {
         message.error('El tamaño de la imagen no puede exceder 6MB');
-      }else if(file.size < 1000){
+      }else if(file.size < 100000){
         message.error('El tamaño de la imagen no puede ser menor a 100 KB');
       }else {
         setImageUploaded(true);
@@ -137,7 +137,7 @@ export const EditarPlatillo = () =>{
       }
       else if(file.size > 900000000) {
         message.error('El tamaño del video no puede exceder 900MB');
-      } else if(file.size < 5000000){
+      } else if(file.size < 10000000){
         message.error('El tamaño del video no puede ser menor de 10MB');
       }else {
         setVideoUploaded(true);
@@ -246,14 +246,12 @@ const onFinish = async (values) => {
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 24 }}
       >
-        <Upload {...verificarImagen} maxCount={1} >
+        <Upload {...verificarImagen} maxCount={1} accept='image/*'>
           <Button style={buttonStyle} icon={<UploadOutlined />} className='sms'>Subir Imagen</Button>
           {imageUploaded }
           {!imageUploaded && <span className='mensaje-transparenteI'> No se ha seleccionado ningún archivo</span>}
         </Upload>
       </Form.Item>
-
-
 
       <Form.Item className='componente-limite'
         label={
@@ -294,7 +292,7 @@ const onFinish = async (values) => {
         labelCol={{ span: 6 }} 
         wrapperCol={{ span: 24 }} 
       >
-        <Upload {...verificarVideo} maxCount={1}>
+        <Upload {...verificarVideo} maxCount={1} accept='video/mp4'>
           <Button style={buttonStyle} icon={<UploadOutlined /> }className='sms'>Subir Video</Button>
           {videoUploaded}
           {!videoUploaded && <span className='mensaje-transparenteV'>No se ha seleccionado ningún video</span>}
