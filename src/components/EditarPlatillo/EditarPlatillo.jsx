@@ -196,7 +196,7 @@ const onFinish = async (values) => {
           { required: bandTitulo, message: 'Ingresa el título del platillo'},
           { max: 50, message: 'El título no puede tener más de 50 caracteres'},
           { min: 6, message: 'El título debe tener al menos 6 caracteres' },
-          { pattern: /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ\s]*$/, message: 'Solo caracteres alfanuméricos son permitidos en el título' },
+          { pattern: /^[A-Z][a-zA-Z ]*$/, message: 'compruebe que el titulo no comience con minusculas o verifique que no contenga caracteres numericos ó extraños'},
         ]}
 
         labelCol={{ span: 6 }} // Configura el ancho de la etiqueta
