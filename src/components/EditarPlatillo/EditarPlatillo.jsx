@@ -246,14 +246,12 @@ const onFinish = async (values) => {
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 24 }}
       >
-        <Upload {...verificarImagen} maxCount={1} >
+        <Upload {...verificarImagen} maxCount={1} accept='image/*'>
           <Button style={buttonStyle} icon={<UploadOutlined />} className='sms'>Subir Imagen</Button>
           {imageUploaded }
           {!imageUploaded && <span className='mensaje-transparenteI'> No se ha seleccionado ningún archivo</span>}
         </Upload>
       </Form.Item>
-
-
 
       <Form.Item className='componente-limite'
         label={
@@ -294,7 +292,7 @@ const onFinish = async (values) => {
         labelCol={{ span: 6 }} 
         wrapperCol={{ span: 24 }} 
       >
-        <Upload {...verificarVideo} maxCount={1}>
+        <Upload {...verificarVideo} maxCount={1} accept='video/mp4'>
           <Button style={buttonStyle} icon={<UploadOutlined /> }className='sms'>Subir Video</Button>
           {videoUploaded}
           {!videoUploaded && <span className='mensaje-transparenteV'>No se ha seleccionado ningún video</span>}
