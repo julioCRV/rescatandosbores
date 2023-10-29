@@ -12,7 +12,7 @@ const { TextArea } = Input;
 
 export const EditarPlatillo = () =>{
   const [imageUploaded, setImageUploaded] = useState(true);
-  const [videoUploaded, setVideoUploaded] = useState(false);
+  const [videoUploaded, setVideoUploaded] = useState(true);
   const [text, setText] = useState('');
   const [text2, setText2] = useState('');
   const [imageModalVisible, setImageModalVisible] = useState(false);
@@ -111,7 +111,7 @@ export const EditarPlatillo = () =>{
         return true;
       }else if (file.size > 6000000) {
         message.error('El tamaño de la imagen no puede exceder 6MB');
-      }else if(file.size < 1000){
+      }else if(file.size < 100000){
         message.error('El tamaño de la imagen no puede ser menor a 100 KB');
       }else {
         setImageUploaded(true);
@@ -137,7 +137,7 @@ export const EditarPlatillo = () =>{
       }
       else if(file.size > 900000000) {
         message.error('El tamaño del video no puede exceder 900MB');
-      } else if(file.size < 5000000){
+      } else if(file.size < 10000000){
         message.error('El tamaño del video no puede ser menor de 10MB');
       }else {
         setVideoUploaded(true);
