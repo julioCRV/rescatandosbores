@@ -3,6 +3,7 @@ import MenuItem from '../MenuItem/MenuItem';
 import '../MenuItem/MenuItem.css'
  const ListaPlatillos=()=> {
   const [platillos, setPlatillos] = useState([]);
+  const [searchedText, setSearchedText] = useState("")
 
   useEffect(() => {
     async function fetchPlatillos() {
@@ -21,6 +22,28 @@ import '../MenuItem/MenuItem.css'
 
     fetchPlatillos();
   }, []);
+
+
+  
+  console.log(searchedText);
+  useEffect(() => {
+    async function fetchPlatillos() {
+      try {
+        const response = await fetch(`http://18.116.106.247:3000/buscarPlatillo?titulo=${searchedText}`);
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          setPlatillos(data.result);
+        } else {
+          console.error('Error al obtener platillos');
+        }
+      } catch (error) {
+        console.error('Error en la solicitud:', error);
+      }
+    }
+
+    fetchPlatillos();
+  }, [searchedText]);
 
   return (
     <div className="menuPlatillo">
