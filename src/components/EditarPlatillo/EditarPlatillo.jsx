@@ -154,12 +154,11 @@ const onFinish = async (values) => {
     formData.append('video', new Blob([videoFile], { type: videoFile.type }), videoFile.name);
     console.log(formData);
     console.log('Realizando llamada');
-    /*
     const response = await axios.put(`http://18.116.106.247:3000/modificarPlatillo/${platilloData.identificador}`,formData,{
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-    });*/
+    });
     console.log('Llega la llamada');
     console.log(response);
     if (response.status === 200) {
