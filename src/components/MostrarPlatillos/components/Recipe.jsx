@@ -55,21 +55,17 @@ const Recipe = () => {
  
         <h2 className="formato-titulo">{platilloData.nombre}</h2>   {/*modificacion cambio de nombre*/}
         <div className="recipe-content">
-
-          <div className="recipe-image">
-            <img
-              src={uri + 'imagen/' + platilloData.imagen}
-
-              alt="Imagen del Platillo"
-              className="recipe-image"
-            />
-          </div>
-
-          <div className="recipe-text">
-            <p>{platilloData.descripcion}</p>
-          </div>
-
-          <div className="recipe-buttons">
+          <div className='recipe-content-header'>
+            <div className="recipe-image">
+              <img
+                src={uri + 'imagen/' + platilloData.imagen}
+                alt="Imagen del Platillo"
+              />
+            </div>
+            <div className="recipe-text">
+              <p>{platilloData.descripcion}</p>
+            </div>
+            <div className="recipe-buttons">
             <div className='buttonn'>
               <Link to={`/editar-platillo/${id}`}>
                 <Button type="primary" onClick={() => console.log('Editar')}>
@@ -79,12 +75,10 @@ const Recipe = () => {
             </div>
             <ModalConfirmation id={platilloData.identificador} nombre={platilloData.nombre} />
           </div>
-
-        <div className='recipe-video'>
-          <div className="recipe-video">
-            <h1>Video</h1>
-            <ReactPlayer url={uri + 'video/' + platilloData.video} controls={true} width="100%" height="100%" playing={true} /> {/*Se modifico el width y borro el width ademas de que se subio los botoenes */}
           </div>
+        <div className='recipe-video'>
+            <h1>Video</h1>
+            <ReactPlayer  url={uri + 'video/' + platilloData.video} controls={true}  width="100%" height="min(450px, 100%)"  playing={true} /> {/*Se modifico el width y borro el width ademas de que se subio los botoenes */}
         </div>
      
       </div>

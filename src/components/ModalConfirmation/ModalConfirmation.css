@@ -9,6 +9,7 @@
 .ant-modal{
     position: relative;
     top: 40%;
+    z-index: 99;
     
 }
 .ant-modal-body p{

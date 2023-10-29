@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Layout, Menu, theme ,Input } from 'antd';
 import { HomeOutlined, UnorderedListOutlined } from '@ant-design/icons'; // Importa los íconos necesarios
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation} from 'react-router-dom';
 import Routes from './Routes';
 import './headerNav.css'
 import { Content } from 'antd/es/layout/layout';
@@ -21,6 +21,7 @@ const App2 = () => {
   const location = useLocation();
   const items1 = ['Home', 'Platillos Tradicionales'];
 
+
   return (
     <Layout className="layout">
       <Header div className="header" >
@@ -36,13 +37,16 @@ const App2 = () => {
           <SubMenu theme='dark'
           title={
               <span>
+        
                <Link to="/menu-platillos" className='menu-icon'>
-            <UnorderedListOutlined /> Platillos Tradicionales
+                 <UnorderedListOutlined /> Platillos Tradicionales
               </Link>
+             
               </span>
             }
           key="Platillos Tradicionales" 
-            className={location.pathname === '/menu-platillos' ? 'selected-menu-item' : ''}
+            className={location.pathname === '/menu-platillos' ? 'selected-menu-item' : ''} 
+           
             >
 
             <Menu.Item key="Registrar Platillo" className={location.pathname === '/registrar-platillo' ? 'selected-menu-item' : ''}>
