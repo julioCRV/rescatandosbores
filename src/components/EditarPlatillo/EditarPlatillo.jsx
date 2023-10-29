@@ -12,7 +12,7 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 export const EditarPlatillo = () =>{
-  const [imageUploaded, setImageUploaded] = useState(false);
+  const [imageUploaded, setImageUploaded] = useState(true);
   const [videoUploaded, setVideoUploaded] = useState(false);
   const [text, setText] = useState('');
   const [text2, setText2] = useState('');
@@ -37,12 +37,12 @@ export const EditarPlatillo = () =>{
     imagen: '',
     identificador: '',
   });
-  const defaultFileList = [
+  const defaultFileListImagen = [
     {
-      uid: '-1',
-      name: nombreImagen, // Nombre de la imagen preexistente
+      uid: idPlatillo,
+      name: nombreImagen,
       status: 'done',
-      url: rutaImagen, // URL de la imagen preexistente
+      url: rutaImagen,
     },
   ];
 
@@ -97,6 +97,7 @@ export const EditarPlatillo = () =>{
   };
 
   const verificarImagen = {
+    
     beforeUpload: (file) => {
       let extension = file.name.split('.');
       extension = extension[extension.length-1].toLowerCase();
@@ -240,7 +241,7 @@ const onFinish = async (values) => {
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 24 }}
       >
-        <Upload {...verificarImagen} maxCount={1} fileList={defaultFileList}>
+        <Upload {...verificarImagen} maxCount={1}>
           <Button style={buttonStyle} icon={<UploadOutlined />} className='sms'>Subir Imagen</Button>
           {imageUploaded }
           {!imageUploaded && <span className='mensaje-transparenteI'> No se ha seleccionado ningún archivo</span>}
