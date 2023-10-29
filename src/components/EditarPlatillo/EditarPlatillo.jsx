@@ -22,7 +22,11 @@ export const EditarPlatillo = () =>{
   const [bandTitulo, setBandTitulo] = useState(false);
   const [bandDescripcion, setBandDescripcion] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [rutaImagen,setRutaImagen] = useState("");
+  const [rutaVideo,setRutaVideo] = useState("");
+  const [nombreImagen,setNombreImagen] = useState("");
+  const [nombreVideo,setNombreVideo] = useState("");
+  const [idPlatillo,setIdPlatillo] = useState("");
   const {id} = useParams(); //Obtengo el id con el useParams
 
   const [platilloData, setPlatilloData] = useState({
@@ -32,6 +36,14 @@ export const EditarPlatillo = () =>{
     imagen: '',
     identificador: '',
   });
+  const defaultFileList = [
+    {
+      uid: '-1',
+      name: nombreImagen, // Nombre de la imagen preexistente
+      status: 'done',
+      url: rutaImagen, // URL de la imagen preexistente
+    },
+  ];
 
 
   //El useEffect se ejecuta cuando ni bien la pagina carga
@@ -43,9 +55,11 @@ export const EditarPlatillo = () =>{
       .then((response) => {
         console.log(response.data.respuesta);
         const platillo = response.data.respuesta;
-        setText(platillo.nombre)
-        setText2(platillo.descripcion)
-
+        setText(platillo.nombre);
+        setText2(platillo.descripcion);
+        setNombreImagen(platillo.imagen);
+        setNombreVideo(platillo.video);
+        setIdPlatillo(platillo.id);
         setPlatilloData({
           nombre: platillo.nombre,
           descripcion: platillo.descripcion,
@@ -53,7 +67,8 @@ export const EditarPlatillo = () =>{
           identificador: platillo.id,
           video: platillo.video,
         });
-
+        setRutaImagen('http://18.116.106.247:3000/media/imagen/' + platillo.imagen);
+        setRutaVideo('http://18.116.106.247:3000/media/video/' + platillo.video);
       })
       .catch((error) => {
         console.error('Error al obtener el platillo:', error);
@@ -82,7 +97,6 @@ export const EditarPlatillo = () =>{
 
   const verificarImagen = {
     beforeUpload: (file) => {
-
       let extension = file.name.split('.');
       extension = extension[extension.length-1].toLowerCase();
       if (extension!='jpg' && extension!='png') {
@@ -224,7 +238,7 @@ const onFinish = async (values) => {
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 24 }}
       >
-        <Upload {...verificarImagen} maxCount={1} >
+        <Upload {...verificarImagen} maxCount={1} fileList={defaultFileList}>
           <Button style={buttonStyle} icon={<UploadOutlined />} className='sms'>Subir Imagen</Button>
           {imageUploaded }
           {!imageUploaded && <span className='mensaje-transparenteI'> No se ha seleccionado ningún archivo</span>}
