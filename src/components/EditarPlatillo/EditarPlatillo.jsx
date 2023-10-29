@@ -307,7 +307,7 @@ const onFinish = async (values) => {
         labelCol={{span: 6}}
         wrapperCol={{ span: 20 }}
       >
-        <div style={{ display: 'flex' ,marginTop:'10px'}}>
+        <div style={{ display: 'flex' ,marginTop:'10px'}}> 
         <Button type="primary" htmlType="submit" className='button' style={{ marginLeft:'160px',backgroundColor: '#7D0633'}}>
           Actualizar
         </Button> 
