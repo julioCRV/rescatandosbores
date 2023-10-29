@@ -16,6 +16,14 @@
   width: 50%;
   margin: auto;
   box-sizing: border-box;
+  position: relative;
+}
+
+.ant-spin {
+  position: absolute;
+  top: 6%;
+  left: 95%;
+  transform: translate(-50%, -50%);
 }
 
 .TituloPrincipalEditar{

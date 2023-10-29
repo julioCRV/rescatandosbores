@@ -8,7 +8,6 @@ import './EditarPlatillo.css';
 import { useParams } from 'react-router-dom';
 
 const { Title } = Typography;
-
 const { TextArea } = Input;
 
 export const EditarPlatillo = () =>{
@@ -186,7 +185,6 @@ const onFinish = async (values) => {
     console.log(err);
   } finally{
     setIsLoading(false); //Desactiva la interfaz de carga
-    
   }
 };
 
@@ -196,8 +194,7 @@ const onFinish = async (values) => {
     <Form onFinish={onFinish}>
     
     <div className="titulo-formato">Editar Platillo</div  >
-
-      {isLoading && <Spin size="large" style={{ position: 'absolute', top: '50%', left: '50%' }} /> } {/* Interfaz de carga */}
+    {isLoading  &&  <Spin size='large' className='ant-spin'/>}
 
       <Form.Item className='componente-limite'
         label={ 
