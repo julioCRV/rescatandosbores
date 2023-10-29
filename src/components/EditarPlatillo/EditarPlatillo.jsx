@@ -11,7 +11,7 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 export const EditarPlatillo = () =>{
-  const [imageUploaded, setImageUploaded] = useState(false);
+  const [imageUploaded, setImageUploaded] = useState(true);
   const [videoUploaded, setVideoUploaded] = useState(false);
   const [text, setText] = useState('');
   const [text2, setText2] = useState('');
@@ -26,10 +26,10 @@ export const EditarPlatillo = () =>{
   const [rutaImagen,setRutaImagen] = useState("");
   const [rutaVideo,setRutaVideo] = useState("");
   const [nombreImagen,setNombreImagen] = useState("");
+  const [datoImagen,setDatoImagen] = useState(null);
   const [nombreVideo,setNombreVideo] = useState("");
   const [idPlatillo,setIdPlatillo] = useState("");
   const {id} = useParams(); //Obtengo el id con el useParams
-
   const [platilloData, setPlatilloData] = useState({
     nombre: '',
     descripcion: '',
@@ -37,21 +37,13 @@ export const EditarPlatillo = () =>{
     imagen: '',
     identificador: '',
   });
-  const defaultFileList = [
-    {
-      uid: '-1',
-      name: nombreImagen, // Nombre de la imagen preexistente
-      status: 'done',
-      url: rutaImagen, // URL de la imagen preexistente
-    },
-  ];
-
 
   //El useEffect se ejecuta cuando ni bien la pagina carga
   useEffect(() => {
     setBandTitulo(false); //Bandera que me ayudan a evitar que me pidan de entrada titulo cuando este ya esta definido por default
     setBandDescripcion(false); //Bandera que me ayudan a evitar que me pidan de entrada descripcion cuando este ya esta definido por default
     //Obtengo el platillo con el id indicado
+
     axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${id}`)
       .then((response) => {
         console.log(response.data.respuesta);
@@ -74,6 +66,15 @@ export const EditarPlatillo = () =>{
       .catch((error) => {
         console.error('Error al obtener el platillo:', error);
       });
+
+      axios.get('http://18.116.106.247:3000/media/imagen/' + nombreImagen)
+      .then((response) => {
+        setDatoImagen(response.data);
+      })
+      .catch((error) => {
+        console.error('Error al obtener el platillo:', error);
+      });      
+
   }, [id]);
   
   const showModal = () => {
@@ -167,12 +168,13 @@ const onFinish = async (values) => {
     formData.append('nombre', values.titulo ?? text);
     formData.append('descripcion', values.descripcion ?? text2);
     formData.append('id', platilloData.identificador);
-    const imagenFile = values.imagen.file;
     const videoFile = values.video.file;
+    const imagenFile = values.imagen.file;
     formData.append('imagen', new Blob([imagenFile], { type: imagenFile.type }), imagenFile.name);
     formData.append('video', new Blob([videoFile], { type: videoFile.type }), videoFile.name);
     console.log(formData);
     console.log('Realizando llamada');
+    
     const response = await axios.put(`http://18.116.106.247:3000/modificarPlatillo/${platilloData.identificador}`,formData,{
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -244,7 +246,7 @@ const onFinish = async (values) => {
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 24 }}
       >
-        <Upload {...verificarImagen} maxCount={1} fileList={defaultFileList}>
+        <Upload {...verificarImagen} maxCount={1} >
           <Button style={buttonStyle} icon={<UploadOutlined />} className='sms'>Subir Imagen</Button>
           {imageUploaded }
           {!imageUploaded && <span className='mensaje-transparenteI'> No se ha seleccionado ningún archivo</span>}
