@@ -199,10 +199,11 @@ const onFinish = async (values) => {
 
 
   return (
+    <div>
+    <div className="titulo-formato" style={{ marginBottom: '30px' }}>Editar Platillo</div  >
     <div className='form-contenedor'>
     {isLoading  &&  <Spin size='large' className='ant-spin'/>}
     <Form onFinish={onFinish}>
-    <div className="titulo-formato">Editar Platillo</div  >
 
       <Form.Item className='componente-limite'
         label={ 
@@ -367,6 +368,7 @@ const onFinish = async (values) => {
         Al cancelar, se perdera toda la informacion que no se haya registrado.
       </Modal>
     </Form>
+    </div>
     </div>
   );
 }
