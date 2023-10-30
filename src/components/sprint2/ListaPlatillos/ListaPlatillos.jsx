@@ -50,6 +50,7 @@ import '../MenuItem/MenuItem.css'
     <div className="menuPlatillo">
       <div className="menuList">
         {platillos.map((menuItem, key) => {
+          console.log(menuItem)
           return (
             <MenuItem
               key={key}

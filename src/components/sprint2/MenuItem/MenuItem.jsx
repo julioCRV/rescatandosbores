@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 
-function MenuItem({ image, name, key, id}) {
+function MenuItem({ image, name, id}) {
   const [hoverTitulo, setHoverTitulo] = useState(false);
 
   const hoverTrue=()=>{
@@ -15,12 +15,13 @@ function MenuItem({ image, name, key, id}) {
   }
   
 const classImagen = "menuItemImagen " + `${hoverTitulo ? "menuItemTituloHover" :""}`
+const urlImagen = 'http://18.116.106.247:3000/media/imagen/' + image.replace(/ /g, "%20")
+console.log(image)
   return (
-    
     <div className="menuItem">
       <Link to={`/mostrar-platillo/page/${id}`} className='ItemContenedorImagen'>
         <div className={classImagen}
-        style={{ backgroundImage: `url( http://18.116.106.247:3000/media/imagen/${image}` }}> 
+        style={{ backgroundImage: `url(${urlImagen})` }}> 
         </div>
       </Link>
       <Link to={`/mostrar-platillo/page/${id}`} className="ItemContenedorTitulo">
