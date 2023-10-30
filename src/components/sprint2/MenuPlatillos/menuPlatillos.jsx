@@ -36,6 +36,13 @@ const MenuPlatillos= () => {
 
   return (
     <>
+       <Link to="/buscador">
+        <Button
+            className='estilo-buttonMenu'
+            icon={<SearchOutlined />}   
+        >
+        </Button>
+        </Link> 
         
         <div className="menuPlatillo">
       <div className="menuList">

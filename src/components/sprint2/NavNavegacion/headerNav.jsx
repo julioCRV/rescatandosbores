@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
-import { Layout, Menu, theme ,Input, Button } from 'antd';
+import { Layout, Menu, theme ,Input } from 'antd';
 import { HomeOutlined, UnorderedListOutlined } from '@ant-design/icons'; // Importa los íconos necesarios
-import { Link, useLocation, Route} from 'react-router-dom';
+import { Link, useLocation} from 'react-router-dom';
 import Routes from './Routes';
 import './headerNav.css'
 import { Content } from 'antd/es/layout/layout';
-import { SearchOutlined } from '@ant-design/icons';
 
 //Es el mismo Nav de navegacion, se le quito el submenu de platillos tradicionales
 const { Header, Footer } = Layout;
 const { SubMenu } = Menu;
 
-
-
 const App2 = () => {
   const [searchedText, setSearchedText] = useState("")
-  const [openSubMenu, setOpenSubMenu] = useState(false);
 
+  const [openSubMenu, setOpenSubMenu] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -56,18 +53,9 @@ const App2 = () => {
             </Menu.Item>
             
           </SubMenu>
-          {location.pathname === '/' && (
-        <Menu.Item key="Buscar" className={`uno ${location.pathname === '/error' ? 'selected-menu-item' : ''}`} style={{ position: 'absolute' }}>
-          <Link to="/error">
-            <Button
-              icon={<SearchOutlined />}
-            >
-            </Button>
-          </Link>
-        </Menu.Item>
-      )}
+          
           </div>
-
+          
         </Menu>
       </Header>
       <Content className='content'>

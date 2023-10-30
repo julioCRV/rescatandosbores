@@ -11,7 +11,7 @@
 .estilo-autocompletable{
   position: absolute;
   width: 40%;
-  margin-top: -84px;
+  margin-top: -154px;
   margin-left: 53%;
 }
 
@@ -19,6 +19,46 @@
   position: absolute  ;
   width: 20%;
   height: 37px;
-  margin-top: -84px;
-  margin-left: 91%;
+  margin-top: -108px;
+  margin-left: 90.7%;
+  background-color: #195ac3; 
+  border: none; 
+  color: #000000;
 }
+
+.estilo-buttonx{
+  position: absolute  ;
+  width: 100px;
+  height: 37px;
+  margin-top: -150px;
+  margin-left: 89.8%;
+  background-color: transparent; 
+  border: none;
+  color: #000000;
+}
+
+
+
+.input-field {
+  width: calc(100% - 100px); /* Ajusta el ancho según tus necesidades */
+  padding-right: 36px; /* Espacio para el botón "Limpiar" */
+}
+
+
+.input-container {
+  position: relative;
+}
+
+.clear-button2 {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  color: #888;
+}
+

@@ -6,7 +6,7 @@ import './Home.css'
 import { Link, useLocation } from 'react-router-dom';
 import MenuItem from '../sprint2/MenuItem/MenuItem'
 import '../sprint2/MenuItem/MenuItem.css'
-import { HistoryOutlined, SearchOutlined } from '@ant-design/icons';
+import { HistoryOutlined, SearchOutlined, CloseOutlined } from '@ant-design/icons';
 
 
 
@@ -16,8 +16,10 @@ const Home= () => {
     const [isSearchVisible, setSearchVisible] = useState(false);
     
     const [searches, setSearches] = useState([]);
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState("");
     const [searchValue, setSearchValue] = useState(""); 
+    const [autoCompleteOptions, setAutoCompleteOptions] = useState([]);
+    const [autoCompleteValue, setAutoCompleteValue] = useState("");
 
     useEffect(() => {
       async function fetchPlatillos2() {
@@ -61,8 +63,9 @@ const Home= () => {
 
   
     const handleSearch2 = () => {
-      if (inputValue.trim() !== '') {
-        setSearches([inputValue, ...searches]);
+      if (autoCompleteValue.trim() !== '') {
+        console.log(autoCompleteValue);
+        setSearches([autoCompleteValue, ...searches]);
         setInputValue('');
       }
     };
@@ -78,43 +81,71 @@ const Home= () => {
     }));
   
 
+    const handleInputChange = (e) => {
+      setInputValue(e.target.value);
+    };
+  
+    const handleClearClick = () => {
+      console.log(inputValue);
+      setInputValue("");
+      
+    };
+
     const tit="Resultados de la búsqueda para:";
+
+  
+    const handleAutoCompleteChange = (value) => {
+      setAutoCompleteValue(value);
+      // Here, you can update the options based on the value (if needed)
+      // For example, you can fetch suggestions from the server and update 'autoCompleteOptions'
+    };
     return (
       <>
       {/*condicional para ocultar la barra de busqueda*/}
-            <>
-               <AutoComplete
-        className="estilo-autocompletable"
-        options={options}
-      >
-        <Input
-          placeholder="Realiza una búsqueda"
-          size="large"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onPressEnter={() => {
-            setSearchValue(inputValue);
-            setSearchVisible(true); 
-            handleSearch(inputValue);
-            handleSearch2();
-          }}
-        />
-      </AutoComplete>
-        </>
-           
+      <div className="input-container">
+        <AutoComplete
+          className="estilo-autocompletable"
+          options={options}
+          value={autoCompleteValue}
+          onChange={handleAutoCompleteChange}
+        >
+          <Input
+            type="text"
+            placeholder="Realiza una búsqueda"
+            size="large"
+            value={autoCompleteValue}
+            onChange={(e) => handleAutoCompleteChange(e.target.value)}
+            onPressEnter={() => {
+              setSearchValue(autoCompleteValue);
+              setSearchVisible(true);
+              handleSearch(autoCompleteValue);
+              handleSearch2();
+            }}
+          />
+        </AutoComplete>
+
+        {autoCompleteValue && (
+          <Button className='estilo-buttonx' onClick={() => setAutoCompleteValue("")}
+          icon={<CloseOutlined/>}
+          >
+        
+                 
+            
+          </Button>
+        )}
+      </div>
   
           {/*button que controla si esta visible o no la barra de navegación */}
          {/* <Link to="/error" className='menu-icon'>*/}
           <Button
               className='estilo-button'
+             
               onClick={() => {
-                if (inputValue==""){
-                  setSearchVisible(false); 
-                  }else{ 
+              
                     handleSearch(inputValue);
                     handleSearch2();
                   setSearchVisible(true);
-                  }
+                  
                  
                  
               }}
@@ -122,6 +153,7 @@ const Home= () => {
               icon={<SearchOutlined />}   
           >
           </Button>
+          
           {/*} </Link> */}
   
   
@@ -138,8 +170,6 @@ const Home= () => {
         <div className="menuList">
         
           {platillos.map((menuItem, key) => {
-           
-      console.log(platillos, "ACAAAAAAAAA222222222");
             return (
               <MenuItem
                 key={key} 
