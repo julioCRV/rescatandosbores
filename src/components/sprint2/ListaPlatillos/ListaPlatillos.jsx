@@ -3,11 +3,8 @@ import MenuItem from '../MenuItem/MenuItem';
 import '../MenuItem/MenuItem.css'
  const ListaPlatillos=()=> {
   const [platillos, setPlatillos] = useState([]);
-<<<<<<< HEAD
-=======
   const [searchedText, setSearchedText] = useState("")
 
->>>>>>> b5d645fe86148912c8635410ce52ca327098d166
   useEffect(() => {
     async function fetchPlatillos() {
       try {
@@ -28,8 +25,6 @@ import '../MenuItem/MenuItem.css'
   }, []);
 
 
-<<<<<<< HEAD
-=======
   
   console.log(searchedText);
   useEffect(() => {
@@ -51,7 +46,6 @@ import '../MenuItem/MenuItem.css'
     fetchPlatillos();
   }, [searchedText]);
 
->>>>>>> b5d645fe86148912c8635410ce52ca327098d166
   return (
     <div className="menuPlatillo">
       <div className="menuList">
