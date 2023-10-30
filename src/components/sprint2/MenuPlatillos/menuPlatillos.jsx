@@ -36,13 +36,6 @@ const MenuPlatillos= () => {
 
   return (
     <>
-       <Link to="/error">
-        <Button
-            className='estilo-button2'
-            icon={<SearchOutlined />}   
-        >
-        </Button>
-        </Link> 
         
         <div className="menuPlatillo">
       <div className="menuList">
