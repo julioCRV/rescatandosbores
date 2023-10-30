@@ -6,6 +6,7 @@ import { Link} from 'react-router-dom';
 import axios from 'axios';
 import './EditarPlatillo.css';
 import { useParams } from 'react-router-dom';
+import Item from 'antd/es/list/Item';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -205,11 +206,11 @@ const onFinish = async (values) => {
 
 
   return (
+    <div>
+    <div className="titulo-formato" style={{ marginBottom: '30px' }}>Editar Platillo</div  >
     <div className='form-contenedor'>
     {isLoading  &&  <Spin size='large' className='ant-spin'/>}
     <Form onFinish={onFinish}>
-    
-    <div className="titulo-formato">Editar Platillo</div  >
 
       <Form.Item className='componente-limite'
         label={ 
@@ -310,18 +311,20 @@ const onFinish = async (values) => {
 
 
 
-      <Form.Item className='componente-limite' style={{ display: 'flex', justifyContent: 'center' }}
+      <Form.Item className='componente-limite' 
         labelCol={{span: 6}}
         wrapperCol={{ span: 20 }}
       >
-        <div style={{ display: 'flex' ,marginTop:'10px'}}> 
-        <Button type="primary" htmlType="submit" className='button' style={{ marginLeft:'160px',backgroundColor: '#7D0633'}}>
+        <div className='contenedorBotones'> 
+        <div className='botonAC'>
+        <Button type="primary" htmlType="submit" className='button' style={{ backgroundColor: '#7D0633'}}>
           Actualizar
         </Button> 
 
-        <Button type="primary" htmlType="button" className='button' style={{marginLeft: '110px',backgroundColor: '#828282'}} onClick={showModal}>
+        <Button type="primary" htmlType="button" className='button' style={{ marginLeft:'90px',backgroundColor: '#828282'}} onClick={showModal}>
           Cancelar
         </Button>
+        </div>
         </div>
       </Form.Item>
 
@@ -348,7 +351,8 @@ const onFinish = async (values) => {
       <Modal
         title="Se actualizo correctamente,¿Desea ver los cambios?"
         visible={irModalEditar}
-        onCancel={() => setCancelModalVisible(false)}
+        closable={false}
+        onCancel={() => setCancelModalVisible(false)} 
         footer={[
           <Link to={`/mostrar-platillo/page/${id}`} key="cancel" className='button-link' onClick={() => setModalEditar(false)}>
            Si
@@ -376,6 +380,7 @@ const onFinish = async (values) => {
         Al cancelar, se perdera toda la informacion que no se haya registrado.
       </Modal>
     </Form>
+    </div>
     </div>
   );
 }
