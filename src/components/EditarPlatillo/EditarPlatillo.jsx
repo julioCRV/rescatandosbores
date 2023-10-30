@@ -340,6 +340,7 @@ const onFinish = async (values) => {
       <Modal
         title="Se actualizo correctamente,¿Desea ver los cambios?"
         visible={irModalEditar}
+        closable={false}
         onCancel={() => setCancelModalVisible(false)} 
         footer={[
           <Link to={`/mostrar-platillo/page/${id}`} key="cancel" className='button-link' onClick={() => setModalEditar(false)}>
