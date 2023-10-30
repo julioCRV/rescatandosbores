@@ -233,6 +233,7 @@ const onFinish = async (values) => {
         <div style={{ position: 'relative' }}>
           <Input
             placeholder="Ingrese el título del platillo"
+            className="input-limited"
             autoComplete="off"
             onChange={handleTextChange}
             value={text}
@@ -283,7 +284,7 @@ const onFinish = async (values) => {
             autoSize={{ minRows: 3, maxRows: 6 }}
             onChange={handleTextChange2}
             value={text2}
-            //maxLength={500} // Limitar a 500 caracteres
+            maxLength={501}
           />
           <div style={{ position: 'absolute', top: 0, right: 0, padding: '8px', color: 'gray' }}>
             {text2.length} / 500
