@@ -6,6 +6,7 @@ import { Link} from 'react-router-dom';
 import axios from 'axios';
 import './EditarPlatillo.css';
 import { useParams } from 'react-router-dom';
+import Item from 'antd/es/list/Item';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -201,7 +202,6 @@ const onFinish = async (values) => {
     <div className='form-contenedor'>
     {isLoading  &&  <Spin size='large' className='ant-spin'/>}
     <Form onFinish={onFinish}>
-    
     <div className="titulo-formato">Editar Platillo</div  >
 
       <Form.Item className='componente-limite'
@@ -301,7 +301,7 @@ const onFinish = async (values) => {
 
 
 
-      <Form.Item className='componente-limite' style={{ display: 'flex', justifyContent: 'center' }}
+      <Form.Item className='componente-limite' style={{ display: 'flex', justifyContent: 'center'}}
         labelCol={{span: 6}}
         wrapperCol={{ span: 20 }}
       >
@@ -339,7 +339,7 @@ const onFinish = async (values) => {
       <Modal
         title="Se actualizo correctamente,¿Desea ver los cambios?"
         visible={irModalEditar}
-        onCancel={() => setCancelModalVisible(false)}
+        onCancel={() => setCancelModalVisible(false)} 
         footer={[
           <Link to={`/mostrar-platillo/page/${id}`} key="cancel" className='button-link' onClick={() => setModalEditar(false)}>
            Si
