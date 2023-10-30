@@ -6,4 +6,19 @@
 .texto{
     font-size: 45px;
 }
-    
+
+
+.estilo-autocompletable{
+  position: absolute;
+  width: 40%;
+  margin-top: -84px;
+  margin-left: 53%;
+}
+
+.estilo-button{
+  position: absolute  ;
+  width: 20%;
+  height: 37px;
+  margin-top: -84px;
+  margin-left: 91%;
+}
