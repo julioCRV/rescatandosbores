@@ -99,7 +99,16 @@
 
 }
 
+.contenedorBotones {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
 
+.botonAC {
+  display: flex;
+  padding: 0 0 0 180px;
+}
 
 .textArea{
   position: relative;
@@ -187,6 +196,20 @@
     border-color: #828282;
     color: white;
     box-shadow: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .botonAC {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+
+  .button {
+    margin-right: 4px;
+    margin-left: 90px;
+    margin-top:10px ;
   }
 }
 

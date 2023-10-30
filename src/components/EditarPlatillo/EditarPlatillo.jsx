@@ -309,18 +309,20 @@ const onFinish = async (values) => {
 
 
 
-      <Form.Item className='componente-limite' style={{ display: 'flex', justifyContent: 'center'}}
+      <Form.Item className='componente-limite' 
         labelCol={{span: 6}}
         wrapperCol={{ span: 20 }}
       >
-        <div style={{ display: 'flex' ,marginTop:'10px'}}> 
-        <Button type="primary" htmlType="submit" className='button' style={{ marginLeft:'160px',backgroundColor: '#7D0633'}}>
+        <div className='contenedorBotones'> 
+        <div className='botonAC'>
+        <Button type="primary" htmlType="submit" className='button' style={{ backgroundColor: '#7D0633'}}>
           Actualizar
         </Button> 
 
-        <Button type="primary" htmlType="button" className='button' style={{marginLeft: '110px',backgroundColor: '#828282'}} onClick={showModal}>
+        <Button type="primary" htmlType="button" className='button' style={{ marginLeft:'90px',backgroundColor: '#828282'}} onClick={showModal}>
           Cancelar
         </Button>
+        </div>
         </div>
       </Form.Item>
 
