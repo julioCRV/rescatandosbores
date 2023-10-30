@@ -194,7 +194,7 @@ const onFinish = async (values) => {
     } catch (err) {
       message.error('Error con la actualizacion');
       console.log(err);
-    } finally{
+    }finally{
       setIsLoading(false); //Desactiva la interfaz de carga
       showModalEditar();
     }
@@ -226,6 +226,7 @@ const onFinish = async (values) => {
         ]}
 
         labelCol={{ span: 6 }} // Configura el ancho de la etiqueta
+
         wrapperCol={{ span: 16 }} // Configura el ancho del campo de entrada
       >
         <div style={{ position: 'relative' }}>
@@ -234,6 +235,7 @@ const onFinish = async (values) => {
             autoComplete="off"
             onChange={handleTextChange}
             value={text}
+            maxLength={51}
           />
           <div style={{ position: 'absolute', top: 0, right: 0, padding: '8px', color: 'gray' }}>
             {text.length} / 50
@@ -379,4 +381,3 @@ const onFinish = async (values) => {
 }
 
 export default EditarPlatillo;
- 
