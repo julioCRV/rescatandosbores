@@ -11,8 +11,8 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 export const EditarPlatillo = () =>{
-  const [imageUploaded, setImageUploaded] = useState(true);
-  const [videoUploaded, setVideoUploaded] = useState(true);
+  const [imageUploaded, setImageUploaded] = useState(false);
+  const [videoUploaded, setVideoUploaded] = useState(false);
   const [text, setText] = useState('');
   const [text2, setText2] = useState('');
   const [imageModalVisible, setImageModalVisible] = useState(false);
@@ -30,6 +30,8 @@ export const EditarPlatillo = () =>{
   const [nombreVideo,setNombreVideo] = useState("");
   const [idPlatillo,setIdPlatillo] = useState("");
   const {id} = useParams(); //Obtengo el id con el useParams
+  const [keyImagen,setKeyImagen] = useState(false);
+  const [keyVideo,setKeyVideo] = useState(false);
   const [platilloData, setPlatilloData] = useState({
     nombre: '',
     descripcion: '',
@@ -115,6 +117,7 @@ export const EditarPlatillo = () =>{
         message.error('El tamaño de la imagen no puede ser menor a 100 KB');
       }else {
         setImageUploaded(true);
+        setKeyImagen(true)
         message.success(`${file.name} subido correctamente.`);
         return false;
       }
@@ -141,6 +144,7 @@ export const EditarPlatillo = () =>{
         message.error('El tamaño del video no puede ser menor de 10MB');
       }else {
         setVideoUploaded(true);
+        setKeyVideo(true);
         message.success(`${file.name} subido correctamente.`);
         return false;
       }
@@ -161,38 +165,41 @@ export const EditarPlatillo = () =>{
 
   //Se ejecuta cuando se da a actualizar
 const onFinish = async (values) => {
-  setIsLoading(true); //Activa la interfaz de carga
-  try {
-    //Cargo los datos de los inputs para poder subirlo a la bd
-    const formData = new FormData();
-    formData.append('nombre', values.titulo ?? text);
-    formData.append('descripcion', values.descripcion ?? text2);
-    formData.append('id', platilloData.identificador);
-    const videoFile = values.video.file;
-    const imagenFile = values.imagen.file;
-    formData.append('imagen', new Blob([imagenFile], { type: imagenFile.type }), imagenFile.name);
-    formData.append('video', new Blob([videoFile], { type: videoFile.type }), videoFile.name);
-    console.log(formData);
-    console.log('Realizando llamada');
-    
-    const response = await axios.put(`http://18.116.106.247:3000/modificarPlatillo/${platilloData.identificador}`,formData,{
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    console.log('Llega la llamada');
-    console.log(response);
-    if (response.status === 200) {
-      /* message.success('Platillo actualizado correctamente'); */
-    } else {
-      message.error('Error al actualizar el platillo');
+  if(keyImagen && keyVideo){
+    setIsLoading(true);
+    try {
+      //Cargo los datos de los inputs para poder subirlo a la bd
+      const formData = new FormData();
+      formData.append('nombre', values.titulo ?? text);
+      formData.append('descripcion', values.descripcion ?? text2);
+      formData.append('id', platilloData.identificador);
+      const videoFile = values.video.file;
+      const imagenFile = values.imagen.file;
+      formData.append('imagen', new Blob([imagenFile], { type: imagenFile.type }), imagenFile.name);
+      formData.append('video', new Blob([videoFile], { type: videoFile.type }), videoFile.name);
+      console.log(formData);
+      console.log('Realizando llamada');
+      const response = await axios.put(`http://18.116.106.247:3000/modificarPlatillo/${platilloData.identificador}`,formData,{
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Llega la llamada');
+      console.log(response);
+      if (response.status === 200) {
+        /* message.success('Platillo actualizado correctamente'); */
+      } else {
+        message.error('Error al actualizar el platillo');
+      }
+    } catch (err) {
+      message.error('Error con la actualizacion');
+      console.log(err);
+    } finally{
+      setIsLoading(false); //Desactiva la interfaz de carga
+      showModalEditar();
     }
-  } catch (err) {
-    message.error('Error con la actualizacion');
-    console.log(err);
-  } finally{
-    setIsLoading(false); //Desactiva la interfaz de carga
-    showModalEditar();
+  }else{
+    message.error(`Verifique que todo los datos esten correctos`);
   }
 };
 
