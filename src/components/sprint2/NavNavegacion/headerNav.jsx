@@ -34,21 +34,13 @@ const App2 = () => {
             </Link> 
           </Menu.Item>     
           
-          <SubMenu theme='dark'
+          <SubMenu theme='dark' className='menu-icon'
           title={
-              <span>
-        
-               <Link to="/menu-platillos" className='menu-icon'>
+              <span>          
                  <UnorderedListOutlined /> Platillos Tradicionales
-              </Link>
-             
               </span>
             }
-          key="Platillos Tradicionales" 
-            className={location.pathname === '/menu-platillos' ? 'selected-menu-item' : ''} 
-           
             >
-
             <Menu.Item key="Registrar Platillo" className={location.pathname === '/registrar-platillo' ? 'selected-menu-item' : ''}>
               <Link to="/registrar-platillo" className='menu-icon'>
                 Registrar Platillo

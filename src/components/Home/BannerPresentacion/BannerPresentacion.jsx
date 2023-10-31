@@ -21,7 +21,7 @@ const BannerPresentacion = () => {
           Rescatando sabores  invita a los visitantes a conocer y disfrutar de la variedad y riqueza de la comida boliviana, que refleja la diversidad cultural y geográfica del país.</p>
         </div>
       </div>
-    
+      <Lista></Lista>
 
     </>
   )

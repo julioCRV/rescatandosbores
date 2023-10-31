@@ -1,0 +1,35 @@
+[33mcommit 2e453cad6b0102742c7f8377a1eccb1ecd63a508[m[33m ([m[1;36mHEAD -> [m[1;32mjulio[m[33m, [m[1;31morigin/julio[m[33m)[m
+Author: harol <harolreal4444@gmail.com>
+Date:   Mon Oct 30 11:37:15 2023 -0400
+
+    Add: agreando responsividad hu7, buscador
+
+[33mcommit cef93ec8ad810807175131c3e5da17377b968a7a[m
+Author: julioCRV <julioroquevalda6@gmail.com>
+Date:   Sun Oct 29 20:41:42 2023 -0400
+
+    Modificacion del menu platillos y buscador en el home
+
+[33mcommit 06f895459a2caa570798cb3d9cd129f781c52769[m
+Author: julioCRV <julioroquevalda6@gmail.com>
+Date:   Sun Oct 29 18:53:59 2023 -0400
+
+    merge menu platillos
+
+[33mcommit 67e61fae3c76be72d54530d3c7d25e25dc6f3e6b[m
+Author: julioCRV <julioroquevalda6@gmail.com>
+Date:   Fri Oct 20 16:12:02 2023 -0400
+
+    v1
+
+[33mcommit 7bfcdbb13eaa97f862e86dd2bfe59b09f7229f0f[m[33m ([m[1;31morigin/ricardo[m[33m, [m[1;31morigin/melina[m[33m)[m
+Author: harol <harolreal4444@gmail.com>
+Date:   Wed Oct 18 09:16:00 2023 -0400
+
+    Creando la estructura Front
+
+[33mcommit ec0cb2a3af8f483a176dd871de53b8f0a40ef4fe[m
+Author: harol <harolreal4444@gmail.com>
+Date:   Wed Oct 18 09:14:28 2023 -0400
+
+    first commit

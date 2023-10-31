@@ -34,8 +34,9 @@ body {
   padding: 30px;
 }
 
-
-
+.uno{
+  left: 95%;
+}
 
 /*PARTE RESPONSIVE*/
 @media (min-width: 320px) and (max-width: 481px){
@@ -55,4 +56,22 @@ body {
       font-size: 10px;
   }
 
+}
+@media screen and (max-width:1050px){
+  .uno{
+    left: 93%;
+  }
+  
+}
+@media screen and (max-width:800px){
+  .uno{
+    left: 91%;
+  }
+  
+}
+@media screen and (max-width:600px){
+  .uno{
+    left: 88%;
+  }
+  
 }
