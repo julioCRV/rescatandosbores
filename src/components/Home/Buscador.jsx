@@ -14,7 +14,8 @@ const Home= () => {
   const [platillos, setPlatillos] = useState([]);
   const [searchedText, setSearchedText] = useState("")
     const [isSearchVisible, setSearchVisible] = useState(false);
-    
+    const [cantResult, setCantResult] = useState(0)
+
     const [searches, setSearches] = useState([]);
     const [inputValue, setInputValue] = useState("");
     const [searchValue, setSearchValue] = useState(""); 
@@ -29,6 +30,7 @@ const Home= () => {
             const data = await response.json();
             console.log(data);
             setPlatillos(data.result);
+            setCantResult(platillos.length)
           } else {
             console.error('Error al obtener platillos');
           }
@@ -161,7 +163,7 @@ const Home= () => {
   { isSearchVisible && (
     <div className="menuPlatillo">
       <div className='div-center' >
-        <h2 >{tit} {searchValue}</h2>
+        <h2 >{tit} {searchValue} es de {cantResult}</h2>
       </div>
     </div>
   )}
