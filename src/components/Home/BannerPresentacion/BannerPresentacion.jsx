@@ -1,7 +1,9 @@
+
+
 import React from 'react'
 import './BannerPresentacion.css'
 import Lista from '../../sprint2/MenuPlatillos/menuPlatillos'
-//
+
 const BannerPresentacion = () => {
   return (
     <>
