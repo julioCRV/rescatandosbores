@@ -14,24 +14,26 @@ const Home= () => {
   const [platillos, setPlatillos] = useState([]);
   const [searchedText, setSearchedText] = useState("")
     const [isSearchVisible, setSearchVisible] = useState(false);
-    
+    const [isAlgoEscrito, setAlgoEscrito] = useState(false);
+    const [isMensajeNadaEncontrado, setMensajeNadaEncontrado] = useState(false);
     const [searches, setSearches] = useState([]);
     const [inputValue, setInputValue] = useState("");
     const [searchValue, setSearchValue] = useState(""); 
-    const [autoCompleteOptions, setAutoCompleteOptions] = useState([]);
     const [autoCompleteValue, setAutoCompleteValue] = useState("");
-
+    const [cantPlatillos, setCantPlatillos] = useState("");
     const [errorMessage, setErrorMessage] = useState('');
 
 
     useEffect(() => {
       async function fetchPlatillos2() {
+        
         try {
           const response = await fetch(`http://18.116.106.247:3000/buscarPlatillo?titulo=${searchedText}`);
           if (response.ok) {
             const data = await response.json();
-            console.log(data);
             setPlatillos(data.result);
+            setCantPlatillos(data.result.length);
+            
           } else {
             console.error('Error al obtener platillos');
           }
@@ -39,16 +41,21 @@ const Home= () => {
           console.error('Error en la solicitud:', error);
         }
       }
-  
-      if (searchedText.trim() !== "") {
+      if (searchedText.trim() === "") {
+        setPlatillos([]);
+      } else {
         fetchPlatillos2();
+        if(cantPlatillos==0){
+          setPlatillos([]);
+          fetchPlatillos2();
+        }
       }
     }, [searchedText]);
-  
-
 
      // Oculta el Input.Search cuando se realiza la búsqueda
      const handleSearch = (value) => {
+  
+        setCantPlatillos(0);
         setSearchedText(value);
       };
 
@@ -63,11 +70,17 @@ const Home= () => {
         </span>
     );
   
-
+    const homeMessage = (
+      <span>
+    <div className='div-center' >
+    <h1>Bienvenido al Buscador de Platillos</h1>
+      <p>Encuentra tus platillos favoritos fácilmente.</p>
+    </div>
+      </span>
+  );
   
     const handleSearch2 = () => {
       if (autoCompleteValue.trim() !== '') {
-        console.log(autoCompleteValue);
         setSearches([autoCompleteValue, ...searches]);
         setInputValue('');
       }
@@ -83,25 +96,16 @@ const Home= () => {
       ),
     }));
   
-
-    const handleInputChange = (e) => {
-      setInputValue(e.target.value);
-    };
-  
-    const handleClearClick = () => {
-      console.log(inputValue);
-      setInputValue("");
-      
-    };
-
+    
     const tit="Resultados de la búsqueda para:";
 
   
     const handleAutoCompleteChange = (value) => {
       const maxLength = 50;
       const regex = /^[A-Za-záéíóúÁÉÍÓÚñ\s]+$/;
-    
-      if (value.length <= maxLength && (regex.test(value) || value === '')) {
+      console.log(value);
+     if (value.length <= maxLength && (regex.test(value) || value === '')) {
+  
         setAutoCompleteValue(value);
         setErrorMessage('');
       } else if (value.length > maxLength) {
@@ -109,84 +113,111 @@ const Home= () => {
       } else {
         setErrorMessage('¡Por favor, intenta nuevamente con solo letras y espacios!');
       }
+  
     };
     
-    
+
     return (
       <>
       {/*condicional para ocultar la barra de busqueda*/}
       <div className="input-container">
-  <AutoComplete
-    className={`estilo-autocompletable ${errorMessage ? 'invalid' : ''}`}
-    options={options}
-    value={autoCompleteValue}
-    onChange={(value) => handleAutoCompleteChange(value)}
-  >
-    <Input
-      type="text"
-      placeholder={errorMessage || 'Realiza una búsqueda'}
-      size="large"
-      onPressEnter={() => {
-        if (!errorMessage) {
-          setSearchValue(autoCompleteValue);
-          setSearchVisible(true);
-          handleSearch(autoCompleteValue);
-          handleSearch2();
-        }
-      }}
-    />
-  </AutoComplete>
+          <AutoComplete
+            className={`estilo-autocompletable ${errorMessage ? 'invalid' : ''}`}
+            options={options}
+            value={autoCompleteValue}
+            onChange={(value) => handleAutoCompleteChange(value)}
+          >
+            <Input
+              type="text"
+              placeholder={errorMessage || 'Realiza una búsqueda'}
+              size="large"
+              
+              onPressEnter={() => {
+                
+                if (!errorMessage) {
+                  setAlgoEscrito(true);
+                  setSearchValue(autoCompleteValue);
+                  if(autoCompleteValue!=""){
+                    setSearchVisible(true);
+                    
+                  }else{
+                    setMensajeNadaEncontrado(false);
+                    setSearchVisible(false);
+                    setAlgoEscrito(false);
+                  }
+                  handleSearch(autoCompleteValue);
+                  handleSearch2();
+                }
+              }}
+            />
+          </AutoComplete>
 
-  {autoCompleteValue && errorMessage && (
-    <div className="error-message">{errorMessage}</div>
-  )}
+          {autoCompleteValue && errorMessage && (
+            <div className="error-message">{errorMessage}</div>
+          )}
 
-  {autoCompleteValue && !errorMessage && (
-    <Button className='estilo-buttonx' onClick={() => setAutoCompleteValue("")} icon={<CloseOutlined />} />
-  )}
-</div>
+          {autoCompleteValue && !errorMessage && (
+            <Button className='estilo-buttonx' onClick={() => setAutoCompleteValue("")} icon={<CloseOutlined />} />
+          )}
+      </div>
 
-  
-          {/*button que controla si esta visible o no la barra de navegación */}
          {/* <Link to="/error" className='menu-icon'>*/}
           <Button
               className='estilo-button'
-             
               onClick={() => {
-              
-                    handleSearch(inputValue);
-                    handleSearch2();
-                  setSearchVisible(true);
-                  
-                 
-                 
+                if (!errorMessage) {
+                  setSearchValue(autoCompleteValue);
+                  if(autoCompleteValue!=""){
+                    setSearchVisible(true);
+                    }else{
+                      setMensajeNadaEncontrado(false);
+                      setSearchVisible(false);
+                      setAlgoEscrito(false);
+                    }
+                  handleSearch(autoCompleteValue);
+                  handleSearch2();
+                }
               }}
-  
               icon={<SearchOutlined />}   
           >
           </Button>
+  
+          { isSearchVisible && (
+              <div className='div-center' >
+                <h2 className='mensaje-resultado'>{tit} {searchValue}</h2>
+                <div className='div-left'>
+                <h2>Se encontraron {cantPlatillos} platillos que coinciden con los términos de búsqueda</h2>
+              </div>
+              </div>
+              
+          )}
+
+          { !isAlgoEscrito && (
+            <div className="menuPlatillo">
+              <div className='div-center' >
+                <h2 >{homeMessage}</h2>
+              </div>
+            </div>
+          )}
+
+
+{ isMensajeNadaEncontrado && (
+            <div className="menuPlatillo">
+              <div className='div-center' >
+                <h2 >{noDataMessage}</h2>
+              </div>
+            </div>
+          )}
           
-          {/*} </Link> */}
-  
-  
-  
-  { isSearchVisible && (
-    <div className="menuPlatillo">
-      <div className='div-center' >
-        <h2 >{tit} {searchValue}</h2>
-      </div>
-    </div>
-  )}
-          
-          <div className="menuPlatillo">
+      <div className="menuPlatillo">
         <div className="menuList">
-        
           {platillos.map((menuItem, key) => {
             return (
               <MenuItem
                 key={key} 
                 image={menuItem.imagen_platillo}
                 name={menuItem.titulo_platillo}
+                pagina={menuItem.id_platillo}
                 id={key+1}
               />
             );

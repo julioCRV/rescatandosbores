@@ -2,13 +2,22 @@
     font-family: sans-serif;
   text-align: center;
 }
-
+.div-left{
+  font-family: sans-serif;
+  text-align: left;
+  margin-left: 1%;
+}
 .texto{
+  font-family: sans-serif;
     font-size: 45px;
 }
 
-
+.mensaje-resultado{
+  font-family: sans-serif;
+  text-align: center;
+}
 .estilo-autocompletable{
+  font-family: sans-serif;
   position: absolute;
   width: 40%;
   margin-top: -154px;
@@ -40,6 +49,7 @@
 
 
 .input-field {
+  font-family: sans-serif;
   width: calc(100% - 100px);
   padding-right: 36px;
 }
@@ -50,6 +60,7 @@
 }
 
 .error-message {
+  font-family: sans-serif;
   position: absolute;
   top: -125px;
   margin-left: 63%;

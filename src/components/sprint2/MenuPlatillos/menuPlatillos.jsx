@@ -4,7 +4,7 @@ import {  Button} from 'antd';
 import './menuPlatillos.css'
 import { Link, useLocation } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
-import MenuItem from '../MenuItem/MenuItem';
+import MenuItemLista from '../MenuItem/MenuItemLista';
 import '../MenuItem/MenuItem.css'
 
 
@@ -47,13 +47,13 @@ const MenuPlatillos= () => {
         <div className="menuPlatillo">
       <div className="menuList">
       
-        {platillos.map((menuItem, key) => {
+        {platillos.map((menuItemLista, key) => {
           console.log(key);
           return (
-            <MenuItem
+            <MenuItemLista
               key={key} 
-              image={menuItem.imagen_platillo}
-              name={menuItem.titulo_platillo}
+              image={menuItemLista.imagen_platillo}
+              name={menuItemLista.titulo_platillo}
               id={key+1}
             />
           );
