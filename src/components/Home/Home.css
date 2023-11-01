@@ -40,8 +40,8 @@
 
 
 .input-field {
-  width: calc(100% - 100px); /* Ajusta el ancho según tus necesidades */
-  padding-right: 36px; /* Espacio para el botón "Limpiar" */
+  width: calc(100% - 100px);
+  padding-right: 36px;
 }
 
 
@@ -49,16 +49,17 @@
   position: relative;
 }
 
-.clear-button2 {
+.error-message {
   position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 14px;
-  color: #888;
+  top: -125px;
+  margin-left: 63%;
+  color: #ff0000; 
+  background-color: #ffe6e6; 
+  padding: 2px; 
+  border: 1px solid #ff0000; 
+  margin-top: 8px; 
 }
 
+@media (min-width: 320px) and (max-width: 481px){
+  
+}

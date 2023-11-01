@@ -48,7 +48,7 @@ const Recipe = () => {
       });
   }, [id]);
 
-
+console.log(platilloData.imagen)
   return (
     
       <div className='reciForma'>

@@ -22,7 +22,6 @@ const MenuPlatillos= () => {
             const data = await response.json();
             setPlatillos(data.result);
             console.log(platillos);
-           
           } else {
             console.error('Error al obtener platillos');
           }
@@ -34,6 +33,7 @@ const MenuPlatillos= () => {
       fetchPlatillos();
     }, []);
 
+    
   return (
     <>
        <Link to="/buscador">
@@ -48,11 +48,12 @@ const MenuPlatillos= () => {
       <div className="menuList">
       
         {platillos.map((menuItem, key) => {
+          console.log(key);
           return (
             <MenuItem
               key={key} 
-              image={menuItem.IMAGEN_PLATILLO}
-              name={menuItem.TITULO_PLATILLO}
+              image={menuItem.imagen_platillo}
+              name={menuItem.titulo_platillo}
               id={key+1}
             />
           );

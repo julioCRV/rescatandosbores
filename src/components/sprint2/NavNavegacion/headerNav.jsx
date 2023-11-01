@@ -27,14 +27,17 @@ const App2 = () => {
       <Header div className="header" >
 
         <Menu theme="none" mode="horizontal" className='menu'>
-        <div >
-          <Menu.Item key="Home" className={location.pathname === '/' ? 'selected-menu-item' : ''} >
+        <div className='alMedio'>
+          <Menu.Item key="Home" className={`${location.pathname === '/' ? 'selected-menu-item' : ''} ${'menu'}`} > 
+          <div className='alMedio'>
             <Link to="/" className='menu-icon'>
-              <HomeOutlined/> Home
+              <HomeOutlined /> Home
             </Link> 
+            </div>
           </Menu.Item>     
           
           <SubMenu theme='dark' className='menu-icon'
+          
           title={
               <span>          
                  <UnorderedListOutlined /> Platillos Tradicionales
@@ -42,16 +45,18 @@ const App2 = () => {
             }
             >
             <Menu.Item key="Registrar Platillo" className={location.pathname === '/registrar-platillo' ? 'selected-menu-item' : ''}>
-              <Link to="/registrar-platillo" className='menu-icon'>
+   
+              <Link to="/registrar-platillo" className={`${'menu-icon'} ${'prueba'}`}>
                 Registrar Platillo
               </Link> 
+         
             </Menu.Item>
             <Menu.Item key="Mostrar Platillo" className={location.pathname === '/mostrar-platillo/page/1' ? 'selected-menu-item' : ''}>
-              <Link to="/mostrar-platillo/page/1" className='menu-icon'>
+              <Link to="/mostrar-platillo/page/1" className={`${'menu-icon'} ${'prueba'}`}>
                 Mostrar Platillo
               </Link> 
             </Menu.Item>
-            
+        
           </SubMenu>
           
           </div>

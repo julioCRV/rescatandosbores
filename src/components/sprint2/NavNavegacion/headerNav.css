@@ -10,6 +10,7 @@
 
 .menu-icon {
   color: #fff !important;
+
 }
 
 .menu-search-container {
@@ -44,18 +45,34 @@ body {
     font-size: 10px;
     margin-left: -30px;
     height: 40px;
-   
+    top: -28%;
+    
   }
-
+  .alMedio{
+    margin-top: -10px;
+  }
   .header {
       height: 40px;
   }
 
-  .menu-item{
-      line-height: 40px;
-      font-size: 10px;
+  .prueba{
+    font-size: 10px;
   }
 
+  :where(.css-dev-only-do-not-override-pr0fja).ant-menu ul, :where(.css-dev-only-do-not-override-pr0fja).ant-menu ol {
+    margin-top: -21px;
+    margin-left: -5%;
+    padding: 0;
+    list-style: none;
+  }
+
+  :where(.css-dev-only-do-not-override-pr0fja).ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub {
+    min-width: 60px;
+    max-height: 100px;
+    padding: 0;
+    overflow: hidden;
+    border-inline-end: 0;
+}
 }
 @media screen and (max-width:1050px){
   .uno{

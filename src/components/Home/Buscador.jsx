@@ -21,6 +21,9 @@ const Home= () => {
     const [autoCompleteOptions, setAutoCompleteOptions] = useState([]);
     const [autoCompleteValue, setAutoCompleteValue] = useState("");
 
+    const [errorMessage, setErrorMessage] = useState('');
+
+
     useEffect(() => {
       async function fetchPlatillos2() {
         try {
@@ -95,48 +98,54 @@ const Home= () => {
 
   
     const handleAutoCompleteChange = (value) => {
-    // Validar usando una expresión regular que permite solo letras (mayúsculas y minúsculas) y espacios
-    const regex = /^[A-Za-z\s]+$/;
-    if (regex.test(value) || value === '') {
-      setAutoCompleteValue(value);
-    }
-      
+      const maxLength = 50;
+      const regex = /^[A-Za-záéíóúÁÉÍÓÚñ\s]+$/;
+    
+      if (value.length <= maxLength && (regex.test(value) || value === '')) {
+        setAutoCompleteValue(value);
+        setErrorMessage('');
+      } else if (value.length > maxLength) {
+        setErrorMessage('¡La búsqueda no puede exceder los 50 caracteres!');
+      } else {
+        setErrorMessage('¡Por favor, intenta nuevamente con solo letras y espacios!');
+      }
     };
+    
+    
     return (
       <>
       {/*condicional para ocultar la barra de busqueda*/}
       <div className="input-container">
-        <AutoComplete
-          className="estilo-autocompletable"
-          options={options}
-          value={autoCompleteValue}
-          onChange={handleAutoCompleteChange}
-        >
-          <Input
-            type="text"
-            placeholder="Realiza una búsqueda"
-            size="large"
-            value={autoCompleteValue}
-            onChange={(e) => handleAutoCompleteChange(e.target.value)}
-            onPressEnter={() => {
-              setSearchValue(autoCompleteValue);
-              setSearchVisible(true);
-              handleSearch(autoCompleteValue);
-              handleSearch2();
-            }}
-          />
-        </AutoComplete>
+  <AutoComplete
+    className={`estilo-autocompletable ${errorMessage ? 'invalid' : ''}`}
+    options={options}
+    value={autoCompleteValue}
+    onChange={(value) => handleAutoCompleteChange(value)}
+  >
+    <Input
+      type="text"
+      placeholder={errorMessage || 'Realiza una búsqueda'}
+      size="large"
+      onPressEnter={() => {
+        if (!errorMessage) {
+          setSearchValue(autoCompleteValue);
+          setSearchVisible(true);
+          handleSearch(autoCompleteValue);
+          handleSearch2();
+        }
+      }}
+    />
+  </AutoComplete>
 
-        {autoCompleteValue && (
-          <Button className='estilo-buttonx' onClick={() => setAutoCompleteValue("")}
-          icon={<CloseOutlined/>}
-          >
-        
-                 
-            
-          </Button>
-        )}
-      </div>
+  {autoCompleteValue && errorMessage && (
+    <div className="error-message">{errorMessage}</div>
+  )}
+
+  {autoCompleteValue && !errorMessage && (
+    <Button className='estilo-buttonx' onClick={() => setAutoCompleteValue("")} icon={<CloseOutlined />} />
+  )}
+</div>
+
   
           {/*button que controla si esta visible o no la barra de navegación */}
          {/* <Link to="/error" className='menu-icon'>*/}
@@ -176,8 +185,8 @@ const Home= () => {
             return (
               <MenuItem
                 key={key} 
-                image={menuItem.IMAGEN_PLATILLO}
-                name={menuItem.TITULO_PLATILLO}
+                image={menuItem.imagen_platillo}
+                name={menuItem.titulo_platillo}
                 id={key+1}
               />
             );

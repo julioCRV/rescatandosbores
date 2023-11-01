@@ -12,6 +12,7 @@ import '../MenuItem/MenuItem.css'
         if (response.ok) {
           const data = await response.json();
           setPlatillos(data.result);
+
         } else {
           console.error('Error al obtener platillos');
         }
@@ -24,36 +25,19 @@ import '../MenuItem/MenuItem.css'
   }, []);
 
 
-  
-  console.log(searchedText);
-  useEffect(() => {
-    async function fetchPlatillos() {
-      try {
-        const response = await fetch(`http://18.116.106.247:3000/buscarPlatillo?titulo=${searchedText}`);
-        if (response.ok) {
-          const data = await response.json();
-          console.log(data);
-          setPlatillos(data.result);
-        } else {
-          console.error('Error al obtener platillos');
-        }
-      } catch (error) {
-        console.error('Error en la solicitud:', error);
-      }
-    }
-
-    fetchPlatillos();
-  }, [searchedText]);
 
   return (
     <div className="menuPlatillo">
       <div className="menuList">
         {platillos.map((menuItem, key) => {
+          console.log(menuItem)
+          console.log(menuItem.titulo_platillo)
+          console.log(menuItem.imagen_platillo)
           return (
             <MenuItem
               key={key}
-              image={menuItem.IMAGEN_PLATILLO}
-              name={menuItem.TITULO_PLATILLO}
+              image={menuItem.imagen_platillo}
+              name={menuItem.titulo_platillo}
               id={key+1}
             />
           );
