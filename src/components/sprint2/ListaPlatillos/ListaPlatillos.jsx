@@ -13,7 +13,6 @@ import '../MenuItem/MenuItem.css'
           const data = await response.json();
           setPlatillos(data.result);
 
-
         } else {
           console.error('Error al obtener platillos');
         }
@@ -32,6 +31,8 @@ import '../MenuItem/MenuItem.css'
       <div className="menuList">
         {platillos.map((menuItem, key) => {
           console.log(menuItem)
+          console.log(menuItem.titulo_platillo)
+          console.log(menuItem.imagen_platillo)
           return (
             <MenuItem
               key={key}

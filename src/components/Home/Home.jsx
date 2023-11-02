@@ -1,13 +1,12 @@
 import React from 'react';
-import { BannerPresentacion } from '../BannerPresentacion/BannerPresentacion.jsx';
-import { ListaPlatillos } from '../ListaPlatillos/ListaPlatillos.jsx';
+import './Home.css'
 function Home() {
-  return (
-    <>
-      <BannerPresentacion />
-      <ListaPlatillos />
-    </>
-
+    return (
+        <div className='div-center' >
+        <h2>Resultados de la búsqueda para:</h2>
+        <h1 className='texto'>Oops!</h1>
+        <h2>No se ha encontrado ningún platillo</h2>
+      </div>
     );
 }
 
