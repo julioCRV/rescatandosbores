@@ -129,8 +129,10 @@ const onFinish = async (values) => {
 
 
   return (
-    <Form onFinish={onFinish}>
+    <div>
     <div className="titulo-formato">Registrar Platillo</div  >
+    <div className='formRegistrar'>
+    <Form onFinish={onFinish}>
 
       <Form.Item className='componente-limite'
         label={ 
@@ -224,16 +226,19 @@ const onFinish = async (values) => {
       </Form.Item>
 
       <Form.Item className='componente-limite'
-        label={<span></span>}
         labelCol={{span: 6}}
         wrapperCol={{ span: 20 }} // Offset para mover el botón
       >
+        <div className='contBotones'>
+        <div className='botRegisCan'>
         <Button type="primary" htmlType="submit" className='button' style={{ marginRight: '20%', backgroundColor: '#7D0633' }}>
           Registrar
         </Button>
         <Button type="primary" htmlType="button" className='button' style={{backgroundColor: '#828282'}} onClick={showModal}>
           Cancelar
         </Button>
+        </div>
+        </div>
       </Form.Item>
 
       <Modal
@@ -260,8 +265,10 @@ const onFinish = async (values) => {
         visible={cancelModalVisible}
         onCancel={() => setCancelModalVisible(false)}
         footer={[
-          <Link to='/mostrar-platillo/page/1' key="cancel" className='button-link' onClick={() => setCancelModalVisible(false)}>
-           OK
+          <Link to='/mostrar-platillo/page/1' key="cancel" onClick={() => setCancelModalVisible(false)}>
+            <Button key="ok" className='button-link' onClick={() => setCancelModalVisible(false)}>
+          Ok
+          </Button>
           </Link>,
           <Button key="ok" className='button-link' onClick={() => setCancelModalVisible(false)}>
           Cancelar
@@ -271,7 +278,8 @@ const onFinish = async (values) => {
         Al cancelar, se perdera toda la informacion que no se haya registrado.
       </Modal>
     </Form>
-    
+    </div>
+    </div>
   );
 }
 

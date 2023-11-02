@@ -1,12 +1,10 @@
-
 import { Form, Input, Button, message, Typography, Upload, Modal, Spin } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { Link} from 'react-router-dom';
 import axios from 'axios';
-import './EditarPlatillo.css';
+import './editarPlatillo.css';
 import { useParams } from 'react-router-dom';
-import Item from 'antd/es/list/Item';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -210,7 +208,7 @@ const onFinish = async (values) => {
     <div>
     <div className="titulo-formato" style={{ marginBottom: '30px' }}>Editar Platillo</div  >
     <div className='form-contenedor'>
-    {isLoading  &&  <Spin size='large' className='ant-spin'/>}
+    {isLoading  &&  <Spin size='large' className='antspin'/>}
     <Form onFinish={onFinish}>
 
       <Form.Item className='componente-limite'
@@ -322,7 +320,7 @@ const onFinish = async (values) => {
           Actualizar
         </Button> 
 
-        <Button type="primary" htmlType="button" className='button' style={{ marginLeft:'90px',backgroundColor: '#828282'}} onClick={showModal}>
+        <Button type="primary" htmlType="button" className='button' style={{backgroundColor: '#828282'}} onClick={showModal}>
           Cancelar
         </Button>
         </div>
@@ -355,8 +353,10 @@ const onFinish = async (values) => {
         closable={false}
         onCancel={() => setCancelModalVisible(false)} 
         footer={[
-          <Link to={`/mostrar-platillo/page/${id}`} key="cancel" className='button-link' onClick={() => setModalEditar(false)}>
-           Si
+          <Link to={`/mostrar-platillo/page/${id}`} key="cancel" onClick={() => setModalEditar(false)}>
+            <Button key="ok" className='button-link' onClick={() => setCancelModalVisible(false)}>
+            Si
+          </Button>,
           </Link>,
           <Button key="ok" className='button-link' onClick={() => setModalEditar(false)}>
           No
@@ -370,8 +370,10 @@ const onFinish = async (values) => {
         visible={cancelModalVisible}
         onCancel={() => setCancelModalVisible(false)}
         footer={[
-          <Link to={`/mostrar-platillo/page/${id}`} key="cancel" className='button-link' onClick={() => setCancelModalVisible(false)}>
-           OK
+          <Link to={`/mostrar-platillo/page/${id}`} key="cancel" onClick={() => setCancelModalVisible(false)}>
+           <Button key="ok" className='button-link' onClick={() => setCancelModalVisible(false)}>
+          Ok
+          </Button>,
           </Link>,
           <Button key="ok" className='button-link' onClick={() => setCancelModalVisible(false)}>
           Cancelar

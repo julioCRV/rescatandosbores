@@ -3,14 +3,15 @@
   font-family: sans-serif;
   font-weight: bold;
   text-align: center;
+  margin-bottom:20px ;
 }
 
 /*Color de fondo de la pagina*/
-body {
+/* body {
   font-family: Arial, sans-serif;
   background-color: #fbdcc4;
   width: 100%;
-}
+} */
 
 form {
   background-color: #fbdcc4;
@@ -47,12 +48,30 @@ form {
 .button {
   background-color: #7D0633;
   color: white;
-  border: none;
-  border-radius: 0px;
   font-size: 16px;
   height: 35px;
   width: 125px;
+}
 
+
+.formRegistrar{
+  border: 1px solid #828282;
+  border-radius: 12px;
+  padding: 20px 0;
+  width: 50%;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.6);
+  margin: 0 auto;
+}
+
+.contBotones {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.botRegisCan {
+  display: flex;
+  padding: 0 0 0 180px;
 }
 
 .custom-button {
@@ -70,7 +89,7 @@ form {
   right: 0;
 }
 
-.button-link {
+/* .button-link {
   background-color: #7D0633;
   color: #fff;
   padding: 8px 16px;
@@ -80,12 +99,12 @@ form {
   border-radius: 0px;
   cursor: pointer;
   font-weight: bold;
-}
+} */
 
-.button-link:hover {
+/* .button-link:hover {
   background-color: #7D0633;
   color: #fff;
-}
+} */
 
 .pitem {
   display: flex;
@@ -112,11 +131,11 @@ form {
     font-size: 20px;
   }
 
-  .button {
+/*   .button {
     margin-bottom: 10px;
     margin-left: 20%;
     width: 65%;
-  }
+  } */
 
   .item-txt {
     font-size: 12px;
@@ -126,4 +145,20 @@ form {
     display: flex;
     justify-content: center;
   }
+}
+
+
+@media (max-width: 1000px) {
+  .botRegisCan{
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+
+  .button {
+    border-radius: 8px;
+    margin-right: 90px;
+    margin-left: 210px;
+    margin-top:10px ;
+  } 
 }
