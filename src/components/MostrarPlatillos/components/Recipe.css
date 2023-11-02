@@ -16,52 +16,54 @@
 
 .recipe-content {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
-.recipe-content-header{
-  display: flex;
-  justify-content: space-around;
-  gap: 3%;
-  margin: 0 32px;
+.recipe-image {
+  flex: 1;
+  padding-right: 20px;
 }
-.recipe-image{
-  align-self: center;
-}
+
 .recipe-image img {
-  max-width: 200px;
+  max-width: 100%;
   height: auto;
   border-radius: 8px;
-  width: 100%;
-  min-width: 150px;
-  
 }
 
-.recipe-text{
-  text-align: center;
-  width: 60%;
-  overflow-wrap: break-word;
-  font-size: 16px;
-  font-family: sans-serif;
+.recipe-text {
+  flex: 2;
+}
+
+.recipe-text p {
+  margin-top: 0;
 }
 
 .recipe-video {
-  text-align: center;
-  width: 80%;
-  margin: 0 auto;
-  overflow: hidden;
-  max-height: 550px;
+  top: 40px;
+  width: 100%;
 }
+
 
 .recipe-buttons {
-  display: flex;
-  align-self: center;
-  gap: 8px;
-  margin-top: -25px;
+  position: relative;
+  top: 30px;
+  margin-left: 20px;
 }
 
+.buttonn {
+  margin-right: 20px;
+}
 
+.edit-button,
+.delete-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 .edit-button:hover,
 .delete-button:hover {
@@ -69,54 +71,39 @@
 }
 
 /*RESPONSIVE*/
-@media only screen and (max-width: 504px){
+@media (min-width: 320px) and (max-width: 526px) {
+
+  .recipe-image {
+    margin-left: 35%;
+    margin-right: 35%;
+  }
+
+  .recipe-buttons {
+    margin-left: 60%;
+    margin-right: 10%;
+  }
+
+  .formato-titulo {
+    font-size: 1rem;
+  }
+
+  .recipe-text{
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 526px) and (max-width: 1771px) {
+  .formato-titulo{
+    font-size: 24px;
+  }
   .recipe-video{
+    margin-left: 2%;
     width: 95%;
   }
-  .reciForma{
-    width: 100%;
-  }
+}
+
+@media (min-width: 1611px){
+
 
 }
-@media only screen and (max-width: 769px){
-  .recipe-content-header{
-    flex-wrap: wrap;
-    align-items: center;
-    row-gap: 16px;
-  }
-  .recipe-buttons{
-    order:2;
-    flex:1;
-    margin-top: 0 ;
-    margin:0 auto;
-    display: flex;
-    justify-content: center;
-    
-  }
-  .recipe-image{
-    order: 2;
-    flex: 1;
-    display: flex;
-    justify-content:end;
-  }
-  p{
-    padding-top: 0;
-    margin:0;
-  }
-  .recipe-text{
-    order: 3;
-    width: 80%;
-  }
-}
-@media only screen and (max-width: 460px){
 
-  .recipe-image{
-    order: 2;
-    flex: 1;
-    display: flex;
-    justify-content:center;
-  }
-  .recipe-text{
-    width: 100%;
-  }
-}

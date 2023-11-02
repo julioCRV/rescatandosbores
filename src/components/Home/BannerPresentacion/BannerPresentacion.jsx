@@ -1,9 +1,7 @@
-
-
 import React from 'react'
 import './BannerPresentacion.css'
 import Lista from '../../sprint2/MenuPlatillos/menuPlatillos'
-import ListaPlatillos from '../../sprint2/ListaPlatillos/ListaPlatillos'
+
 const BannerPresentacion = () => {
   return (
     <>
@@ -24,7 +22,7 @@ const BannerPresentacion = () => {
           Rescatando sabores  invita a los visitantes a conocer y disfrutar de la variedad y riqueza de la comida boliviana, que refleja la diversidad cultural y geográfica del país.</p>
         </div>
       </div>
-      <ListaPlatillos />
+      <Lista></Lista>
 
     </>
   )

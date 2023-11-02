@@ -3,21 +3,55 @@ import { UploadOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import './registrarPlatillo.css';
-
+import './EditarPlatillo.css';
+import { useParams } from 'react-router-dom';
 const { Title } = Typography;
 
 const { TextArea } = Input;
 
-function MyForm() {
-  const [imageUploaded, setImageUploaded] = useState(false);
-  const [videoUploaded, setVideoUploaded] = useState(false);
+export const EditarPlatillo = () =>{
+  const [imageUploaded, setImageUploaded] = useState(true);
+  const [videoUploaded, setVideoUploaded] = useState(true);
   const [text, setText] = useState('');
   const [text2, setText2] = useState('');
   const [imageModalVisible, setImageModalVisible] = useState(false);
   const [videoModalVisible, setVideoModalVisible] = useState(false);
   const [cancelModalVisible, setCancelModalVisible] = useState(false);
+  const [urlImagen, setUrlImagen] = useState('')
+  const [urlVideo, setUrlVideo] = useState('')
+  const {id} = useParams();
+  const [platilloData, setPlatilloData] = useState({
+    nombre: '',
+    descripcion: '',
+    video: '',
+    imagen: '',
+    identificador: '',
+  });
 
+  useEffect(() => {
+    console.log('realizando llamada');
+    axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${id}`)
+      .then((response) => {
+        console.log(response.data.respuesta);
+        const platillo = response.data.respuesta;
+        setText(platillo.nombre)
+        setText2(platillo.descripcion)
+        console.log(text)
+        setPlatilloData({
+          nombre: platillo.nombre,
+          descripcion: platillo.descripcion,
+          imagen: platillo.imagen,
+          identificador: platillo.id,
+          video: platillo.video,
+        });
+        setUrlImagen('http://18.116.106.247:3000/media/imagen/' + platilloData.imagen)
+        setUrlVideo('http://18.116.106.247:3000/media/video/' + platilloData.video)
+
+      })
+      .catch((error) => {
+        console.error('Error al obtener el platillo:', error);
+      });
+  }, [id]);
   const showModal = () => {
     setCancelModalVisible(true);
   };
@@ -37,6 +71,14 @@ function MyForm() {
   };
 
   const verificarImagen = {
+    defaultFileList: [
+      {
+        uid: '2',
+        name: 'imagenPlatillo.png',
+        status: 'done',
+        url: urlImagen,
+      },
+    ],
     beforeUpload: (file) => {
 
       let extension = file.name.split('.');
@@ -63,6 +105,14 @@ function MyForm() {
   };
 
   const verificarVideo = {
+    defaultFileList: [
+      {
+        uid: '2',
+        name: 'videoPlatillo.mp4',
+        status: 'done',
+        url: urlVideo,
+      },
+    ],
     beforeUpload: (file) => {
       let extension = file.name.split('.');
       extension = extension[extension.length-1].toLowerCase();
@@ -109,7 +159,7 @@ const onFinish = async (values) => {
     formData.append('video', new Blob([videoFile], { type: videoFile.type }), videoFile.name);
 
     console.log('Realizando llamada');
-    const response = await axios.post('http://18.116.106.247:3000/registrarPlatillo', formData, {
+    const response = await axios.post(`http://18.116.106.247:3000/modificarPlatillo/${id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -130,7 +180,7 @@ const onFinish = async (values) => {
 
   return (
     <Form onFinish={onFinish}>
-    <div className="titulo-formato">Registrar Platillo</div  >
+    <div className="titulo-formato">Editar Platillo</div  >
 
       <Form.Item className='componente-limite'
         label={ 
@@ -142,9 +192,7 @@ const onFinish = async (values) => {
           { required: true, message: 'Ingresa el título del platillo' },
           { max: 50, message: 'El título no puede tener más de 50 caracteres' },
           { min: 6, message: 'El título debe tener al menos 6 caracteres' },
-          { pattern: /^[a-zA-ZáéíóúÁÉÍÓÚüÜ\s]*$/, message: 'Solo son permitidos letras en el título' }
-
-
+          { pattern: /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ\s]*$/, message: 'Solo caracteres alfanuméricos son permitidos en el título' },
         ]}
         labelCol={{ span: 6 }} // Configura el ancho de la etiqueta
         wrapperCol={{ span: 16 }} // Configura el ancho del campo de entrada
@@ -229,7 +277,7 @@ const onFinish = async (values) => {
         wrapperCol={{ span: 20 }} // Offset para mover el botón
       >
         <Button type="primary" htmlType="submit" className='button' style={{ marginRight: '20%', backgroundColor: '#7D0633' }}>
-          Registrar
+          Editar 
         </Button>
         <Button type="primary" htmlType="button" className='button' style={{backgroundColor: '#828282'}} onClick={showModal}>
           Cancelar
@@ -274,5 +322,4 @@ const onFinish = async (values) => {
     
   );
 }
-
-export default MyForm;
+export default EditarPlatillo;
