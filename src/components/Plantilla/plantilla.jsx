@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Layout, Menu, theme } from 'antd';
 import { HomeOutlined, UnorderedListOutlined } from '@ant-design/icons'; // Importa los íconos necesarios
 import { Link, useLocation } from 'react-router-dom';
+import Buscar from "../Buscar/Buscar"
 
 import Routes from './Routes';
 
@@ -29,13 +30,14 @@ const App2 = () => {
           theme="dark"
           mode="horizontal"
           className='menu'
-        >{/*
+        >
           <Menu.Item key="Home" className={location.pathname === '/' ? 'selected-menu-item' : ''}>
             <Link to="/">
               <HomeOutlined/> Home
             </Link> 
           </Menu.Item>
-          */}<SubMenu
+          
+          <SubMenu
             title={
               <span>
                 <UnorderedListOutlined /> Platillos Tradicionales
@@ -55,6 +57,9 @@ const App2 = () => {
               </Link> 
             </Menu.Item>
           </SubMenu>
+          <Menu.Item key="Buscar platillo" className={location.pathname === '/mostrar-resultados' ? 'selected-menu-item' : ''}>
+
+          </Menu.Item>
         </Menu>
       </Header>
       <Content className='content'>

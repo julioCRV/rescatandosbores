@@ -8,6 +8,7 @@ import MenuNav from './components/sprint2/NavNavegacion/headerNav'
 import Footer from './components/Footer/Footer'
 
 
+
 function App() {
   return (
     <Router>
@@ -16,7 +17,9 @@ function App() {
       <MenuNav />
         <Footer />
         
+        
       </div>
+     
      
     </Router>
   );

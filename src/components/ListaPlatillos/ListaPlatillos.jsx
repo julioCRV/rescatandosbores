@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import MenuItem from '../MenuItem/MenuItem';
 import '../MenuItem/MenuItem.css'
- const ListaPlatillos=()=> {
+
+export const ListaPlatillos=()=> {
   const [platillos, setPlatillos] = useState([]);
-  const [searchedText, setSearchedText] = useState("")
 
   useEffect(() => {
     async function fetchPlatillos() {
@@ -12,8 +12,7 @@ import '../MenuItem/MenuItem.css'
         if (response.ok) {
           const data = await response.json();
           setPlatillos(data.result);
-
-
+          console.log(data.result);
         } else {
           console.error('Error al obtener platillos');
         }
@@ -25,18 +24,16 @@ import '../MenuItem/MenuItem.css'
     fetchPlatillos();
   }, []);
 
-
-
   return (
     <div className="menuPlatillo">
+      <h1 className="menuTitle">Platillos Tradicionales</h1>
       <div className="menuList">
         {platillos.map((menuItem, key) => {
-          console.log(menuItem)
           return (
             <MenuItem
               key={key}
-              image={menuItem.imagen_platillo}
-              name={menuItem.titulo_platillo}
+              image={menuItem.IMAGEN_PLATILLO}
+              name={menuItem.TITULO_PLATILLO}
               id={key+1}
             />
           );
@@ -45,4 +42,3 @@ import '../MenuItem/MenuItem.css'
     </div>
   );
 }
-export default ListaPlatillos;
