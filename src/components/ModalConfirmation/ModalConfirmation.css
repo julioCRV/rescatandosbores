@@ -1,0 +1,33 @@
+.ant-modal-body {
+    font-size: 14px;
+    line-height: 1.5714285714285714;
+    word-wrap: break-word;
+    display: flex;
+
+
+}
+.ant-modal{
+    position: relative;
+    top: 40%;
+    z-index: 99;
+    
+}
+.ant-modal-body p{
+    margin-left: 1em;
+
+    font-size: 1rem;
+}
+
+
+
+.ant-modal-footer{
+    margin-top:-20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+}
+@media only screen and (max-width:545px){
+    .ant-modal-footer{
+        justify-content: center;
+    }
+}
