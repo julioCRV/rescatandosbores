@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Layout, Menu, theme ,Input } from 'antd';
-import { HomeOutlined, UnorderedListOutlined } from '@ant-design/icons'; // Importa los íconos necesarios
+import { Layout, Menu, theme ,Input,Button } from 'antd';
+import { HomeOutlined, UnorderedListOutlined, SearchOutlined, MenuOutlined } from '@ant-design/icons'; // Importa los íconos necesarios
 import { Link, useLocation} from 'react-router-dom';
 import Routes from './Routes';
 import './headerNav.css'
@@ -12,8 +12,12 @@ const { SubMenu } = Menu;
 
 const App2 = () => {
   const [searchedText, setSearchedText] = useState("")
-
+  const [openMenu, setOpenMenu] = useState(false);
+  
   const [openSubMenu, setOpenSubMenu] = useState(false);
+  const toggleMenu = () => {
+    setOpenMenu(!openMenu);
+  };
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -56,8 +60,17 @@ const App2 = () => {
                 Mostrar Platillo
               </Link> 
             </Menu.Item>
-        
-          </SubMenu>
+            </SubMenu>
+            {location.pathname === '/' && (
+      <Menu.Item key="Buscar" className={`uno ${location.pathname === '/buscador' ? 'selected-menu-item' : ''}`} style={{ position: 'absolute' }}>
+        <Link to="/buscador">
+          <Button
+            icon={<SearchOutlined />}
+          >
+          </Button>
+        </Link>
+      </Menu.Item>
+    )}
           
           </div>
           

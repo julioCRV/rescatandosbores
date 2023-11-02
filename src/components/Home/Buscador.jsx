@@ -6,9 +6,8 @@ import './Home.css'
 import { Link, useLocation } from 'react-router-dom';
 import MenuItem from '../sprint2/MenuItem/MenuItem'
 import '../sprint2/MenuItem/MenuItem.css'
-import { HistoryOutlined, SearchOutlined, CloseOutlined } from '@ant-design/icons';
-
-
+import { HistoryOutlined, SearchOutlined, CloseOutlined,CloseCircleOutlined, CloseSquareFilled } from '@ant-design/icons';
+import './Buscador.css'
 
 const Home= () => {
   const [platillos, setPlatillos] = useState([]);
@@ -120,18 +119,18 @@ const Home= () => {
     return (
       <>
       {/*condicional para ocultar la barra de busqueda*/}
-      <div className="input-container">
+      <div className="buscador-contenedor">
           <AutoComplete
             className={`estilo-autocompletable ${errorMessage ? 'invalid' : ''}`}
             options={options}
             value={autoCompleteValue}
             onChange={(value) => handleAutoCompleteChange(value)}
+
           >
             <Input
               type="text"
               placeholder={errorMessage || 'Realiza una búsqueda'}
               size="large"
-              
               onPressEnter={() => {
                 
                 if (!errorMessage) {
@@ -148,18 +147,19 @@ const Home= () => {
                   handleSearch(autoCompleteValue);
                   handleSearch2();
                 }
+                
               }}
             />
+  
+
           </AutoComplete>
 
           {autoCompleteValue && errorMessage && (
             <div className="error-message">{errorMessage}</div>
           )}
-
-          {autoCompleteValue && !errorMessage && (
+                    {autoCompleteValue && !errorMessage && (
             <Button className='estilo-buttonx' onClick={() => setAutoCompleteValue("")} icon={<CloseOutlined />} />
           )}
-      </div>
 
          {/* <Link to="/error" className='menu-icon'>*/}
           <Button
@@ -181,6 +181,7 @@ const Home= () => {
               icon={<SearchOutlined />}   
           >
           </Button>
+      </div>
   
           { isSearchVisible && (
               <div className='div-center' >
@@ -191,7 +192,9 @@ const Home= () => {
               </div>
               
           )}
-
+          {
+            cantPlatillos===0 && noDataMessage
+          }
           { !isAlgoEscrito && (
             <div className="menuPlatillo">
               <div className='div-center' >

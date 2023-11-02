@@ -28,6 +28,7 @@ form {
     color: rgb(144, 32, 32);   
     position: sticky;
     top: 0px;
+    z-index: 99;
   }
   
   .footer {

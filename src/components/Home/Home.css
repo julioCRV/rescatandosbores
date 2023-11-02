@@ -4,8 +4,7 @@
 }
 .div-left{
   font-family: sans-serif;
-  text-align: left;
-  margin-left: 1%;
+  text-align: center;
 }
 .texto{
   font-family: sans-serif;
@@ -16,47 +15,17 @@
   font-family: sans-serif;
   text-align: center;
 }
-.estilo-autocompletable{
-  font-family: sans-serif;
-  position: absolute;
-  width: 40%;
-  margin-top: -154px;
-  margin-left: 53%;
-}
-
-.estilo-button{
-  position: absolute  ;
-  width: 20%;
-  height: 37px;
-  margin-top: -108px;
-  margin-left: 90.7%;
-  background-color: #195ac3; 
-  border: none; 
-  color: #000000;
-}
-
-.estilo-buttonx{
-  position: absolute  ;
-  width: 100px;
-  height: 37px;
-  margin-top: -150px;
-  margin-left: 89.8%;
-  background-color: transparent; 
-  border: none;
-  color: #000000;
-}
 
 
 
 .input-field {
   font-family: sans-serif;
-  width: calc(100% - 100px);
-  padding-right: 36px;
+
 }
 
 
 .input-container {
-  position: relative;
+  z-index: 100;
 }
 
 .error-message {

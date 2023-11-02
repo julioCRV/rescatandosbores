@@ -38,6 +38,12 @@ body {
 .uno{
   left: 95%;
 }
+.menu-button {
+  display: none; /* Ocultar el botón en pantallas grandes */
+}
+.menu-open {
+  display: block; /* Mostrar el menú desplegable en pantallas pequeñas */
+}
 
 /*PARTE RESPONSIVE*/
 @media (min-width: 320px) and (max-width: 481px){
@@ -89,6 +95,18 @@ body {
 @media screen and (max-width:600px){
   .uno{
     left: 88%;
+  }
+  
+}
+@media screen and (max-width:500px){
+  .uno{
+    left: 85%;
+  }
+  
+}
+@media screen and (max-width:350px){
+  .uno{
+    left: 80%;
   }
   
 }

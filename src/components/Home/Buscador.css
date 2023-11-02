@@ -1,0 +1,64 @@
+.buscador-contenedor{
+    position: absolute;
+    top: 23%;
+    z-index: 105;
+    width: 50%;
+    left: 75%;
+}
+.estilo-autocompletable{
+    font-family: sans-serif;
+    width: 40%;
+  }
+  
+  .estilo-button{
+    width: 20%;
+    height: 37px;
+    background-color: #195ac3; 
+    border: none; 
+    color: #000000;
+    z-index: 100;
+  }
+  
+  .estilo-buttonx{
+    position: relative;
+    width: 100px;
+    height: 37px;
+    background-color: transparent; 
+    border: none;
+    color: #000000;
+    z-index: 105;
+    left: -5%;
+    margin-right: -3%;
+  }
+  
+
+@media only screen and (max-width:1200px){
+    .buscador-contenedor{
+        top: 26%;
+    }  .estilo-buttonx{
+        left: -7%;
+        margin-right: -5%;
+      }
+}
+@media only screen and (max-width:769px){
+    .estilo-button{
+        width: 15%;
+      }
+    .estilo-autocompletable{
+        font-family: sans-serif;
+        height: 25px;
+      }
+      .estilo-buttonx{
+        left: -9%;
+        margin-right: -7%;
+      }
+    
+}
+@media only screen and (max-width:500px){
+    .buscador-contenedor{
+        width: 40%;
+        left: 65%;
+        top: 8%;
+    }
+
+}

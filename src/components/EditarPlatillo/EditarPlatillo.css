@@ -99,13 +99,13 @@
 
 .contenedorBotones {
   display: flex;
-  justify-content: center;
   margin-top: 10px;
 }
 
 .botonAC {
   display: flex;
-  padding: 0 0 0 180px;
+  padding-left: 20%;
+  gap: 5%;
 }
 
 .textArea{
@@ -209,8 +209,11 @@
 @media only screen and (max-width:769px) {
   .ant-form{
 
-    width: 70%;
+    width: 85%;
 
+  }
+  .form-contenedor{
+    width: 70%;
   }
 }
 @media only screen and (max-width:500px) {
@@ -218,6 +221,9 @@
 
     width: 100%;
 
+  }
+  .form-contenedor{
+    width: 90%;
   }
 }
 

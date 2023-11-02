@@ -57,7 +57,7 @@ form {
 .formRegistrar{
   border: 1px solid #828282;
   border-radius: 12px;
-  padding: 20px 0;
+  padding: 5vh 0;
   width: 50%;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.6);
   margin: 0 auto;
@@ -65,13 +65,15 @@ form {
 
 .contBotones {
   display: flex;
-  justify-content: center;
+  justify-content: end;
   margin-top: 10px;
+  gap: 5%;
 }
 
 .botRegisCan {
   display: flex;
-  padding: 0 0 0 180px;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .custom-button {
@@ -109,6 +111,10 @@ form {
 .pitem {
   display: flex;
   justify-content: center;
+}
+.ant-form{
+  margin: 0 auto;
+  width: 80%;
 }
 
 .mensaje-transparenteI{
@@ -157,8 +163,37 @@ form {
 
   .button {
     border-radius: 8px;
-    margin-right: 90px;
-    margin-left: 210px;
     margin-top:10px ;
   } 
+  .formRegistrar{
+    width: 65%;
+
+  }
+  .ant-form{
+    width: 82%;
+  }
+}
+@media (max-width: 769px) {
+
+  .formRegistrar{
+    width: 70%;
+  }
+  .ant-form{
+    width: 85%;
+  }
+  .contBotones {
+
+    justify-content: center;
+  }
+}
+
+@media (max-width: 504px) {
+
+  .formRegistrar{
+    width: 95%;
+    padding-left: 10%;
+  }
+  .ant-form{
+    width: 90%;
+  }
 }

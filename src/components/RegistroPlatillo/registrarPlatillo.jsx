@@ -231,7 +231,7 @@ const onFinish = async (values) => {
       >
         <div className='contBotones'>
         <div className='botRegisCan'>
-        <Button type="primary" htmlType="submit" className='button' style={{ marginRight: '20%', backgroundColor: '#7D0633' }}>
+        <Button type="primary" htmlType="submit" className='button' style={{ marginRight: '5%', backgroundColor: '#7D0633' }}>
           Registrar
         </Button>
         <Button type="primary" htmlType="button" className='button' style={{backgroundColor: '#828282'}} onClick={showModal}>
