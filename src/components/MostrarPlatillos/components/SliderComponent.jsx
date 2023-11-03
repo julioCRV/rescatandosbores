@@ -11,17 +11,20 @@ import './Slider.css'
 
 const SliderComponent = () => {
   const { id } = useParams();
-  const [platilloData, setPlatilloData] = useState(null);
-
-  useEffect(() => {
-    axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${id}`)
+  const [totalPlatillos, setTotalPlatillos] = useState(0);
+  
+ useEffect(() => {
+    // Realizar una solicitud al servidor para obtener la cantidad de platillos registrados
+    axios.get('http://18.116.106.247:3000/contarPlatillos')
       .then((response) => {
-        setPlatilloData(response.data.respuesta);
+        setTotalPlatillos(response.data.total_platillos);
       })
       .catch((error) => {
-        console.error('Error al obtener el platillo:', error);
+        console.error('Error al obtener la cantidad de platillos:', error);
       });
-  }, [id]);
+  }, []);
+
+  console.log(Number(id))
 
   const settings = {
     dots: true,
@@ -30,24 +33,43 @@ const SliderComponent = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-
+  
   return (
     <div className="slider-container">
-   
       {/* Agregar controles de navegación */}
       <div className="slider-controls">
+        {id>0 && (
         <Link to={`/mostrar-platillo/page/${Number(id) - 1}`}>
           <Button disabled={Number(id) === 1} type="primary" icon={<LeftOutlined />} size="large" />
         </Link>
-
+        )}
         <span className='espacio'> {id} </span>
-       
-        <Link to={`/mostrar-platillo/page/${Number(id) + 1}`}>
-          <Button type="primary" icon={<RightOutlined />} size="large" />
-        </Link>
+  
+        {id < totalPlatillos && (
+          <Link to={`/mostrar-platillo/page/${Number(id) + 1}`}>
+            <Button
+              type="primary"
+              icon={<RightOutlined />}
+              size="large"
+            />
+          </Link>
+        )}
+        
+        {id >= totalPlatillos && (
+          <Button
+              disabled={Number(id) >= totalPlatillos}
+              type="primary"
+              icon={<RightOutlined />}
+              size="large"
+            />
+        
+        )}
       </div>
     </div>
   );
+  
+  
+  
 };
 
 export default SliderComponent;
