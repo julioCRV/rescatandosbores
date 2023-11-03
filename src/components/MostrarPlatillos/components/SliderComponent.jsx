@@ -11,17 +11,20 @@ import './Slider.css'
 
 const SliderComponent = () => {
   const { id } = useParams();
-  const [platilloData, setPlatilloData] = useState(null);
-
-  useEffect(() => {
-    axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${id}`)
+  const [platilloData, setPlatilloData] = useState(0);
+  const [totalPlatillos, setTotalPlatillos] = useState(0);
+  
+ useEffect(() => {
+    // Realizar una solicitud al servidor para obtener la cantidad de platillos registrados
+    axios.get('http://18.116.106.247:3000/contarPlatillos')
       .then((response) => {
-        setPlatilloData(response.data.respuesta);
+        setTotalPlatillos(response.data.total_platillos);
       })
       .catch((error) => {
-        console.error('Error al obtener el platillo:', error);
+        console.error('Error al obtener la cantidad de platillos:', error);
       });
-  }, [id]);
+  }, []);
+
 
   const settings = {
     dots: true,
@@ -30,24 +33,54 @@ const SliderComponent = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+console.log(totalPlatillos)
+{/*
+const navigateToPage = (pageNumber) => {
+  if (!isNaN(pageNumber) && pageNumber >= 1 && pageNumber <= totalPlatillos) {
+    // Verificar si pageNumber es un número y está dentro del rango
+    window.location.href = `/mostrar-platillo/page/${pageNumber}`;
+  } else {
+    window.location.href = `/`;
+    console.log("Número de página no válido");
+  }
+};
 
-  return (
-    <div className="slider-container">
-   
-      {/* Agregar controles de navegación */}
+if (isNaN(id) || id < 1) {
+  // Si el id no es un número o es menor que 1, redirige a la página 1
+  window.location.href = '/mostrar-platillo/page/1';
+  return null; // No renderiza el componente
+}
+*/}
+
+return (
+  <div className="slider-container">
+    {totalPlatillos ? ( // Verificar si hay platillos disponibles
+      <Slider {...settings}>
+        
+      </Slider>
+    ) : (
+      <p></p>
+    )}
+
+    {/* Agregar controles de navegación si hay platillos disponibles */}
+    {totalPlatillos && (
       <div className="slider-controls">
-        <Link to={`/mostrar-platillo/page/${Number(id) - 1}`}>
-          <Button disabled={Number(id) === 1} type="primary" icon={<LeftOutlined />} size="large" />
-        </Link>
+        <Button
+          onClick={() => navigateToPage(Number(id) - 1)}
+          disabled={Number(id) === 1}
+          type="primary" icon={<LeftOutlined />} size="large"
+        ></Button>
 
         <span className='espacio'> {id} </span>
        
-        <Link to={`/mostrar-platillo/page/${Number(id) + 1}`}>
-          <Button type="primary" icon={<RightOutlined />} size="large" />
-        </Link>
+        <Button onClick={() => navigateToPage(Number(id) + 1)}
+          disabled={Number(id) === totalPlatillos}
+          type="primary" icon={<RightOutlined />} size="large"
+        ></Button>
       </div>
-    </div>
-  );
+    )}
+  </div>
+);
 };
 
 export default SliderComponent;
