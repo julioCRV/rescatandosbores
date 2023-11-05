@@ -152,7 +152,7 @@ const onFinish = async (values) => {
           { required: true, message: 'Ingresa el título del platillo' },
           { max: 50, message: 'El título no puede tener más de 50 caracteres' },
           { min: 6, message: 'El título debe tener al menos 6 caracteres' },
-          { pattern: /^[a-zA-ZáéíóúÁÉÍÓÚüÜ\s]*$/, message: 'Solo son permitidos letras en el título' }
+          { pattern: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]*$/, message: 'Solo son permitidos letras en el título' }
 
 
         ]}
