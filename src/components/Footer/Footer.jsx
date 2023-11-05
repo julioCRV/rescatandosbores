@@ -3,7 +3,7 @@ import "./Footer.css";
 const piePagina = () => {
     return(
          <div class = "footerA">
-        <p class = "textoPie">Copyright @ 2023 Llajta Solutions Todos los derechos reservados</p>
+        <p class = "textoPie">UMSS @ Sistema creado por Team Llajta Solutions - Todos los derechos reservados 2023</p>
     </div>
     );
 }

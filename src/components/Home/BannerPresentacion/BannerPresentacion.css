@@ -1,0 +1,144 @@
+.banner{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 60%;
+  margin: 0 auto;
+  padding: 2rem 0;
+  font-family: sans-serif;
+}
+.banner-sticker{
+
+  width: 150px;
+
+  box-sizing: border-box;
+
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
+  transform: translatey(0px);
+  animation: float 6s ease-in-out infinite;
+  img { width: 100%; height: auto; }
+}
+
+.banner-contenedor-titulo{
+  width: 100%;
+  font-size: 45px;
+  line-height: 40px;
+  font-family: sans-serif;
+  color: #333;
+  height: 40px;
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+}
+.banner-titulo{
+  font-weight: 600;
+  overflow: hidden;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+.banner-titulo:hover{
+  transform: scale(1.1);
+}
+.banner-descripcion{
+  font-size: 1.2em;
+
+  font-family: sans-serif;
+  color: #242424;
+  padding: 5px 0;
+  margin-top: 0.5rem;
+  font-weight: 400;
+}
+.banner-header{
+  display:flex;
+}
+
+@keyframes float {
+  0% {
+      filter: drop-shadow(0 5px 15px 0px rgba(0, 0, 0, 0.6));
+    transform: translatey(0px);
+  }
+  50% {
+      filter: drop-shadow(0 25px 15px 0px rgba(0, 0, 0, 0.2));
+    transform: translatey(-20px);
+  }
+  100% {
+      filter: drop-shadow(0 5px 15px 0px rgba(0, 0, 0, 0.6));
+    transform: translatey(0px);
+  }
+}
+
+
+
+.banner-titulo-list{
+  list-style: none;
+  margin: 0 0 0 0.5rem;
+  padding: 0;
+  
+  animation: 6s linear 1s normal none infinite change;
+
+}
+.banner-list-item{
+  line-height: 40px;
+  margin: 0;
+}
+
+@keyframes change {
+  0% {
+      margin-top: 0;
+    }
+    15% {
+      margin-top: -40px;
+    }
+    25% {
+      margin-top: -80px;
+    }
+    40% {
+      margin-top: -40px;
+    }
+    50% {
+      margin-top: 0px;
+    }
+    65% {
+      margin-top: 40px;
+    }
+    75% {
+      margin-top: 80px;
+    }
+    85% {
+      margin-top: 40px;
+    }
+    100% {
+      margin-top: 0;
+    }
+  
+}
+
+@media only screen and (max-width: 900px) {
+  .banner-contenedor-titulo{
+      font-size: 36px;
+  }
+
+}
+@media only screen and (max-width: 769px) {
+  .banner-contenedor-titulo{
+      font-size: 32px;
+  }
+  .banner-descripcion{
+      font-size: 16px;
+  }
+  .banner{
+      width: 90%;
+  }
+}
+@media only screen and (max-width: 630px) {
+  .banner{
+      flex-direction: column;
+  }
+  .banner-descripcion{
+      font-size: 19px;
+  }
+  .banner-sticker{
+      padding-bottom: 1rem;
+  }
+}

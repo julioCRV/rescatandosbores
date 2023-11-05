@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, message, Space,notification, Tooltip, Popover } from 'antd';
 import {DeleteOutlined,  ExclamationCircleOutlined, CheckCircleOutlined, InfoCircleOutlined} from '@ant-design/icons'
-
-
+import { Link } from 'react-router-dom';
+import './ModalConfirmation.css'
 
 export const ModalConfirmation = ({id, nombre}) => {
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
-    const [modalText, setModalText] = useState(`¿Esta seguro de eliminar el platillo ${nombre}?`);
-    const [messageApi, contextHolder] = message.useMessage();
+    const [modalText, setModalText] = useState("");
+    useEffect(() => {
+      setModalText(`¿Está seguro que desea eliminar ${nombre}?`);
+    }, [nombre]);
     const showModal = () => {
       setOpen(true);
     };
@@ -18,15 +20,14 @@ export const ModalConfirmation = ({id, nombre}) => {
       setConfirmLoading(true);
       try {
         // Realizar la solicitud fetch aquí (reemplaza la URL con tu endpoint)
-        const response = await fetch(`http://localhost:5000/eliminarPlatillo/${id}`, {
+        const response = await fetch(`http://18.116.106.247:3000/eliminarPlatillo/${id}`, {
           method: 'DELETE',
         });
   
         if (response.ok) {
           setOpen(false);
           setConfirmLoading(false);
-          mostrarNotificacionExito();
-          window.location.reload();
+          await mostrarNotificacionExito();
         } else {
           mostrarNotificacionError("Error de conexion");
         }
@@ -35,7 +36,7 @@ export const ModalConfirmation = ({id, nombre}) => {
       } finally {
         setOpen(false);
         setConfirmLoading(false);
-        setModalText('¿Esta seguro de eliminar el platillo tradicional?')
+        setModalText(`¿Esta seguro que desea eliminar ${nombre}?`)
       }
     };
   
@@ -48,7 +49,7 @@ export const ModalConfirmation = ({id, nombre}) => {
         message: 'Eliminación Exitosa',
         description: 'El elemento ha sido eliminado correctamente.',
         icon: <ExclamationCircleOutlined style={{ color: '#52c41a', }} />,
-        duration:1,
+        duration:2,
         style: {
           position: 'fixed',
           top: '50%',
@@ -92,13 +93,13 @@ export const ModalConfirmation = ({id, nombre}) => {
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
         footer={[
-          <Button onClick={handleCancel}>Cancelar</Button>,
-          <Button onClick={handleOk} danger type='primary'>Eliminar</Button>,
+          <Button onClick={handleCancel} style={{height: '45px', width:'225px', marginRight:'15px'}}>Cancelar</Button>,
+          <Link to={`/mostrar-platillo/page/1`}><Button onClick={handleOk} danger type='primary' style={{height:'45px', width:'225px'}}>Eliminar</Button></Link>,
         ]}
       >
+        <ExclamationCircleOutlined style={{ color: 'red' }} />
         <p>{modalText}</p>
       </Modal>
     </>
   )
 }
-
