@@ -35,7 +35,7 @@ const App2 = () => {
           <Menu.Item key="Home" className={`${location.pathname === '/' ? 'selected-menu-item' : ''} ${'menu'}`} > 
           <div className='alMedio'>
             <Link to="/" className='menu-icon'>
-              <HomeOutlined /> Home
+              <HomeOutlined /> Inicio
             </Link> 
             </div>
           </Menu.Item>     

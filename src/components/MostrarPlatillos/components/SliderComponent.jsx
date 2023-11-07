@@ -45,25 +45,15 @@ const SliderComponent = () => {
         )}
         <span className='espacio'> {id} </span>
   
-        {id < totalPlatillos && (
+
           <Link to={`/mostrar-platillo/page/${Number(id) + 1}`}>
             <Button
+             disabled={Number(id) >= totalPlatillos}
               type="primary"
               icon={<RightOutlined />}
               size="large"
             />
           </Link>
-        )}
-        
-        {id >= totalPlatillos && (
-          <Button
-              disabled={Number(id) >= totalPlatillos}
-              type="primary"
-              icon={<RightOutlined />}
-              size="large"
-            />
-        
-        )}
       </div>
     </div>
   );

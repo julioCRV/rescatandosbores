@@ -77,8 +77,8 @@ console.log(platilloData.imagen)
           </div>
           </div>
         <div className='recipe-video'>
-            <h1>Video</h1>
-            <ReactPlayer  url={uri + 'video/' + platilloData.video} controls={true}  width="100%" height="min(450px, 100%)"  playing={true} /> {/*Se modifico el width y borro el width ademas de que se subio los botoenes */}
+            <h1></h1>
+            <ReactPlayer  url={uri + 'video/' + platilloData.video} controls={true}  width="300px" height="240px"  playing={true} /> {/*Se modifico el width y borro el width ademas de que se subio los botoenes */}
         </div>
      
       </div>

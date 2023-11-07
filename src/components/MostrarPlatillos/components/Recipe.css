@@ -49,11 +49,13 @@
 
 .recipe-video {
   text-align: center;
-  width: 80%;
   margin: 0 auto;
   overflow: hidden;
- 
+  object-fit: cover;
+  justify-content: center;
+  align-items: center;
 }
+
 
 .recipe-buttons {
   display: flex;
