@@ -5,6 +5,7 @@ import { Link, useLocation} from 'react-router-dom';
 import Routes from './Routes';
 import './headerNav.css'
 import { Content } from 'antd/es/layout/layout';
+import Buscador from '../../Home/Buscador';
 
 //Es el mismo Nav de navegacion, se le quito el submenu de platillos tradicionales
 const { Header, Footer } = Layout;
@@ -25,6 +26,10 @@ const App2 = () => {
   const location = useLocation();
   const items1 = ['Home', 'Platillos Tradicionales'];
 
+  const handleSearch = (query) => {
+    // Lógica de búsqueda, por ejemplo, redirección a una página de resultados
+    console.log(`Realizando búsqueda: ${query}`);
+  };
 
   return (
     <Layout className="layout">
@@ -71,6 +76,10 @@ const App2 = () => {
         </Link>
       </Menu.Item>
     )}
+
+
+
+    
           
           </div>
           

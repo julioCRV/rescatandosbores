@@ -7,10 +7,10 @@ import Header from './components/MenuNavegacion/header'
 import MenuNav from './components/sprint2/NavNavegacion/headerNav'
 import Footer from './components/Footer/Footer'
 
-
 function App() {
   return (
     <Router>
+      
       <div className="App">
         <Header />
       <MenuNav />

@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState ,useRef } from 'react';
 import axios from 'axios';
-import { List, Card, Image, Input, Button, AutoComplete, Space} from 'antd';
+import { Input, Button, AutoComplete, Space} from 'antd';
 import './Home.css'
 import { Link, useLocation } from 'react-router-dom';
 import MenuItem from '../sprint2/MenuItem/MenuItem'
@@ -9,7 +9,7 @@ import '../sprint2/MenuItem/MenuItem.css'
 import { HistoryOutlined, SearchOutlined, CloseOutlined,CloseCircleOutlined, CloseSquareFilled } from '@ant-design/icons';
 import './Buscador.css'
 
-const Home= () => {
+const Buscador  = ({ onSearch }) => {
   const [platillos, setPlatillos] = useState([]);
   const [searchedText, setSearchedText] = useState("")
     const [isSearchVisible, setSearchVisible] = useState(false);
@@ -53,7 +53,6 @@ const Home= () => {
 
      // Oculta el Input.Search cuando se realiza la búsqueda
      const handleSearch = (value) => {
-  
         setCantPlatillos(0);
         setSearchedText(value);
       };
@@ -115,17 +114,32 @@ const Home= () => {
   
     };
     
+    const [scroll, setScroll] = useState(false);
+
+    useEffect(() => {
+      const handleScroll = () => {
+        if (window.scrollY > 100) { // Ajusta este valor según tu necesidad de desplazamiento
+          setScroll(true);
+        } else {
+          setScroll(false);
+        }
+      };
+  
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, []); 
 
     return (
       <>
       {/*condicional para ocultar la barra de busqueda*/}
-      <div className="buscador-contenedor">
+      <div className={`buscador-contenedor ${scroll ? 'buscador-fijo' : ''}`}>
           <AutoComplete
-            className={`estilo-autocompletable ${errorMessage ? 'invalid' : ''}`}
+            className={`estilo-autocompletable ${errorMessage ? 'invalid' : ''} `}
             options={options}
             value={autoCompleteValue}
             onChange={(value) => handleAutoCompleteChange(value)}
-
           >
             <Input
               type="text"
@@ -150,8 +164,6 @@ const Home= () => {
                 
               }}
             />
-  
-
           </AutoComplete>
 
           {autoCompleteValue && errorMessage && (
@@ -232,5 +244,5 @@ const Home= () => {
     );
 }
 
-export default Home; 
+export default Buscador; 
 
