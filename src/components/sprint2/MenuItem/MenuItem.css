@@ -18,7 +18,11 @@
   grid-template-columns: repeat(4, 1fr);
   place-items: center;
 }
-
+.contenedorTitulo{
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+}
 /* MENU ITEM STYLING */
 
 .menuItem {
@@ -52,19 +56,32 @@
   transition: 0.4s ease-in;
 }
 
+
 .menuItemTitulo:hover{
   color: blue;
   transform: translate(0, 0.5em);
 }
 .menuItemTitulo{
-  text-align: center;
+  text-align:left;
   font-family: sans-serif;
   font-size: 1.6vw;
   transition: all 0.4s ease;
 }
-.ItemContenedorImagen:hover ~ .ItemContenedorTitulo > .menuItemTitulo{
+.ItemContenedorImagen{
+  height: 200px;
+  overflow: hidden;
+}
+.ItemContenedorImagen:hover ~ .contenedorTitulo .ItemContenedorTitulo > .menuItemTitulo{
   color: rgba(4, 0, 255, 0.9);
   transform: translateY(0.5em);
+}
+.ItemContenedorImagen:hover ~ .contenedorTitulo .classHeart{
+  transform: translateY(0.5em);
+  transition: transform 0.5s ease;
+}
+.ItemContenedorImagen:hover ~ .contenedorTitulo .classHeartLike{
+  transform: translateY(0.5em);
+  transition: transform 0.5s ease;
 }
 .menuItemTituloHover{
   transform: scale(1.4,1.2);
@@ -73,6 +90,14 @@
 a{
   color: #333;
 }
+
+.classHeart svg{
+  fill: #333;
+  width: 24px;
+  height: 24px;
+}
+
+
 @media only screen and (max-width: 769px) {
   .menuItemTitulo {
     font-size: 2vw;
