@@ -48,6 +48,16 @@
   color: #007bff; /* Color del texto cuando está activo */
 }
 
+/* Estilo para hacer el botón invisible */
+.invisible-button {
+  display: none;
+}
+
+/* Estilo para el icono de prohibido al pasar el cursor */
+.invisible-button:hover {
+  cursor: not-allowed;
+}
+
 /*RESPONSIVE*/
 @media (min-width: 320px) and (max-width: 380px) {
   .slider-container{

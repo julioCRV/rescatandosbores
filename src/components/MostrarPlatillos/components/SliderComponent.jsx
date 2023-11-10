@@ -11,7 +11,6 @@ import './Slider.css'
 
 const SliderComponent = () => {
   const { id } = useParams();
-  const [platilloData, setPlatilloData] = useState(0);
   const [totalPlatillos, setTotalPlatillos] = useState(0);
   
  useEffect(() => {
@@ -25,6 +24,7 @@ const SliderComponent = () => {
       });
   }, []);
 
+  console.log(Number(id))
 
   const settings = {
     dots: true,
@@ -33,54 +33,33 @@ const SliderComponent = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-console.log(totalPlatillos)
-{/*
-const navigateToPage = (pageNumber) => {
-  if (!isNaN(pageNumber) && pageNumber >= 1 && pageNumber <= totalPlatillos) {
-    // Verificar si pageNumber es un número y está dentro del rango
-    window.location.href = `/mostrar-platillo/page/${pageNumber}`;
-  } else {
-    window.location.href = `/`;
-    console.log("Número de página no válido");
-  }
-};
-
-if (isNaN(id) || id < 1) {
-  // Si el id no es un número o es menor que 1, redirige a la página 1
-  window.location.href = '/mostrar-platillo/page/1';
-  return null; // No renderiza el componente
-}
-*/}
-
-return (
-  <div className="slider-container">
-    {totalPlatillos ? ( // Verificar si hay platillos disponibles
-      <Slider {...settings}>
-        
-      </Slider>
-    ) : (
-      <p></p>
-    )}
-
-    {/* Agregar controles de navegación si hay platillos disponibles */}
-    {totalPlatillos && (
+  
+  return (
+    <div className="slider-container">
+      {/* Agregar controles de navegación */}
       <div className="slider-controls">
-        <Button
-          onClick={() => navigateToPage(Number(id) - 1)}
-          disabled={Number(id) === 1}
-          type="primary" icon={<LeftOutlined />} size="large"
-        ></Button>
-
+        {id>0 && (
+        <Link to={`/mostrar-platillo/page/${Number(id) - 1}`}>
+          <Button disabled={Number(id) === 1} type="primary" icon={<LeftOutlined />} size="large" />
+        </Link>
+        )}
         <span className='espacio'> {id} </span>
-       
-        <Button onClick={() => navigateToPage(Number(id) + 1)}
-          disabled={Number(id) === totalPlatillos}
-          type="primary" icon={<RightOutlined />} size="large"
-        ></Button>
+  
+
+          <Link to={`/mostrar-platillo/page/${Number(id) + 1}`}>
+            <Button
+             disabled={Number(id) >= totalPlatillos}
+              type="primary"
+              icon={<RightOutlined />}
+              size="large"
+            />
+          </Link>
       </div>
-    )}
-  </div>
-);
+    </div>
+  );
+  
+  
+  
 };
 
 export default SliderComponent;

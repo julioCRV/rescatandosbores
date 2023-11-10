@@ -118,6 +118,7 @@ const onFinish = async (values) => {
     console.log(response);
     if (response.status === 200) {
       message.success('Platillo registrado correctamente');
+      
     } else {
       message.error('Error al registrar el platillo');
     }
@@ -125,12 +126,21 @@ const onFinish = async (values) => {
     message.error('Error con el registro');
     console.log(err);
   }
+  setText('');
+  setText2('');
+  verificarImagen.onRemove();
+  verificarVideo.onRemove();
+  setImageModalVisible('');
+  setVideoModalVisible('');
+  setImageUploaded('');
+  setVideoUploaded('');
 };
 
-
   return (
-    <Form onFinish={onFinish}>
+    <div>
     <div className="titulo-formato">Registrar Platillo</div  >
+    <div className='formRegistrar'>
+    <Form onFinish={onFinish}>
 
       <Form.Item className='componente-limite'
         label={ 
@@ -142,7 +152,7 @@ const onFinish = async (values) => {
           { required: true, message: 'Ingresa el título del platillo' },
           { max: 50, message: 'El título no puede tener más de 50 caracteres' },
           { min: 6, message: 'El título debe tener al menos 6 caracteres' },
-          { pattern: /^[a-zA-ZáéíóúÁÉÍÓÚüÜ\s]*$/, message: 'Solo son permitidos letras en el título' }
+          { pattern: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]*$/, message: 'Solo son permitidos caracteres alfabeticos en el título' }
 
 
         ]}
@@ -156,7 +166,7 @@ const onFinish = async (values) => {
             onChange={handleTextChange}
             value={text}
           />
-          <div style={{ position: 'absolute', top: 0, right: 0, padding: '8px', color: 'gray' }}>
+          <div style={{ position: 'relative', top: 0, right: 0, padding: '8px', color: 'gray' }}>
             {text.length} / 50
           </div>
         </div>
@@ -201,12 +211,12 @@ const onFinish = async (values) => {
             value={text2}
             //maxLength={500} // Limitar a 500 caracteres
           />
-          <div style={{ position: 'absolute', top: 0, right: 0, padding: '8px', color: 'gray' }}>
+          <div style={{ position: 'relative', top: 0, right: 0, padding: '8px', color: 'gray' }}>
             {text2.length} / 500
-          </div>
+      </div>
         </div>
       </Form.Item>
-
+      
       <Form.Item className='componente-limite'
         label={
           <span className='item-txt' onClick={(e)=>{e.preventDefault()}}>Video:</span>}
@@ -224,16 +234,17 @@ const onFinish = async (values) => {
       </Form.Item>
 
       <Form.Item className='componente-limite'
-        label={<span></span>}
         labelCol={{span: 6}}
-        wrapperCol={{ span: 20 }} // Offset para mover el botón
+        wrapperCol={{ span: 21 }} // Offset para mover el botón
       >
-        <Button type="primary" htmlType="submit" className='button' style={{ marginRight: '20%', backgroundColor: '#7D0633' }}>
+        <div className='contBotones'>
+        <Button type="primary" htmlType="submit" className='button' style={{backgroundColor: '#7D0633' }}>
           Registrar
         </Button>
         <Button type="primary" htmlType="button" className='button' style={{backgroundColor: '#828282'}} onClick={showModal}>
           Cancelar
         </Button>
+        </div>
       </Form.Item>
 
       <Modal
@@ -260,8 +271,10 @@ const onFinish = async (values) => {
         visible={cancelModalVisible}
         onCancel={() => setCancelModalVisible(false)}
         footer={[
-          <Link to='/mostrar-platillo/page/1' key="cancel" className='button-link' onClick={() => setCancelModalVisible(false)}>
-           OK
+          <Link to='/mostrar-platillo/page/1' key="cancel" onClick={() => setCancelModalVisible(false)}>
+            <Button key="ok" className='button-link' onClick={() => setCancelModalVisible(false)}>
+          Ok
+          </Button>
           </Link>,
           <Button key="ok" className='button-link' onClick={() => setCancelModalVisible(false)}>
           Cancelar
@@ -271,7 +284,8 @@ const onFinish = async (values) => {
         Al cancelar, se perdera toda la informacion que no se haya registrado.
       </Modal>
     </Form>
-    
+    </div>
+    </div>
   );
 }
 

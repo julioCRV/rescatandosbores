@@ -1,16 +1,15 @@
 
 import React, { useEffect, useState ,useRef } from 'react';
 import axios from 'axios';
-import { List, Card, Image, Input, Button, AutoComplete, Space} from 'antd';
+import { Input, Button, AutoComplete, Space} from 'antd';
 import './Home.css'
 import { Link, useLocation } from 'react-router-dom';
 import MenuItem from '../sprint2/MenuItem/MenuItem'
 import '../sprint2/MenuItem/MenuItem.css'
-import { HistoryOutlined, SearchOutlined, CloseOutlined } from '@ant-design/icons';
+import { HistoryOutlined, SearchOutlined, CloseOutlined,CloseCircleOutlined, CloseSquareFilled } from '@ant-design/icons';
+import './Buscador.css'
 
-
-
-const Home= () => {
+const Buscador  = ({ onSearch }) => {
   const [platillos, setPlatillos] = useState([]);
   const [searchedText, setSearchedText] = useState("")
     const [isSearchVisible, setSearchVisible] = useState(false);
@@ -54,7 +53,6 @@ const Home= () => {
 
      // Oculta el Input.Search cuando se realiza la búsqueda
      const handleSearch = (value) => {
-  
         setCantPlatillos(0);
         setSearchedText(value);
       };
@@ -116,13 +114,29 @@ const Home= () => {
   
     };
     
+    const [scroll, setScroll] = useState(false);
+
+    useEffect(() => {
+      const handleScroll = () => {
+        if (window.scrollY > 100) { // Ajusta este valor según tu necesidad de desplazamiento
+          setScroll(true);
+        } else {
+          setScroll(false);
+        }
+      };
+  
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, []); 
 
     return (
       <>
       {/*condicional para ocultar la barra de busqueda*/}
-      <div className="input-container">
+      <div className={`buscador-contenedor ${scroll ? 'buscador-fijo' : ''}`}>
           <AutoComplete
-            className={`estilo-autocompletable ${errorMessage ? 'invalid' : ''}`}
+            className={`estilo-autocompletable ${errorMessage ? 'invalid' : ''} `}
             options={options}
             value={autoCompleteValue}
             onChange={(value) => handleAutoCompleteChange(value)}
@@ -131,7 +145,6 @@ const Home= () => {
               type="text"
               placeholder={errorMessage || 'Realiza una búsqueda'}
               size="large"
-              
               onPressEnter={() => {
                 
                 if (!errorMessage) {
@@ -148,6 +161,7 @@ const Home= () => {
                   handleSearch(autoCompleteValue);
                   handleSearch2();
                 }
+                
               }}
             />
           </AutoComplete>
@@ -155,11 +169,9 @@ const Home= () => {
           {autoCompleteValue && errorMessage && (
             <div className="error-message">{errorMessage}</div>
           )}
-
-          {autoCompleteValue && !errorMessage && (
+                    {autoCompleteValue && !errorMessage && (
             <Button className='estilo-buttonx' onClick={() => setAutoCompleteValue("")} icon={<CloseOutlined />} />
           )}
-      </div>
 
          {/* <Link to="/error" className='menu-icon'>*/}
           <Button
@@ -181,6 +193,7 @@ const Home= () => {
               icon={<SearchOutlined />}   
           >
           </Button>
+      </div>
   
           { isSearchVisible && (
               <div className='div-center' >
@@ -191,7 +204,9 @@ const Home= () => {
               </div>
               
           )}
-
+          {
+            cantPlatillos===0 && noDataMessage
+          }
           { !isAlgoEscrito && (
             <div className="menuPlatillo">
               <div className='div-center' >
@@ -229,4 +244,5 @@ const Home= () => {
     );
 }
 
-export default Home; 
+export default Buscador; 
+

@@ -29,7 +29,7 @@ const Recipe = () => {
   const [platillos, setPlatillos] = useState([]);
 
   useEffect(() => {
-    console.log('realizando llamada de la receta <:v');
+    console.log('realizando llamada');
     axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${id}`)
       .then((response) => {
         console.log(response.data.respuesta);
@@ -55,37 +55,30 @@ console.log(platilloData.imagen)
  
         <h2 className="formato-titulo">{platilloData.nombre}</h2>   {/*modificacion cambio de nombre*/}
         <div className="recipe-content">
-
-          <div className="recipe-image">
-            <img
-              src={uri + 'imagen/' + platilloData.imagen}
-
-              alt="Imagen del Platillo"
-              className="recipe-image"
-            />
-          </div>
-
-          <div className="recipe-text">
-            <p>{platilloData.descripcion}</p>
-          </div>
-
-          <div className="recipe-buttons">
+          <div className='recipe-content-header'>
+            <div className="recipe-image">
+              <img
+                src={uri + 'imagen/' + platilloData.imagen}
+                alt="Imagen del Platillo"
+              />
+            </div>
+            <div className="recipe-text">
+              <p>{platilloData.descripcion}</p>
+            </div>
+            <div className="recipe-buttons">
             <div className='buttonn'>
-              <Button type="primary"  className={location.pathname === '/editar-platillo' ? 'selected-menu-item' : ''} 
-             onClick={() => console.log('Editar')}>
-              <Link to={`/editar-platillo/${id}`} className='menu-icon'>
-              <EditOutlined />
-            </Link> 
-              </Button>
+              <Link to={`/editar-platillo/${id}`}>
+                <Button type="primary" onClick={() => console.log('Editar')}>
+                <EditOutlined />
+                </Button>
+            </Link>
             </div>
             <ModalConfirmation id={platilloData.identificador} nombre={platilloData.nombre} />
           </div>
-
-        <div className='recipe-video'>
-          <div className="recipe-video">
-            <h1>Video</h1>
-            <ReactPlayer url={uri + 'video/' + platilloData.video} controls={true} width="100%" height="100%" playing={true} /> {/*Se modifico el width y borro el width ademas de que se subio los botoenes */}
           </div>
+        <div className='recipe-video'>
+            <h1></h1>
+            <ReactPlayer  url={uri + 'video/' + platilloData.video} controls={true}  width="300px" height="240px"  playing={true} /> {/*Se modifico el width y borro el width ademas de que se subio los botoenes */}
         </div>
      
       </div>
