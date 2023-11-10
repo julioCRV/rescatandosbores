@@ -1,14 +1,13 @@
 .buscador-contenedor {
-  position: fixed;
+  position: relative;
   top: 23%;
-  right: 0;
+  left: 60%;
   z-index: 105;
   width: 100%; 
   max-width: 500px; 
-  margin-top: -7px; 
+  margin-top: -80px; 
   display: flex;
   justify-content: space-between; 
-  align-items: center; 
 }
 
 .estilo-autocompletable {
@@ -30,7 +29,7 @@
   position: relative;
   width: 100px;
   height: 37px;
-  background-color: transparent;
+  background-color: floralwhite;
   border: none;
   color: #000000;
   z-index: 105;
@@ -88,7 +87,7 @@
 .buscador-fijo {
   position: fixed;
   top: 23%;
-  right: 0;
+  margin-left: 2%;
   z-index: 105;
   width: 100%; 
   max-width: 500px; 
