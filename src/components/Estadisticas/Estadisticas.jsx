@@ -7,7 +7,7 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
-import './Estadisticas.css';
+import './estadisticas.css';
 
 
 ChartJS.register(ArcElement,Tooltip,Legend);
@@ -33,10 +33,10 @@ const dashboard = () => {
         setTotalCalificaciones(cantidadUsuarios*cantidadPlatillos);
         
         const porcentajeSiCalculado = (cantidadCalificados/totalCalificaciones)*100;
-        setPorcentajeSi(porcentajeSiCalculado.toFixed(2));
+        setPorcentajeSi(Number(porcentajeSiCalculado.toFixed(2)));
         
         const porcentajeNoCalculado = (totalCalificaciones-cantidadCalificados)/totalCalificaciones*100;
-        setPorcentajeNo(porcentajeNoCalculado.toFixed(2));
+        setPorcentajeNo(Number(porcentajeNoCalculado.toFixed(2)));
         
         porcentajeSiRef.current = porcentajeSi;
         porcentajeNoRef.current = porcentajeNo;
@@ -67,7 +67,7 @@ const dashboard = () => {
         beforeDatasetsDraw(chart, args, pluginOption){
             const {ctx, data} = chart;
             ctx.save();
-            ctx.font = 'bolder 14px sans-serif';
+            ctx.font = 'bolder 15px sans-serif';
             ctx.fillStyle = 'red';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
@@ -123,7 +123,15 @@ const dashboard = () => {
             </div>
 
             <div className="totalesEst">
+                <div className='contenedorTotal'>
 
+                </div>
+                <div className='contenedorTotal'>
+
+                </div>
+                <div className='contenedorTotal'>
+                    
+                </div>
             </div>
 
             <div className="calificacionesEst">
