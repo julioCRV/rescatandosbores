@@ -8,6 +8,7 @@ import {
 import { Doughnut } from 'react-chartjs-2';
 
 import './estadisticas.css';
+import { useEffect, useState } from 'react';
 
 
 ChartJS.register(
@@ -21,24 +22,36 @@ ChartJS.register(
 
 const dashboard = () => {
 
+    const [cantidadPlatillos,setCantidadPlatillos] = useState(0);
+    const [cantidadUsuarios,setCantidadUsuarios] = useState(0);
+    const [cantidadCalificaciones,setCantidadCalificaciones] = useState(0);
+
+    useEffect(() => {
+        setCantidadPlatillos(50);
+        setCantidadUsuarios(30);
+        setCantidadCalificaciones(675);
+    });
+
     const data = {
         //labels: ['yes', 'no'],
         datasets: [{
             label: 'Poll',
-            data: [3,6],
+            data: [83,350],
             backgroundColor: ['black', 'red'],
             borderColor: ['black', 'red'],
         }]
     }
 
-    const options = {}
+    const options = {
+        cutout: 30,
+    }
 
     const textCenter = {
         id: 'textCenter',
         beforeDatasetsDraw(chart, args, pluginOption){
             const {ctx, data} = chart;
             ctx.save();
-            ctx.font = 'bolder 20px sans-serif';
+            ctx.font = 'bolder 15px sans-serif';
             ctx.fillStyle = 'red';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
@@ -60,9 +73,9 @@ const dashboard = () => {
                     <div className="tasa">
                         <Doughnut data={data} options={options} plugins={[textCenter]} />
                     </div>
-                    <div>
+                    <div className='descripcionTasas'>
                         <p className='text'>Tasa de calificaciones ejecutadas en platillos tradicionales</p>
-                        <p className='cantidad'>450</p>
+                        <p className='cantidad'>{cantidadCalificaciones}</p>
                     </div>
                 </div>
                 
@@ -70,8 +83,8 @@ const dashboard = () => {
                     <div className="tasa">
                         <Doughnut data={data} options={options} plugins={[textCenter]} />
                     </div>
-                    <div>
-                        <p className='text'>Tasa de calificaciones no ejecutadas en platillos tradicionales</p>
+                    <div className='descripcionTasas'>
+                        <p className='text'>Tasa de calificaciones ejecutadas en platillos tradicionales</p>
                         <p className='cantidad'>450</p>
                     </div>
                 </div>
