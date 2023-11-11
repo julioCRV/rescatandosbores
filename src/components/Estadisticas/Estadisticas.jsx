@@ -7,7 +7,7 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
-import './estadisticas.css';
+import './Estadisticas.css';
 
 
 ChartJS.register(ArcElement,Tooltip,Legend);

@@ -1,0 +1,38 @@
+
+.tituloest{
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tasasRoscas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedorTasa{
+    border-radius: 15px;
+    border: 2px solid #000;
+    width: 450px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15PX;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.descripcionTasas{
+    margin: 10px;
+}
+
+.tasa{
+    width: 100px;
+    margin: 10px;
+}
+
+
+
