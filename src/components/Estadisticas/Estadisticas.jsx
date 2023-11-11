@@ -4,18 +4,13 @@ import {
     Tooltip,
     Legend
 } from 'chart.js';
-
+import React, { useEffect, useRef, useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
 import './estadisticas.css';
-import { useEffect, useState } from 'react';
 
 
-ChartJS.register(
-    ArcElement,
-    Tooltip,
-    Legend
-);
+ChartJS.register(ArcElement,Tooltip,Legend);
 
 
 
@@ -24,21 +19,42 @@ const dashboard = () => {
 
     const [cantidadPlatillos,setCantidadPlatillos] = useState(0);
     const [cantidadUsuarios,setCantidadUsuarios] = useState(0);
-    const [cantidadCalificaciones,setCantidadCalificaciones] = useState(0);
+    const [cantidadCalificados,setCantidadCalificados] = useState(0);
+    const [totalCalificaciones,setTotalCalificaciones] = useState(0);
+    const [porcentajeSi,setPorcentajeSi] = useState(0);
+    const porcentajeSiRef = useRef(porcentajeSi);
+    const [porcentajeNo,setPorcentajeNo] = useState(0);
+    const porcentajeNoRef = useRef(porcentajeNo);
 
     useEffect(() => {
         setCantidadPlatillos(50);
         setCantidadUsuarios(30);
-        setCantidadCalificaciones(675);
+        setCantidadCalificados(675);
+        setTotalCalificaciones(cantidadUsuarios*cantidadPlatillos);
+        
+        const porcentajeSiCalculado = (cantidadCalificados/totalCalificaciones)*100;
+        setPorcentajeSi(porcentajeSiCalculado.toFixed(2));
+        
+        const porcentajeNoCalculado = (totalCalificaciones-cantidadCalificados)/totalCalificaciones*100;
+        setPorcentajeNo(porcentajeNoCalculado.toFixed(2));
+        
+        porcentajeSiRef.current = porcentajeSi;
+        porcentajeNoRef.current = porcentajeNo;
     });
 
-    const data = {
-        //labels: ['yes', 'no'],
+    const dataSi = {
         datasets: [{
-            label: 'Poll',
-            data: [83,350],
-            backgroundColor: ['black', 'red'],
-            borderColor: ['black', 'red'],
+            data: [porcentajeSi,100-porcentajeSi],
+            backgroundColor: ['red', 'black'],
+            borderColor: ['red', 'black'],
+        }]
+    }
+
+    const dataNo = {
+        datasets: [{
+            data: [porcentajeNo,100-porcentajeNo],
+            backgroundColor: ['red', 'black'],
+            borderColor: ['red', 'black'],
         }]
     }
 
@@ -46,8 +62,22 @@ const dashboard = () => {
         cutout: 30,
     }
 
-    const textCenter = {
-        id: 'textCenter',
+    const textCenterSi = {
+        id: 'textCenterSi',
+        beforeDatasetsDraw(chart, args, pluginOption){
+            const {ctx, data} = chart;
+            ctx.save();
+            ctx.font = 'bolder 14px sans-serif';
+            ctx.fillStyle = 'red';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            const porcentajeSi = porcentajeSiRef.current;
+            ctx.fillText(porcentajeSi+'%', chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y);
+        }
+    }
+
+    const textCenterNo = {
+        id: 'textCenterNo',
         beforeDatasetsDraw(chart, args, pluginOption){
             const {ctx, data} = chart;
             ctx.save();
@@ -55,7 +85,8 @@ const dashboard = () => {
             ctx.fillStyle = 'red';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText('100%', chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y);
+            const porcentajeNo = porcentajeNoRef.current;
+            ctx.fillText(porcentajeNo+'%', chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y);
         }
     }
     
@@ -71,21 +102,21 @@ const dashboard = () => {
 
                 <div className='contenedorTasa'>
                     <div className="tasa">
-                        <Doughnut data={data} options={options} plugins={[textCenter]} />
+                        <Doughnut data={dataSi} options={options} plugins={[textCenterSi]} />
                     </div>
                     <div className='descripcionTasas'>
                         <p className='text'>Tasa de calificaciones ejecutadas en platillos tradicionales</p>
-                        <p className='cantidad'>{cantidadCalificaciones}</p>
+                        <p className='cantidad'>{cantidadCalificados}</p>
                     </div>
                 </div>
                 
                 <div className="contenedorTasa">
                     <div className="tasa">
-                        <Doughnut data={data} options={options} plugins={[textCenter]} />
+                        <Doughnut data={dataNo} options={options} plugins={[textCenterNo]} />
                     </div>
                     <div className='descripcionTasas'>
-                        <p className='text'>Tasa de calificaciones ejecutadas en platillos tradicionales</p>
-                        <p className='cantidad'>450</p>
+                        <p className='text'>Tasa de calificaciones no ejecutadas en platillos tradicionales</p>
+                        <p className='cantidad'>{totalCalificaciones-cantidadCalificados}</p>
                     </div>
                 </div>
 
