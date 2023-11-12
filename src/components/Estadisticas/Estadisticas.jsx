@@ -98,7 +98,7 @@ const dashboard = () => {
     const dataAnual ={
         labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
         datasets: [{
-            labels: 'Sales aaa',
+            label: 'Cantidad',
             data: [3,6,5,12,15,7,5,6,6,1,2,1],
             backgroundColor: 'aqua',
             borderColor: 'black',
@@ -110,7 +110,9 @@ const dashboard = () => {
 
     const optionAnual = {
         plugins: {
-            legend: true
+            legend: {
+                display: false,
+            }
         },
     }
 
