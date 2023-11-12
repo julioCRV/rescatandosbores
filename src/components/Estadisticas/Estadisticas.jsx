@@ -2,15 +2,20 @@ import {
     Chart as ChartJS,
     ArcElement,
     Tooltip,
-    Legend
+    Legend,
+    LineElement,
+    CategoryScale,
+    LinearScale,
+    PointElement
 } from 'chart.js';
+
 import React, { useEffect, useRef, useState } from 'react';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut,Line } from 'react-chartjs-2';
 
 import './Estadisticas.css';
 
 
-ChartJS.register(ArcElement,Tooltip,Legend);
+ChartJS.register(ArcElement,Tooltip,Legend,LineElement,CategoryScale,LinearScale,PointElement);
 
 
 
@@ -89,7 +94,25 @@ const dashboard = () => {
             ctx.fillText(porcentajeNo+'%', chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y);
         }
     }
-    
+
+    const dataAnual ={
+        labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+        datasets: [{
+            labels: 'Sales aaa',
+            data: [3,6,5,12,15,7,5,6,6,1,2,1],
+            backgroundColor: 'aqua',
+            borderColor: 'black',
+            pointBorderColor: 'aqua',
+            fill: true,
+            tension: 0.4
+        }]
+    }
+
+    const optionAnual = {
+        plugins: {
+            legend: true
+        },
+    }
 
     return(
         <div className="estadistica">
@@ -126,7 +149,7 @@ const dashboard = () => {
 
                 <div className='contenedorTotal'>
                     <div className='iconTotal'>
-                        <img src="./src/assets/sopa-caliente.png" alt="platillo" />
+                        <img className='iconTotal' src="./src/assets/sopa-caliente.png" alt="platillo" />
                     </div>
                     <div className='descripcionTotal'>
                         <p className='cantidad'>{cantidadPlatillos}</p>
@@ -136,7 +159,7 @@ const dashboard = () => {
 
                 <div className='contenedorTotal'>
                     <div className='iconTotal'>
-                        <img src="./src/assets/grupo.png" alt="usuarios" />
+                        <img className='iconTotal' src="./src/assets/grupo.png" alt="usuarios" />
                     </div>
                     <div className='descripcionTotal'>
                     <p className='cantidad'>{cantidadUsuarios}</p>
@@ -146,7 +169,7 @@ const dashboard = () => {
 
                 <div className='contenedorTotal'>
                     <div className='iconTotal'>
-                        <img src="./src/assets/corazon.png" alt="calificaciones" />
+                        <img className='iconTotal' src="./src/assets/corazon.png" alt="calificaciones" />
                     </div>
                     <div className='descripcionTotal'>
                         <p className='cantidad'>{totalCalificaciones}</p>
@@ -157,7 +180,12 @@ const dashboard = () => {
             </div>
 
             <div className="calificacionesEst">
-
+                <h3>Calificaciones Mensuales de 2023</h3>
+                <div className='contenedorGrafico'>
+                    <Line data={dataAnual} options={optionAnual}></Line>
+                    <p className='cantidad'>Total: {cantidadCalificados}</p>
+                </div>
+                
             </div>
 
         </div>

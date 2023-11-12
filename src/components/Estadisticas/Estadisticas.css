@@ -78,5 +78,16 @@
     justify-content: center;
     align-items: center;
     margin-left: 10px;
+    .cantidad{
+        font-size: 20px;
+        margin: 0px;
+        margin-bottom: 5px;
+    }
+    .text{
+        margin: 0px;
+        margin-top: 5px;
+    }
 }
+
+
 
