@@ -7,7 +7,7 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
-import './estadisticas.css';
+import './Estadisticas.css';
 
 
 ChartJS.register(ArcElement,Tooltip,Legend);
@@ -123,15 +123,37 @@ const dashboard = () => {
             </div>
 
             <div className="totalesEst">
-                <div className='contenedorTotal'>
 
-                </div>
                 <div className='contenedorTotal'>
+                    <div className='iconTotal'>
+                        <img src="./src/assets/sopa-caliente.png" alt="platillo" />
+                    </div>
+                    <div className='descripcionTotal'>
+                        <p className='cantidad'>{cantidadPlatillos}</p>
+                        <p className='text'>Platillos Totales</p>
+                    </div>
+                </div>
 
-                </div>
                 <div className='contenedorTotal'>
-                    
+                    <div className='iconTotal'>
+                        <img src="./src/assets/grupo.png" alt="usuarios" />
+                    </div>
+                    <div className='descripcionTotal'>
+                    <p className='cantidad'>{cantidadUsuarios}</p>
+                        <p className='text'>Usuarios Totales</p>
+                    </div>
                 </div>
+
+                <div className='contenedorTotal'>
+                    <div className='iconTotal'>
+                        <img src="./src/assets/corazon.png" alt="calificaciones" />
+                    </div>
+                    <div className='descripcionTotal'>
+                        <p className='cantidad'>{totalCalificaciones}</p>
+                        <p className='text'>Calificaciones Totales</p>
+                    </div>
+                </div>
+
             </div>
 
             <div className="calificacionesEst">
