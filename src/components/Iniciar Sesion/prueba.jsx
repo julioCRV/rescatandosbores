@@ -11,7 +11,7 @@ const App = () => {
   const handleSubmenu1Click = () => {
     setSubmenu1Visible(!submenu1Visible);
     // Asegurarse de que el otro submenu esté cerrado
-    setSubmenu2Visible(false);
+    setSubmenu2Visible(false);                                          
   };
 
   const handleSubmenu2Click = () => {

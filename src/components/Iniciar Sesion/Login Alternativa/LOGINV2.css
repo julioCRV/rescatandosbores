@@ -1,0 +1,16 @@
+.contenedor-Div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.contenedor-Login{
+    width: 80%; /* El div ocupa el 80% del ancho de su contenedor */
+    max-width: 400px; /* Tamaño máximo del div en anchura */
+  }
+  
+  /* Estilos adicionales para hacer el texto responsive */
+  .contenedor-Login h1 {
+    font-size: 2em; /* Puedes ajustar el tamaño del texto según tus necesidades */
+  }

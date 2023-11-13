@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Layout, Menu, theme ,Input,Button } from 'antd';
-import { HomeOutlined, UnorderedListOutlined, SearchOutlined, MenuOutlined } from '@ant-design/icons'; // Importa los íconos necesarios
+import { HomeOutlined, UnorderedListOutlined, SearchOutlined,MailOutlined, AppstoreOutlined, MenuOutlined } from '@ant-design/icons'; // Importa los íconos necesarios
 import { Link, useLocation} from 'react-router-dom';
 import Routes from './Routes';
 import './headerNav.css'
@@ -51,8 +51,9 @@ const App2 = () => {
               <HomeOutlined /> Inicio
             </Link> 
             </div>
+            
           </Menu.Item>     
-          
+          </div>
           <SubMenu theme='dark' className='menu-icon'
               title="Platillos Tradicionales"        
               icon={<UnorderedListOutlined />}
@@ -61,32 +62,27 @@ const App2 = () => {
               >
              
               <Menu.Item key="Registrar Platillo" className={location.pathname === '/registrar-platillo' ? 'selected-menu-item' : ''}>
-    
                 <Link to="/registrar-platillo" className={`${'menu-icon'} ${'prueba'}`}>
                   Registrar Platillo
                 </Link> 
-          
               </Menu.Item>
               <Menu.Item key="Mostrar Platillo" className={location.pathname === '/mostrar-platillo/page/1' ? 'selected-menu-item' : ''}>
                 <Link to="/mostrar-platillo/page/1" className={`${'menu-icon'} ${'prueba'}`}>
                   Mostrar Platillo
                 </Link> 
               </Menu.Item>
-  
           </SubMenu>
 
-          <SubMenu style={{ position: 'absolute', left:'95%' }}
+          <SubMenu style={{ position: 'absolute', left: '94.5%', top: '10%' }}
             icon={<FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30 }}/>}
             onTitleClick={handleSubmenu2Click}
             visible={submenu2Visible}>
-            
-              <Menu.Item> <BLogin></BLogin> </Menu.Item>
-             <Menu.Item>   <BLogout></BLogout></Menu.Item>
-           
-              <Profile></Profile>
-  
-             
-              
+             <Profile/>
+             <Menu.Item  style={{ textAlign: 'center', }}>
+                  <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30, alignItems: 'center' }} />
+             </Menu.Item>
+             <Menu.Item> <BLogin/> </Menu.Item>
+             <Menu.Item> <BLogout/> </Menu.Item>
            </SubMenu>
 
             {location.pathname === '/' && (
@@ -99,16 +95,7 @@ const App2 = () => {
                 </Link>
               </Menu.Item>
             )}
-
-
        
-        
-        
-
-
-    
-          
-          </div>
           
         </Menu>
       </Header>
