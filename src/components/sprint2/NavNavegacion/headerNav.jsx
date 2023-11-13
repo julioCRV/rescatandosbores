@@ -45,14 +45,16 @@ const App2 = () => {
             </div>
           </Menu.Item>     
           
-          <SubMenu theme='dark' className='menu-icon'
+          <SubMenu theme='dark' className= {`${location.pathname === '/platillos-tradicionales' ? 'selected-menu-item' : ''} ${'menu'}`}
           
           title={
-              <span>          
-                 <UnorderedListOutlined /> Platillos Tradicionales
-              </span>
+              <Link to="/platillos-tradicionales" className='menu-icon'>
+                <span>          
+                  <UnorderedListOutlined /> Platillos Tradicionales
+                </span>
+                 </Link>    
             }
-            >
+          >
             <Menu.Item key="Registrar Platillo" className={location.pathname === '/registrar-platillo' ? 'selected-menu-item' : ''}>
    
               <Link to="/registrar-platillo" className={`${'menu-icon'} ${'prueba'}`}>

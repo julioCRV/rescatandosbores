@@ -11,7 +11,7 @@ import {
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Doughnut,Line } from 'react-chartjs-2';
-
+import { Col } from 'antd';
 import './Estadisticas.css';
 
 
@@ -65,6 +65,7 @@ const dashboard = () => {
 
     const options = {
         cutout: 30,
+        responsive:true
     }
 
     const textCenterSi = {
@@ -137,7 +138,7 @@ const dashboard = () => {
                 
                 <div className="contenedorTasa">
                     <div className="tasa">
-                        <Doughnut data={dataNo} options={options} plugins={[textCenterNo]} />
+                        <Doughnut data={dataNo} options={options} plugins={[textCenterNo]} style={{height:'128px',width:'128px'}}/>
                     </div>
                     <div className='descripcionTasas'>
                         <p className='text'>Tasa de calificaciones no ejecutadas en platillos tradicionales</p>
@@ -187,7 +188,6 @@ const dashboard = () => {
                     <Line data={dataAnual} options={optionAnual}></Line>
                     <p className='cantidad'>Total: {cantidadCalificados}</p>
                 </div>
-                
             </div>
 
         </div>

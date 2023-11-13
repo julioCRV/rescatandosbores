@@ -97,6 +97,18 @@ a{
   height: 24px;
 }
 
+.classHeart:hover{
+  filter: brightness(3);
+  filter: contrast(2);
+  transform: scale(1.1);
+  transition: all 0.3s;
+}
+.classHeartLike:hover{
+  filter:contrast(0.7);
+  transform: scale(1.1);
+  transition: all 0.3s;
+}
+
 
 @media only screen and (max-width: 769px) {
   .menuItemTitulo {

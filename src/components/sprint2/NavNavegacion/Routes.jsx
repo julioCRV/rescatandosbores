@@ -7,12 +7,14 @@ import Buscador from '../../Home/Buscador'
 import MyForm from '../../RegistroPlatillo/registrarPlatillo';
 import MostrarPlatillos from '../../MostrarPlatillos/mostrarPlatillos';
 import EditarPlatillos from '../../EditarPlatillo/EditarPlatillo'
+import Estadisticas from '../../Estadisticas/Estadisticas'
 
 function Router() {
     return (
         <Routes>
             <Route path='/' element={<Home/>}/>
-            <Route path='/menu-platillos' element={<Menu/>}/>
+            <Route path='/platillos-tradicionales' element={<Estadisticas />} />
+            <Route path='/menu-platillos' element={<Menu/>} />
             <Route path='/buscador' element={<Buscador/>}/>
             <Route path='/registrar-platillo' element={<MyForm/>}/>
             <Route path='/mostrar-platillo/page/:id' element={<MostrarPlatillos/>}/>
