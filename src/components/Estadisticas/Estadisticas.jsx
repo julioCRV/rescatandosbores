@@ -13,6 +13,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Doughnut,Line } from 'react-chartjs-2';
 import { Col } from 'antd';
 import './Estadisticas.css';
+import axios from 'axios';
 
 
 ChartJS.register(ArcElement,Tooltip,Legend,LineElement,CategoryScale,LinearScale,PointElement);
@@ -30,11 +31,35 @@ const dashboard = () => {
     const porcentajeSiRef = useRef(porcentajeSi);
     const [porcentajeNo,setPorcentajeNo] = useState(0);
     const porcentajeNoRef = useRef(porcentajeNo);
+    const [datosMensuales,setDatosMensuales] = useState([]);
 
     useEffect(() => {
-        setCantidadPlatillos(50);
-        setCantidadUsuarios(30);
-        setCantidadCalificados(675);
+
+       axios.get('http://18.116.106.247:3000/contarPlatillos')
+      .then((response) => {
+        setCantidadPlatillos(response.data.total_platillos);
+      })
+      .catch((error) => {
+        console.error('Error al obtener los datos:', error);
+      });
+
+      axios.get('http://18.116.106.247:3000/obtenerEstadisticas')
+      .then((response) => {
+        const data = response.data;
+        setCantidadUsuarios(data.totalUsuarios.total_usuarios);
+        const likes = data.likesMes;
+        const datosLikes = [];
+        let cantidadT = 0;
+        likes.forEach(like => {
+            cantidadT += like.cantidad_likes;
+            datosLikes.push(like.cantidad_likes);
+        });
+        setCantidadCalificados(cantidadT);
+        setDatosMensuales(datosLikes);
+      })
+      .catch((error) => {
+        console.error('Error al obtener los datos:', error);
+      });
         setTotalCalificaciones(cantidadUsuarios*cantidadPlatillos);
         
         const porcentajeSiCalculado = (cantidadCalificados/totalCalificaciones)*100;
@@ -64,7 +89,7 @@ const dashboard = () => {
     }
 
     const options = {
-        cutout: 30,
+        cutout: 35,
         responsive:true
     }
 
@@ -100,7 +125,7 @@ const dashboard = () => {
         labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
         datasets: [{
             label: 'Cantidad',
-            data: [3,6,5,12,15,7,5,6,6,1,2,1],
+            data: datosMensuales,
             backgroundColor: 'aqua',
             borderColor: 'black',
             pointBorderColor: 'aqua',
