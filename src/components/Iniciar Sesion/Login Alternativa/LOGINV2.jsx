@@ -21,10 +21,11 @@ function vistaLogin() {
     setChecked(event.target.checked);
   };
 
+
   return (
     <div className='contenedor-Div'>
     <div className='contenedor-Login'>
-        <Paper elevation={3} style={{ padding: "10px", paddingBottom: "50px" }}>
+        <Paper elevation={3} style={{ padding: "20px", paddingBottom: "150px" }}>
         <div align="center">
           {checked ? (
             <Chip

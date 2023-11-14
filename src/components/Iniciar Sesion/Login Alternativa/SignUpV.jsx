@@ -198,7 +198,7 @@ export default function Login() {
           startIcon={<LoginIcon />}
           onClick={handleSubmit}
         >
-          REGISTRARSE
+          Registrarse
         </Button>
       </div>
 

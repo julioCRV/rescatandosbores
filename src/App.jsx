@@ -3,25 +3,15 @@ import './App.css';
 
 import { useState } from 'react';
 import { BrowserRouter as Router, Route,Routes, Link, Navigate } from 'react-router-dom';
-import Header from './components/MenuNavegacion/header';
-import MenuNav from './components/sprint2/NavNavegacion/headerNav';
-import Footer from './components/Footer/Footer';
-import LogIn from './components/Iniciar Sesion/login'
-import VistaInicio from './views/vistaInicio'
 
-import Menu from './components/sprint2/MenuPlatillos/menuPlatillos';
-import Home from './components/Home/BannerPresentacion/BannerPresentacion';
-import Buscador from './components/Home/Buscador'
-import MyForm from './components/RegistroPlatillo/registrarPlatillo';
-import MostrarPlatillos from './components/MostrarPlatillos/mostrarPlatillos';
-import EditarPlatillos from './components/EditarPlatillo/EditarPlatillo'
-import Login from "./components/Iniciar Sesion/Login Alternativa/LOGINV2"
+import ViewNologin from './views/vistaInicioUsuarioNoLogIn'
+import ViewLogin from './views/vistaInicioUsuarioLogin'
+import ViewAdmin from './views/vistaInicioAdmin'
+import Pr from './components/Iniciar Sesion/prueba'
 
 function App() {
   const [mostrarLogin, setMostrarLogin] = useState(false);
-  const [mostrarHeader, setMostrarHeader] = useState(true);
-  const [mostrarMenuNav, setMostrarMenuNav] = useState(true);
-  const [mostrarFooter, setMostrarFooter] = useState(true);
+
 
   const [esAdministrador, setAdministrador] = useState(false);
   const [esUsuarioSincuenta, setUsuarioSincuenta] = useState(false);
@@ -43,50 +33,53 @@ function App() {
     }
   };
 
-  const handleMostrarLogin = () => {
-    setMostrarLogin(!mostrarLogin);
-    setMostrarHeader(false);
-    setMostrarMenuNav(false);
-    setMostrarFooter(false);
-  };
-  const handleMostrarLogin2 = () => {
-    setMostrarLogin(false);
-    setMostrarHeader(true);
-    setMostrarMenuNav(true);
-    setMostrarFooter(true);
-  };
+
+
+  const token=localStorage.getItem('token');
+
+  const mostrarToken = () => {
+    console.log('AQUI EL TOKEN',token)
+  }
+
+   const [enPaginaIniciarSesion, setEnPaginaIniciarSesion] = useState(false);
 
   return (
     
     <div>
       {esUsuarioSincuenta ? (
         <Router>
-          <Routes>
-            <Route path="/" element={<VistaInicio />} />
-            <Route path="/Iniciar-sesion" element={<Login />} />
-          </Routes>
-        </Router>
+        <div className="App">
+        <ViewNologin /> 
+        <Pr/>
+      </div>
+      </Router>
       ) : (
         <div>
-          <p>¡No eres un usuario sin cuenta!</p>
-
         </div>
       )}
 
       {esUsuario ? (
         <Router>
-          <VistaInicio />
-          <Routes>
-            <Route path="/" element={<VistaInicio />} />
-            <Route path="/Iniciar-sesion" element={<Login />} />
-          </Routes>
+       <div className="App">
+        <ViewLogin /> 
+      </div>
         </Router>
       ) : (
         <div>
-          <p>¡No eres un usuario!</p>
-
         </div>
       )} 
+
+{esAdministrador ? (
+        <Router>
+          <div className="App">
+        <ViewAdmin /> 
+      </div>
+        </Router>
+      ) : (
+        <div>
+        </div>
+      )}
+
        <div>
         <button onClick={() => handleClick('administrador')} disabled={esAdministrador}>
         Administrador
@@ -97,6 +90,7 @@ function App() {
       <button onClick={() => handleClick('usuario')} disabled={esUsuario}>
         Usuario 
       </button>
+      <button onClick={mostrarToken}>VER TOKEN</button>
       </div>
     </div>
   );

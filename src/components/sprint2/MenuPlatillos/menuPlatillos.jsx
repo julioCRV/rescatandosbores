@@ -10,14 +10,18 @@ import '../MenuItem/MenuItem.css'
 
 const MenuPlatillos= () => {
   const [platillos, setPlatillos] = useState([]);
-
-
+  const token=localStorage.getItem('token');
   
 
     useEffect(() => {
       async function fetchPlatillos() {
         try {
-          const response = await fetch(`http://18.116.106.247:3000/all`);
+          const response = await fetch(`http://18.116.106.247:3000/all`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
           if (response.ok) {
             const data = await response.json();
             setPlatillos(data.result);

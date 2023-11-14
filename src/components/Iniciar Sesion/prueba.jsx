@@ -1,47 +1,64 @@
-import React, { useState } from 'react';
-import { Menu } from 'antd';
-import { MailOutlined, AppstoreOutlined } from '@ant-design/icons';
+import React, { useState, useEffect } from 'react';
 
-const { SubMenu } = Menu;
+const Prueba = () => {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
 
-const App = () => {
-  const [submenu1Visible, setSubmenu1Visible] = useState(false);
-  const [submenu2Visible, setSubmenu2Visible] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      // Recuperar el token almacenado
+      const token = localStorage.getItem('token');
 
-  const handleSubmenu1Click = () => {
-    setSubmenu1Visible(!submenu1Visible);
-    // Asegurarse de que el otro submenu esté cerrado
-    setSubmenu2Visible(false);                                          
-  };
+      // URL de la ruta protegida
+      
+      const rutaProtegidaURL = 'http://18.116.106.247:3000/all';
 
-  const handleSubmenu2Click = () => {
-    setSubmenu2Visible(!submenu2Visible);
-    // Asegurarse de que el otro submenu esté cerrado
-    setSubmenu1Visible(false);
-  };
+      // Configuración de la solicitud
+      const requestOptions = {
+        method: 'GET',  // Método de la solicitud (puedes ajustar según tu API)
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+        },
+      };
+
+      try {
+        const response = await fetch(rutaProtegidaURL, requestOptions);
+
+        if (response.ok) {
+          const responseData = await response.json();
+          setData(responseData);
+        } else if (response.status === 401) {
+          setError('Error de autenticación: Token inválido o expirado');
+          // Puedes redirigir al usuario a la página de inicio de sesión u tomar otra acción.
+        } else {
+          setError(`Error en la solicitud: ${response.statusText}`);
+        }
+      } catch (error) {
+        setError(`Error en la solicitud: ${error.message}`);
+      }
+    };
+
+    fetchData();
+  }, []); // El segundo parámetro [] indica que este efecto se ejecutará solo una vez, equivalente al componentDidMount en una clase.
 
   return (
-    <Menu mode="horizontal">
-      <SubMenu
-       
-        icon={<MailOutlined />}
-        onTitleClick={handleSubmenu1Click}
-        visible={submenu1Visible}
-      >
-        <Menu.Item >Opción 1</Menu.Item>
-        <Menu.Item>Opción 2</Menu.Item>
-      </SubMenu>
-      <SubMenu
-     
-        icon={<AppstoreOutlined />}
-        onTitleClick={handleSubmenu2Click}
-        visible={submenu2Visible}
-      >
-        <Menu.Item >Opción 3</Menu.Item>
-        <Menu.Item >Opción 4</Menu.Item>
-      </SubMenu>
-    </Menu>
+    <div>
+      {data && (
+        <div>
+          <h2>Respuesta del servidor:</h2>
+          <pre>{JSON.stringify(data, null, 2)}</pre>
+        </div>
+      )}
+
+      {error && (
+        <div>
+          <h2>Error:</h2>
+          <p>{error}</p>
+        </div>
+      )}
+    </div>
   );
 };
 
-export default App;
+export default Prueba;

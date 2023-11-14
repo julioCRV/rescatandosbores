@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 // Material UI Imports
 import {
@@ -102,6 +104,68 @@ export default function Login() {
     setSuccess("Form Submitted Successfully");
   };
 
+  const handleLogin = async () => {
+    const url = 'http://18.116.106.247:3000/login';
+    const datos = new FormData();
+    datos.append("usuario", username);
+    datos.append("contrasenia", password);
+
+    console.log(datos.get("usuario"));
+    console.log(datos.get("contrasenia"));
+    const credentials = {
+      email: datos.get("usuario"),
+      password: datos.get("contrasenia"),
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setToken(data.token);
+        // Almacenamiento del token después del inicio de sesión
+        localStorage.setItem('token', data.token);
+
+        //console.log('Token recibido:', data.token);
+
+        // Puedes hacer algo con el token, como almacenarlo en el estado o en localStorage
+      } else {
+        const errorData = await response.json();
+        console.error('Error al iniciar sesión:', errorData.message);
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+    }
+  };
+
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [token, setToken] = useState();
+
+  useEffect(() => {
+    if (token) {
+      console.log(token);
+      var valoresToken = JSON.parse(atob(token.split('.')[1]));
+      console.log(valoresToken);
+      console.log(valoresToken.email);
+      console.log(valoresToken.rol);
+      const user = { username: valoresToken.email, role: valoresToken.rol, token: token};
+      handleLogin(user);
+      if (valoresToken.rol === 'administrador') {
+        console.log('Inicio de sesión como Administrador');
+      } else if (valoresToken.rol === 'usuario') {
+        console.log('Inicio de sesión como Usuario');
+      }
+    }
+  }, [token]);
+
   return (
     <div>
       <div style={{ marginTop: "5px" }}>
@@ -116,9 +180,7 @@ export default function Login() {
           InputProps={{}}
           size="small"
           onBlur={handleEmail}
-          onChange={(event) => {
-            setEmailInput(event.target.value);
-          }}
+          onChange={(e) => setUsername(e.target.value)} 
         />
       </div>
       <div style={{ marginTop: "5px" }}>
@@ -134,9 +196,7 @@ export default function Login() {
             onBlur={handlePassword}
             id="standard-adornment-password"
             type={showPassword ? "text" : "password"}
-            onChange={(event) => {
-              setPasswordInput(event.target.value);
-            }}
+            onChange={(e) => setPassword(e.target.value)}
             value={passwordInput}
             endAdornment={
               <InputAdornment position="end">
@@ -162,15 +222,21 @@ export default function Login() {
         Recordar
       </div>
 
-      <div style={{ marginTop: "10px" }}>
+      <div style={{ marginTop: "15px" }}>
+      <Link to="/">
         <Button
           variant="contained"
           fullWidth
           startIcon={<LoginIcon />}
-          onClick={handleSubmit}
+          //onClick={handleSubmit}
+          onClick={handleLogin}
         >
-          INICIAR SESIÓN
+          Iniciar sesión
         </Button>
+        </Link>
+        <Link to="/">
+      <button>Salir</button>
+    </Link>
       </div>
 
       {/* Show Form Error if any */}
