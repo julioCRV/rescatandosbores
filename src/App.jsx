@@ -38,7 +38,12 @@ function App() {
   const token=localStorage.getItem('token');
 
   const mostrarToken = () => {
-    console.log('AQUI EL TOKEN',token)
+    console.log('AQUI EL TOKEN',token);
+    // Recuperar la constante de localStorage y convertirla de nuevo a su formato original
+const miConstanteRecuperada = JSON.parse(localStorage.getItem('email'));
+
+console.log('AAAAAAAAAAAAAAAAAAAA',miConstanteRecuperada); // Mostrará el objeto original
+
   }
 
    const [enPaginaIniciarSesion, setEnPaginaIniciarSesion] = useState(false);
@@ -90,7 +95,7 @@ function App() {
       <button onClick={() => handleClick('usuario')} disabled={esUsuario}>
         Usuario 
       </button>
-      <button onClick={mostrarToken}>VER TOKEN</button>
+      <button >VER TOKEN</button>
       </div>
     </div>
   );

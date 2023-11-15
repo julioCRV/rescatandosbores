@@ -94,21 +94,21 @@ export default function Login() {
     // IF username error is true
     if (usernameError || !usernameInput) {
       setFormValid(
-        "Username is set btw 5 - 15 characters long. Please Re-Enter"
+        "El nombre de usuario se establece entre 5 y 15 caracteres. Por favor vuelva a ingresar"
       );
       return;
     }
 
     // If Email error is true
     if (emailError || !emailInput) {
-      setFormValid("Email is Invalid. Please Re-Enter");
+      setFormValid("El correo electrónico es invalido. Por favor vuelva a ingresar");
       return;
     }
 
     // If Password error is true
     if (passwordError || !passwordInput) {
       setFormValid(
-        "Password is set btw 5 - 20 characters long. Please Re-Enter"
+        "La contraseña se establece entre 5 y 20 caracteres. Por favor vuelva a ingresar"
       );
       return;
     }
@@ -120,7 +120,7 @@ export default function Login() {
     console.log("Password : " + passwordInput);
 
     //Show Successfull Submittion
-    setSuccess("Form Submitted Successfully");
+    setSuccess("Formulario enviado exitosamente");
   };
 
   return (
@@ -220,14 +220,6 @@ export default function Login() {
         </Stack>
       )}
 
-      <div style={{ marginTop: "7px", fontSize: "10px" }} margin="left">
-        <a>Recordar</a>
-        <br />
-        ¿No tienes una cuenta?{" "}
-        <small style={{ textDecoration: "underline", color: "blue" }}>
-          Registrese
-        </small>
-      </div>
     </div>
   );
 }

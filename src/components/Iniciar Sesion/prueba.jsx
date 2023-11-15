@@ -11,7 +11,7 @@ const Prueba = () => {
 
       // URL de la ruta protegida
       
-      const rutaProtegidaURL = 'http://18.116.106.247:3000/all';
+      const rutaProtegidaURL = 'http://18.116.106.247:3000/contarPlatillos';
 
       // Configuración de la solicitud
       const requestOptions = {

@@ -82,14 +82,14 @@ export default function Login() {
 
     // If Email error is true
     if (emailError || !emailInput) {
-      setFormValid("Email is Invalid. Please Re-Enter");
+      setFormValid("El correo electrónico es invalido. Por favor vuelva a ingresar");
       return;
     }
 
     // If Password error is true
     if (passwordError || !passwordInput) {
       setFormValid(
-        "Password is set btw 5 - 20 characters long. Please Re-Enter"
+        "La contraseña se establece entre 5 y 20 caracteres. Por favor vuelva a ingresar"
       );
       return;
     }
@@ -101,14 +101,14 @@ export default function Login() {
     console.log("Remember : " + rememberMe);
 
     //Show Successfull Submittion
-    setSuccess("Form Submitted Successfully");
+    setSuccess("Formulario enviado exitosamente");
   };
 
   const handleLogin = async () => {
     const url = 'http://18.116.106.247:3000/login';
     const datos = new FormData();
-    datos.append("usuario", username);
-    datos.append("contrasenia", password);
+    datos.append("usuario", emailInput);
+    datos.append("contrasenia", passwordInput);
 
     console.log(datos.get("usuario"));
     console.log(datos.get("contrasenia"));
@@ -132,7 +132,7 @@ export default function Login() {
         // Almacenamiento del token después del inicio de sesión
         localStorage.setItem('token', data.token);
 
-        //console.log('Token recibido:', data.token);
+        console.log('Token recibido:', data.token);
 
         // Puedes hacer algo con el token, como almacenarlo en el estado o en localStorage
       } else {
@@ -143,10 +143,6 @@ export default function Login() {
       console.error('Error en la solicitud:', error);
     }
   };
-
-
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [token, setToken] = useState();
 
   useEffect(() => {
@@ -156,6 +152,7 @@ export default function Login() {
       console.log(valoresToken);
       console.log(valoresToken.email);
       console.log(valoresToken.rol);
+      localStorage.setItem('email', JSON.stringify(valoresToken.email));
       const user = { username: valoresToken.email, role: valoresToken.rol, token: token};
       handleLogin(user);
       if (valoresToken.rol === 'administrador') {
@@ -165,6 +162,11 @@ export default function Login() {
       }
     }
   }, [token]);
+
+  const submitYlogin = () => {
+    handleSubmit();
+    handleLogin();
+  };
 
   return (
     <div>
@@ -180,7 +182,10 @@ export default function Login() {
           InputProps={{}}
           size="small"
           onBlur={handleEmail}
-          onChange={(e) => setUsername(e.target.value)} 
+          /*onChange={(e) => setUsername(e.target.value)} */
+          onChange={(event) => {
+            setEmailInput(event.target.value);
+          }}
         />
       </div>
       <div style={{ marginTop: "5px" }}>
@@ -196,7 +201,10 @@ export default function Login() {
             onBlur={handlePassword}
             id="standard-adornment-password"
             type={showPassword ? "text" : "password"}
-            onChange={(e) => setPassword(e.target.value)}
+            /*onChange={(e) => setPassword(e.target.value)}*/
+            onChange={(event) => {
+              setPasswordInput(event.target.value)
+            }}
             value={passwordInput}
             endAdornment={
               <InputAdornment position="end">
@@ -223,17 +231,16 @@ export default function Login() {
       </div>
 
       <div style={{ marginTop: "15px" }}>
-      <Link to="/">
+      {/*<Link to="/">**/}
         <Button
           variant="contained"
           fullWidth
           startIcon={<LoginIcon />}
-          //onClick={handleSubmit}
-          onClick={handleLogin}
+          onClick={submitYlogin}
         >
           Iniciar sesión
         </Button>
-        </Link>
+       {/*  </Link>*/}
         <Link to="/">
       <button>Salir</button>
     </Link>
@@ -256,15 +263,6 @@ export default function Login() {
           </Alert>
         </Stack>
       )}
-
-      <div style={{ marginTop: "7px", fontSize: "10px" }} margin="left">
-        <a>Recuperar contraseña</a>
-        <br />
-        ¿No tienes una cuenta?{" "}
-        <small style={{ textDecoration: "underline", color: "blue" }}>
-          Restrese
-        </small>
-      </div>
     </div>
   );
 }

@@ -19,13 +19,14 @@ const MenuPlatillos= () => {
           const response = await fetch(`http://18.116.106.247:3000/all`,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+              'Authorization': `${token}`,
             },
           });
           if (response.ok) {
             const data = await response.json();
             setPlatillos(data.result);
-            console.log(platillos);
+            //console.log(platillos);
           } else {
             console.error('Error al obtener platillos');
           }
@@ -44,7 +45,7 @@ const MenuPlatillos= () => {
       <div className="menuList">
       
         {platillos.map((menuItemLista, key) => {
-          console.log(key);
+          //console.log(key);
           return (
             <MenuItemLista
               key={key} 

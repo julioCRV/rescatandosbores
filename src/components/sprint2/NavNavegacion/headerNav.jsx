@@ -10,7 +10,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCircleUser} from '@fortawesome/free-regular-svg-icons'
 import BLogin from '../../Iniciar Sesion/login'
 import BLogout from '../../Iniciar Sesion/logout'
-import Profile from '../../Iniciar Sesion/Profile'
+
 
 //Es el mismo Nav de navegacion, se le quito el submenu de platillos tradicionales
 const { Header, Footer } = Layout;
@@ -38,6 +38,7 @@ const App2 = () => {
     // Asegurarse de que el otro submenu esté cerrado
     setSubmenu1Visible(false);
   };
+  const miEmail = JSON.parse(localStorage.getItem('email'));
 
   return (
     <Layout className="layout">
@@ -77,9 +78,12 @@ const App2 = () => {
             icon={<FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30 }}/>}
             onTitleClick={handleSubmenu2Click}
             visible={submenu2Visible}>
-             <Profile/>
+         
              <Menu.Item  style={{ textAlign: 'center', }}>
+                  <div>
                   <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30, alignItems: 'center' }} />
+                  {miEmail}
+                  </div>
              </Menu.Item>
              <Menu.Item> <BLogin/> </Menu.Item>
              <Menu.Item> <BLogout/> </Menu.Item>

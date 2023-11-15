@@ -17,6 +17,7 @@ function MyForm() {
   const [imageModalVisible, setImageModalVisible] = useState(false);
   const [videoModalVisible, setVideoModalVisible] = useState(false);
   const [cancelModalVisible, setCancelModalVisible] = useState(false);
+  const token=localStorage.getItem('token');
 
   const showModal = () => {
     setCancelModalVisible(true);
@@ -92,6 +93,13 @@ function MyForm() {
     height: '30px', // Tamaño en píxeles
   };
 
+  const axiosConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`,
+    }
+  };
+
 const onFinish = async (values) => {
   console.log('Finaliza el formulario');
   console.log(values);
@@ -112,6 +120,7 @@ const onFinish = async (values) => {
     const response = await axios.post('http://18.116.106.247:3000/registrarPlatillo', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
+        'Authorization': `${token}`,
       },
     });
     console.log('Llega la llamada');

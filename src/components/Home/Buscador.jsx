@@ -21,13 +21,19 @@ const Buscador  = ({ onSearch }) => {
     const [autoCompleteValue, setAutoCompleteValue] = useState("");
     const [cantPlatillos, setCantPlatillos] = useState("");
     const [errorMessage, setErrorMessage] = useState('');
-
+    const token=localStorage.getItem('token');
 
     useEffect(() => {
+
       async function fetchPlatillos2() {
-        
         try {
-          const response = await fetch(`http://18.116.106.247:3000/buscarPlatillo?titulo=${searchedText}`);
+          const response = await fetch(`http://18.116.106.247:3000/buscarPlatillo?titulo=${searchedText}`,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `${token}`,
+            },
+          });
           if (response.ok) {
             const data = await response.json();
             setPlatillos(data.result);

@@ -27,10 +27,18 @@ const Recipe = () => {
     identificador: '',
   });
   const [platillos, setPlatillos] = useState([]);
+  const token=localStorage.getItem('token');
+  
+  const axiosConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`,
+    }
+  };
 
   useEffect(() => {
     console.log('realizando llamada');
-    axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${id}`)
+      axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${id}`, axiosConfig)
       .then((response) => {
         console.log(response.data.respuesta);
         const platillo = response.data.respuesta;
@@ -40,6 +48,7 @@ const Recipe = () => {
           imagen: platillo.imagen,
           identificador: platillo.id,
           video: platillo.video,
+      
         });
       })
       .catch((error) => {
@@ -47,7 +56,9 @@ const Recipe = () => {
         console.error('Error al obtener el platillo:', error);
       });
   }, [id]);
-
+if (!platilloData){
+  return <p>Cargando..</p>;
+}
 console.log(platilloData.imagen)
   return (
     
