@@ -13,7 +13,7 @@ function App() {
   const [mostrarLogin, setMostrarLogin] = useState(false);
 
 
-  const [esAdministrador, setAdministrador] = useState(false);
+  const [esAdministrador, setAdministrador] = useState(true);
   const [esUsuarioSincuenta, setUsuarioSincuenta] = useState(false);
   const [esUsuario, setUsuario] = useState(false);
 
@@ -42,7 +42,7 @@ function App() {
     // Recuperar la constante de localStorage y convertirla de nuevo a su formato original
 const miConstanteRecuperada = JSON.parse(localStorage.getItem('email'));
 
-console.log('AAAAAAAAAAAAAAAAAAAA',miConstanteRecuperada); // Mostrará el objeto original
+console.log('CORREOOOOOO',miConstanteRecuperada); // Mostrará el objeto original
 
   }
 
@@ -95,7 +95,7 @@ console.log('AAAAAAAAAAAAAAAAAAAA',miConstanteRecuperada); // Mostrará el objet
       <button onClick={() => handleClick('usuario')} disabled={esUsuario}>
         Usuario 
       </button>
-      <button >VER TOKEN</button>
+      <button onClick={mostrarToken}>VER TOKEN</button>
       </div>
     </div>
   );

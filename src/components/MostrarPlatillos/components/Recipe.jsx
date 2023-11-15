@@ -26,7 +26,6 @@ const Recipe = () => {
     imagen: '',
     identificador: '',
   });
-  const [platillos, setPlatillos] = useState([]);
   const token=localStorage.getItem('token');
   
   const axiosConfig = {
@@ -40,7 +39,7 @@ const Recipe = () => {
     console.log('realizando llamada');
       axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${id}`, axiosConfig)
       .then((response) => {
-        console.log(response.data.respuesta);
+        //console.log('Aquiiiiiiiii',response.data.respuesta);
         const platillo = response.data.respuesta;
         setPlatilloData({
           nombre: platillo.nombre,
@@ -56,10 +55,10 @@ const Recipe = () => {
         console.error('Error al obtener el platillo:', error);
       });
   }, [id]);
-if (!platilloData){
-  return <p>Cargando..</p>;
-}
-console.log(platilloData.imagen)
+
+  //console.log(platilloData.imagen)
+  //console.log(platilloData)
+
   return (
     
       <div className='reciForma'>
@@ -87,11 +86,11 @@ console.log(platilloData.imagen)
             <ModalConfirmation id={platilloData.identificador} nombre={platilloData.nombre} />
           </div>
           </div>
-        <div className='recipe-video'>
+      
+          <div className='recipe-video'>
             <h1></h1>
             <ReactPlayer  url={uri + 'video/' + platilloData.video} controls={true}  width="300px" height="240px"  playing={true} /> {/*Se modifico el width y borro el width ademas de que se subio los botoenes */}
         </div>
-     
       </div>
     </div>
 

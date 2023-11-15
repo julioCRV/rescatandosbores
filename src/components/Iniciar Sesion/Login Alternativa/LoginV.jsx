@@ -110,8 +110,8 @@ export default function Login() {
     datos.append("usuario", emailInput);
     datos.append("contrasenia", passwordInput);
 
-    console.log(datos.get("usuario"));
-    console.log(datos.get("contrasenia"));
+    //console.log(datos.get("usuario"));
+    //console.log(datos.get("contrasenia"));
     const credentials = {
       email: datos.get("usuario"),
       password: datos.get("contrasenia"),
@@ -132,7 +132,7 @@ export default function Login() {
         // Almacenamiento del token después del inicio de sesión
         localStorage.setItem('token', data.token);
 
-        console.log('Token recibido:', data.token);
+        //console.log('Token recibido:', data.token);
 
         // Puedes hacer algo con el token, como almacenarlo en el estado o en localStorage
       } else {
@@ -147,11 +147,11 @@ export default function Login() {
 
   useEffect(() => {
     if (token) {
-      console.log(token);
+      //console.log(token);
       var valoresToken = JSON.parse(atob(token.split('.')[1]));
-      console.log(valoresToken);
-      console.log(valoresToken.email);
-      console.log(valoresToken.rol);
+      //console.log(valoresToken);
+      //console.log(valoresToken.email);
+      //console.log(valoresToken.rol);
       localStorage.setItem('email', JSON.stringify(valoresToken.email));
       const user = { username: valoresToken.email, role: valoresToken.rol, token: token};
       handleLogin(user);

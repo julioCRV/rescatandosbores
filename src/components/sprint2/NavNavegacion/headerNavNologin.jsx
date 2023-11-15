@@ -8,7 +8,6 @@ import { Content } from 'antd/es/layout/layout';
 import Buscador from '../../Home/Buscador';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCircleUser} from '@fortawesome/free-regular-svg-icons'
-import BLogin from '../../Iniciar Sesion/login'
 import BLogout from '../../Iniciar Sesion/logout'
 import Profile from '../../Iniciar Sesion/Profile'
 
@@ -75,7 +74,11 @@ const App2 = () => {
              <Menu.Item  style={{ textAlign: 'center', }}>
                   <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30, alignItems: 'center' }} />
              </Menu.Item>
-             <Menu.Item> <BLogin/> </Menu.Item>
+             <Menu.Item> 
+             <Link  to="/Iniciar-sesion">
+                    <Button  icon={<LoginOutlined />}>Iniciar Sesison</Button>
+                </Link>
+               </Menu.Item>
              <Menu.Item> <BLogout/> </Menu.Item>
            </SubMenu>
 

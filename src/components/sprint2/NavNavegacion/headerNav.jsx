@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Layout, Menu, theme ,Input,Button } from 'antd';
-import { HomeOutlined, UnorderedListOutlined, SearchOutlined,MailOutlined, AppstoreOutlined, MenuOutlined } from '@ant-design/icons'; // Importa los íconos necesarios
+import { HomeOutlined, UnorderedListOutlined, SearchOutlined, LoginOutlined } from '@ant-design/icons'; // Importa los íconos necesarios
 import { Link, useLocation} from 'react-router-dom';
 import Routes from './Routes';
 import './headerNav.css'
 import { Content } from 'antd/es/layout/layout';
-import Buscador from '../../Home/Buscador';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCircleUser} from '@fortawesome/free-regular-svg-icons'
-import BLogin from '../../Iniciar Sesion/login'
 import BLogout from '../../Iniciar Sesion/logout'
 
 
@@ -19,6 +17,8 @@ const { SubMenu } = Menu;
 const App2 = () => {
   const [submenu1Visible, setSubmenu1Visible] = useState(false);
   const [submenu2Visible, setSubmenu2Visible] = useState(false);
+  const [isBotonLogin, setisBotonLogin] = useState(true);
+  const [isBotonLogout, setisBotonLogout] = useState(false);
   const location = useLocation();
 
   const handleSearch = (query) => {
@@ -30,7 +30,7 @@ const App2 = () => {
   const handleSubmenu1Click = () => {
     setSubmenu1Visible(!submenu1Visible);
     // Asegurarse de que el otro submenu esté cerrado
-    setSubmenu2Visible(fa);
+    setSubmenu2Visible(false);
   };
 
   const handleSubmenu2Click = () => {
@@ -38,6 +38,17 @@ const App2 = () => {
     // Asegurarse de que el otro submenu esté cerrado
     setSubmenu1Visible(false);
   };
+
+  const mostrarBotonLL = () =>{
+    if(miEmail!=null){
+      setisBotonLogout(true);
+      setisBotonLogin(false);
+    }
+    if(isBotonLogout){
+      setisBotonLogout(false);
+      setisBotonLogin(true);
+    }
+  }
   const miEmail = JSON.parse(localStorage.getItem('email'));
 
   return (
@@ -79,14 +90,21 @@ const App2 = () => {
             onTitleClick={handleSubmenu2Click}
             visible={submenu2Visible}>
          
-             <Menu.Item  style={{ textAlign: 'center', }}>
-                  <div>
-                  <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30, alignItems: 'center' }} />
-                  {miEmail}
-                  </div>
+             <Menu.Item  style={{ textAlign: 'center', }}>   
+             <div>
+                  <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30, alignItems: 'center' }} /> {miEmail}
+             </div>
              </Menu.Item>
-             <Menu.Item> <BLogin/> </Menu.Item>
-             <Menu.Item> <BLogout/> </Menu.Item>
+             {miEmail ? (
+              <Menu.Item onClick={mostrarBotonLL}> <BLogout/> </Menu.Item>
+             ) :(
+             
+             <Menu.Item> 
+                <Link  to="/Iniciar-sesion">
+                    <Button onClick={mostrarBotonLL} icon={<LoginOutlined />}>Iniciar Sesison</Button>
+                </Link>
+             </Menu.Item>
+             )}
            </SubMenu>
 
             {location.pathname === '/' && (

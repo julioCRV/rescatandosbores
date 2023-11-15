@@ -26,7 +26,6 @@ const MenuPlatillos= () => {
           if (response.ok) {
             const data = await response.json();
             setPlatillos(data.result);
-            //console.log(platillos);
           } else {
             console.error('Error al obtener platillos');
           }

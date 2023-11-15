@@ -1,40 +1,31 @@
 import React,{ useState }  from 'react';
 import { Button } from 'antd';
-import { UserOutlined } from '@ant-design/icons'; 
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faCircleUser} from '@fortawesome/free-regular-svg-icons'
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { Link } from 'react-router-dom';
 
 const ButtonLogout = () => {
-  for (var i = 0; i < localStorage.length; i++) {
-    var key = localStorage.key(i);
-    var value = localStorage.getItem(key);
-  
-    console.log(key + ": " + value);
-  
-  
-    };
 
-  const token=localStorage.getItem('token');
   const removeToken = () => {
-    console.log("Antes de eliminar:", token,localStorage.getItem("token"));
+    const token=localStorage.getItem('token');
+    console.log("Antes de eliminar:", localStorage.getItem("token"), localStorage.getItem("email"));
     localStorage.removeItem('token');
-    console.log("Después de eliminar:", localStorage.getItem("token"));
+    localStorage.removeItem('email');
+    console.log("Después de eliminar:", localStorage.getItem("token"), localStorage.getItem("email"));
+};
 
-    // Recupera todos los elementos almacenados en localStorage
-for (var i = 0; i < localStorage.length; i++) {
-  var key = localStorage.key(i);
-  var value = localStorage.getItem(key);
+  const handleLogout = () => {
+    // Realizar acciones necesarias al cerrar sesión, como remover el token
+    removeToken();
 
-  console.log(key + ": " + value);
-}
-
+   if (location.pathname === '/') {
+      window.location.reload();
+    } 
   };
 
 
-
   return (
-    <Button onClick={removeToken}>Cerrar Sesión</Button>
+    <Link to="/">
+    <Button onClick={handleLogout}>Cerrar Sesión</Button>
+    </Link>
   );
 };
 

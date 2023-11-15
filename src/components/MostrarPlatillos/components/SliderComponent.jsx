@@ -32,7 +32,7 @@ const SliderComponent = () => {
       });
   }, []);
 
-  console.log(Number(id))
+  //console.log(Number(id))
 
   const settings = {
     dots: true,
