@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     height: 70vh;
-    
+/*     background-color: #b07961; */
     /*width: 80%; /* Ancho del contenedor, ajusta según tus necesidades */
     /*max-width: 600px; /* Ancho máximo del contenedor */
     /*height: 70vh; /* Altura del contenedor */
@@ -13,7 +13,6 @@
 .contenedor-Login{
     width: 100%; /* El div ocupa el 80% del ancho de su contenedor */
     max-width: 400px; /* Tamaño máximo del div en anchura */
-    
   }
   
   /* Estilos adicionales para hacer el texto responsive */

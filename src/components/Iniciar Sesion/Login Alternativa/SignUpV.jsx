@@ -159,7 +159,7 @@ export default function Login() {
           }}
         />
       </div>
-      <div style={{ marginTop: "5px" }}>
+      <div style={{ marginTop: "10px" }}>
         <FormControl sx={{ width: "100%" }} variant="standard">
           <InputLabel
             error={passwordError}
@@ -191,14 +191,15 @@ export default function Login() {
         </FormControl>
       </div>
 
-      <div style={{ marginTop: "10px" }}>
+      <div style={{marginTop:"30px"}}>
         <Button
           variant="contained"
           fullWidth
           startIcon={<LoginIcon />}
           onClick={handleSubmit}
+          style={{ textTransform: 'capitalize',backgroundColor:"#b07961",color:"#000"  }}
         >
-          Registrarse
+          registrarse
         </Button>
       </div>
 
