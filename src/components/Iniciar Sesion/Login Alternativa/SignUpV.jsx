@@ -191,6 +191,15 @@ export default function Login() {
         </FormControl>
       </div>
 
+      <div style={{ fontSize: "12px",margin:"10px" }}>
+        <Checkbox
+          {...label}
+          size="small"
+          onChange={(event) => setRememberMe(event.target.checked)}
+        />
+        Recordar
+      </div>
+
       <div style={{marginTop:"30px"}}>
         <Button
           variant="contained"
