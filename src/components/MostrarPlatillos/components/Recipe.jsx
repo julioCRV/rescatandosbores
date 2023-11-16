@@ -29,11 +29,37 @@ const Recipe = () => {
     identificador: '',
   });
   const [platillos, setPlatillos] = useState([]);
-  const [administrador, setadministrador] = useState(false)
-
-  const like = ()=>{
-    setLikeClick(!likeClick);
-  }
+  const [esAdministrador, setAdministrador] = useState(false)
+  const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJjbGllbnRlQGV4YW1wbGUuY29tIiwicm9sIjoiY2xpZW50ZSIsImlhdCI6MTcwMDE0NDMzNywiZXhwIjoxNzAwMTQ1MjM3fQ.Xmtk7FbWCB8lh4ZDIKKzieb4oRpJtUPpadsC-_ul0IA";
+  
+  const axiosConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`,
+    }
+  };
+  const like =  async () => {
+    try {
+      // Realizar la solicitud fetch aquí (reemplaza la URL con tu endpoint)
+      const response = await fetch(`http://18.116.106.247:3000/actualizarCalificacion/${platilloData.identificador}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+        },
+        method: 'PUT',
+    });
+      console.log(response)
+      if (response.ok) {
+        const data = await response.json();
+        setLikeClick(!likeClick);
+        console.log("se cambio el estado " + data.message)
+      } else {
+        console.log("error al calificar platillo")
+      }
+    } catch (error) {
+        console.log(error);
+    } 
+  };
 
   const HeartSvg = () => (
     <svg width="24px" height="24px" fill="currentColor" viewBox="0 0 1024 1024">
@@ -43,9 +69,8 @@ const Recipe = () => {
   const HeartIcon = (props) => <Icon component={HeartSvg} {...props} />;
   useEffect(() => {
     console.log('realizando llamada');
-    axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${id}`)
+    axios.get(`http://18.116.106.247:3000/mostrarPlatillos/page/${id}`, axiosConfig)
       .then((response) => {
-        console.log(response.data.respuesta);
         const platillo = response.data.respuesta;
         setPlatilloData({
           nombre: platillo.nombre,
@@ -60,8 +85,31 @@ const Recipe = () => {
         console.error('Error al obtener el platillo:', error);
       });
   }, [id]);
+  useEffect(() => {
+    async function fetchPlatillos() {
+      try {
+        const response = await fetch(`http://18.116.106.247:3000/obtenerCalificacion/${platilloData.identificador}`, axiosConfig);
+        console.log(response)
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data.ok)
+          data.ok===1 && setLikeClick(true);
 
-console.log(platilloData.imagen)
+        } else {
+          console.error('Error');
+        }
+      } catch (error) {
+        console.error('Error en la solicitud:', error);
+      }
+    }
+    fetchPlatillos()
+  }, [likeClick]);
+  useEffect(() => {
+    console.log(token)
+    var valoresToken = JSON.parse(atob(token.split('.')[1]));
+    valoresToken.rol==='administrador'? setAdministrador(true): setAdministrador(false)
+  }, []);
+
   return (
     
       <div className='reciForma'>
@@ -82,7 +130,7 @@ console.log(platilloData.imagen)
             {!likeClick ? <HeartOutlined className="classHeart " onClick={like}/> : <HeartIcon onClick={like} style={{color:"red",}} className="classHeartLike"/>}
             {//cambiar por admistrador para ver usuario final
             }
-            {!administrador &&            <div className='buttonn'>
+            {esAdministrador===true &&            <div className='buttonn'>
               <Link to={`/editar-platillo/${id}`}>
                 <Button type="primary" onClick={() => console.log('Editar')}>
                 <EditOutlined />
