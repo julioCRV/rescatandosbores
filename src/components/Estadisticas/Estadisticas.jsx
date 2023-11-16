@@ -33,17 +33,29 @@ const dashboard = () => {
     const porcentajeNoRef = useRef(porcentajeNo);
     const [datosMensuales,setDatosMensuales] = useState([]);
 
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbCI6ImFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MDAxMDI0NzcsImV4cCI6MTcwMDEwMzM3N30.UJz588gKtVs0kL1R9UscDVVgp72qx5VnNAVjmh3NNWs'
+  
+        const axiosConfig = {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`,
+          }
+        };
+
     useEffect(() => {
 
-       axios.get('http://18.116.106.247:3000/contarPlatillos')
+        
+
+       axios.get('http://18.116.106.247:3000/contarPlatillos',axiosConfig)
       .then((response) => {
+        console.log(response);
         setCantidadPlatillos(response.data.total_platillos);
       })
       .catch((error) => {
         console.error('Error al obtener los datos:', error);
       });
 
-      axios.get('http://18.116.106.247:3000/obtenerEstadisticas')
+      axios.get('http://18.116.106.247:3000/obtenerEstadisticas',axiosConfig)
       .then((response) => {
         const data = response.data;
         setCantidadUsuarios(data.totalUsuarios.total_usuarios);
@@ -51,7 +63,7 @@ const dashboard = () => {
         const datosLikes = [];
         let cantidadT = 0;
         likes.forEach(like => {
-            cantidadT += like.cantidad_likes;
+            cantidadT += parseInt(like.cantidad_likes);
             datosLikes.push(like.cantidad_likes);
         });
         setCantidadCalificados(cantidadT);
@@ -89,7 +101,7 @@ const dashboard = () => {
     }
 
     const options = {
-        cutout: 35,
+        cutout: 40,
         responsive:true
     }
 
