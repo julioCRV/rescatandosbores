@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { useState } from "react";
-
 import Chip from "@mui/material/Chip";
 import FaceIcon from "@mui/icons-material/Face";
 import Paper from "@mui/material/Paper";
@@ -12,6 +11,7 @@ import Switch from "@mui/material/Switch";
 import Login from "./LoginV";
 import Signup from "./SignUpV";
 import './LoginV2.css'
+import { Box } from '@mui/material';
 
 
 function vistaLogin() {
@@ -49,13 +49,24 @@ function vistaLogin() {
             />
           )}
           <br />
-
+          <Box
+          sx={{
+            '& .MuiSwitch-switchBase.Mui-checked': {
+              color: '#b07961',
+            },
+            '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+              backgroundColor: '#b07961',
+            },
+          }}
+          >
           {<Switch
             checked={checked}
             onChange={handleChange}
             inputProps={{ "aria-label": "controlled" }}
-            color="primary"
+
           />}
+          </Box>
+          
         </div>
 
         {checked ? <Login /> : <Signup />}
