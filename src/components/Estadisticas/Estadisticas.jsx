@@ -153,7 +153,7 @@ const dashboard = () => {
     }
 
     const options = {
-        cutout: 40,
+        cutout: 45,
         responsive:true
     }
 
