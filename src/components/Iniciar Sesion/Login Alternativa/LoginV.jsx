@@ -237,7 +237,7 @@ export default function Login() {
           fullWidth
           startIcon={<LoginIcon />}
           onClick={submitYlogin}
-          style={{ textTransform: 'capitalize',backgroundColor:"#b07961",color:"#000"  }}
+          style={{ textTransform: 'capitalize',backgroundColor:"#66072c"  }}
         >
           Iniciar sesión
         </Button>

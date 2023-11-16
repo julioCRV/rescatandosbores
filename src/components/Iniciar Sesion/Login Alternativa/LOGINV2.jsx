@@ -54,7 +54,7 @@ function vistaLogin() {
             checked={checked}
             onChange={handleChange}
             inputProps={{ "aria-label": "controlled" }}
-            style={{ color: '#b07961'}}
+            color="primary"
           />}
         </div>
 

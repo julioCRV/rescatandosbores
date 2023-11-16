@@ -206,7 +206,7 @@ export default function Login() {
           fullWidth
           startIcon={<LoginIcon />}
           onClick={handleSubmit}
-          style={{ textTransform: 'capitalize',backgroundColor:"#b07961",color:"#000"  }}
+          style={{ textTransform: 'capitalize',backgroundColor:"#66072c" }}
         >
           registrarse
         </Button>
