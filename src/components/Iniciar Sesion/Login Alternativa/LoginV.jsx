@@ -221,7 +221,7 @@ export default function Login() {
         </FormControl>
       </div>
 
-      <div style={{ fontSize: "10px" }}>
+      <div style={{ fontSize: "12px" }}>
         <Checkbox
           {...label}
           size="small"
@@ -237,13 +237,10 @@ export default function Login() {
           fullWidth
           startIcon={<LoginIcon />}
           onClick={submitYlogin}
+          style={{ textTransform: 'capitalize',backgroundColor:"#b07961",color:"#000"  }}
         >
           Iniciar sesión
         </Button>
-       {/*  </Link>*/}
-        <Link to="/">
-      <button>Salir</button>
-    </Link>
       </div>
 
       {/* Show Form Error if any */}
