@@ -12,10 +12,18 @@ import './Slider.css'
 const SliderComponent = () => {
   const { id } = useParams();
   const [totalPlatillos, setTotalPlatillos] = useState(0);
+  const token=localStorage.getItem('token');
   
+  const axiosConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`,
+    }
+  };
+
  useEffect(() => {
     // Realizar una solicitud al servidor para obtener la cantidad de platillos registrados
-    axios.get('http://18.116.106.247:3000/contarPlatillos')
+    axios.get('http://18.116.106.247:3000/contarPlatillos', axiosConfig)
       .then((response) => {
         setTotalPlatillos(response.data.total_platillos);
       })
@@ -24,7 +32,7 @@ const SliderComponent = () => {
       });
   }, []);
 
-  console.log(Number(id))
+  //console.log(Number(id))
 
   const settings = {
     dots: true,

@@ -6,11 +6,18 @@ import { useState, useEffect } from 'react';
 
 function MenuItem({ image, name, pagina, id}) {
   const [pagid, setPagid] = useState(null); // Inicializa platillos como null o 0, según lo que sea más apropiado para tu caso
+  const token=localStorage.getItem('token');
 
   useEffect(() => {
     async function fetchPlatillos() {
       try {
-        const response = await fetch(`http://18.116.106.247:3000/obtener_pagina/${pagina}`);
+        const response = await fetch(`http://18.116.106.247:3000/obtener_pagina/${pagina}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}`,
+          },
+        });
 
         if (response.ok) {
           const data = await response.json();

@@ -1,6 +1,6 @@
 import React from 'react'
 import './BannerPresentacion.css'
-import ListaPlatillos from '../../sprint2/MenuPlatillos/menuPlatillos'
+import ListaPlatillos from '../../MenuPlatillos/menuPlatillos'
 //import ListaPlatillos from '../../sprint2/ListaPlatillos/ListaPlatillos'
 
 

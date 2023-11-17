@@ -1,4 +1,4 @@
-.reciForma {
+¿.reciForma {
   width: 90%;
   margin: 0 auto;
   padding: 20px;
@@ -61,9 +61,20 @@
   display: flex;
   align-self: center;
   gap: 8px;
-  margin-top: -25px;
+  margin-top: -24px;
+  flex-direction: column;
+  justify-content: center;
 }
 
+.recipe-buttons .anticon{
+  display: inline;
+}
+
+.buttonn{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
 
 .edit-button:hover,
@@ -89,12 +100,15 @@
   }
   .recipe-buttons{
     order:2;
-    flex:1;
+    flex: 0.5;
     margin-top: 0 ;
     margin:0 auto;
     display: flex;
     justify-content: center;
     
+  }
+  .buttonn{
+    align-self: center;
   }
   .recipe-image{
     order: 2;
@@ -121,5 +135,12 @@
   }
   .recipe-text{
     width: 100%;
+  }
+  .recipe-buttons{
+    flex-direction: row;
+    align-items: center;
+  }
+  .buttonn{
+    flex-direction: row;
   }
 }

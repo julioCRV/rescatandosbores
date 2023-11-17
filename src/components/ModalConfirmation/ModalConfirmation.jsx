@@ -8,6 +8,8 @@ export const ModalConfirmation = ({id, nombre}) => {
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [modalText, setModalText] = useState("");
+    const token=localStorage.getItem('token');
+
     useEffect(() => {
       setModalText(`¿Está seguro que desea eliminar ${nombre}?`);
     }, [nombre]);
@@ -20,9 +22,13 @@ export const ModalConfirmation = ({id, nombre}) => {
       setConfirmLoading(true);
       try {
         // Realizar la solicitud fetch aquí (reemplaza la URL con tu endpoint)
-        const response = await fetch(`http://18.116.106.247:3000/eliminarPlatillo/${id}`, {
+        const response = await fetch(`http://18.116.106.247:3000/eliminarPlatillo/${id}`,{
           method: 'DELETE',
-        });
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `${token}`,
+            },
+          });
   
         if (response.ok) {
           setOpen(false);

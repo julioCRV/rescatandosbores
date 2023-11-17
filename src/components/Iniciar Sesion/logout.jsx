@@ -1,22 +1,36 @@
 import React,{ useState }  from 'react';
 import { Button } from 'antd';
-import { UserOutlined } from '@ant-design/icons'; 
+import { Link } from 'react-router-dom';
 
-import { useAuth0 } from '@auth0/auth0-react';
+const ButtonLogout = () => {
 
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faCircleUser} from '@fortawesome/free-regular-svg-icons'
-import { library } from '@fortawesome/fontawesome-svg-core';
+  const removeToken = () => {
+    const token=localStorage.getItem('token');
+    console.log("Antes de eliminar:", localStorage.getItem("token"), localStorage.getItem("email"));
+    localStorage.removeItem('token');
+    const recordar = localStorage.getItem('recordar');
+    if(recordar=='no'){
+      localStorage.removeItem('email');
+    }
+    console.log("Después de eliminar:", localStorage.getItem("token"), localStorage.getItem("email"));
+};
 
-const AuthButton = () => {
-  const {logout} = useAuth0();
+  const handleLogout = () => {
+    // Realizar acciones necesarias al cerrar sesión, como remover el token
+    removeToken();
 
+   if (location.pathname === '/') {
+      window.location.reload();
+    } 
+  };
 
 
   return (
-    <Button  onClick={() => logout()}>Cerrar Sesión</Button>
-    
+    <Link to="/">
+    <Button onClick={handleLogout}>Cerrar Sesión</Button>
+    </Link>
   );
 };
 
-export default AuthButton;
+
+export default ButtonLogout;

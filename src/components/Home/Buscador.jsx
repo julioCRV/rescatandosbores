@@ -3,10 +3,9 @@ import React, { useEffect, useState ,useRef } from 'react';
 import axios from 'axios';
 import { Input, Button, AutoComplete, Space} from 'antd';
 import './Home.css'
-import { Link, useLocation } from 'react-router-dom';
-import MenuItem from '../sprint2/MenuItem/MenuItem'
-import '../sprint2/MenuItem/MenuItem.css'
-import { HistoryOutlined, SearchOutlined, CloseOutlined,CloseCircleOutlined, CloseSquareFilled } from '@ant-design/icons';
+import MenuItem from '../MenuItem/MenuItem'
+import '../MenuItem/MenuItem.css'
+import { HistoryOutlined, SearchOutlined, CloseOutlined} from '@ant-design/icons';
 import './Buscador.css'
 
 const Buscador  = ({ onSearch }) => {
@@ -21,13 +20,19 @@ const Buscador  = ({ onSearch }) => {
     const [autoCompleteValue, setAutoCompleteValue] = useState("");
     const [cantPlatillos, setCantPlatillos] = useState("");
     const [errorMessage, setErrorMessage] = useState('');
-
+    const token=localStorage.getItem('token');
 
     useEffect(() => {
+
       async function fetchPlatillos2() {
-        
         try {
-          const response = await fetch(`http://18.116.106.247:3000/buscarPlatillo?titulo=${searchedText}`);
+          const response = await fetch(`http://18.116.106.247:3000/buscarPlatillo?titulo=${searchedText}`,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `${token}`,
+            },
+          });
           if (response.ok) {
             const data = await response.json();
             setPlatillos(data.result);
