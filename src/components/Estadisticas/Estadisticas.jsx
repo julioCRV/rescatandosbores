@@ -34,7 +34,7 @@ const dashboard = () => {
     const [datosMensuales,setDatosMensuales] = useState([]);
 
     const fetchData = async () => {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbCI6ImFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MDAxNDY3NDcsImV4cCI6MTcwMDE0NzY0N30.T0W4bXuw867q89o-HBEYVfDtB54qfyOXgCo2Rv6MSyI';
+        const token = localStorage.getItem('token');
   
         const axiosConfig = {
             headers: {
@@ -83,58 +83,6 @@ const dashboard = () => {
         porcentajeSiRef.current = porcentajeSi;
         porcentajeNoRef.current = porcentajeNo;
     },);
-    
-    /*
-    useEffect(() => {
-        
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbCI6ImFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MDAxNDU3NjAsImV4cCI6MTcwMDE0NjY2MH0.0iL7hIR58V4SOfzHCY0S25J76qNXg_A6znA1kC1VoG4';
-  
-    const axiosConfig = {
-        headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `${token}`,
-        }
-    };
-        
-    const fetchData = async () =>{
-        try{
-            const responsePlatillos = await axios.get('http://18.116.106.247:3000/contarPlatillos', axiosConfig);
-            setCantidadPlatillos(responsePlatillos.data.total_platillos);
-
-            const responseEstadisticas = await axios.get('http://18.116.106.247:3000/obtenerEstadisticas', axiosConfig);
-            console.log(responseEstadisticas);
-            const data = responseEstadisticas.data;
-            setCantidadUsuarios(data.totalUsuarios.total_usuarios);
-            const likes = data.likesMes;
-            const datosLikes = [];
-            let cantidadT = 0;
-            likes.forEach(like => {
-                cantidadT += parseInt(like.cantidad_likes);
-                datosLikes.push(like.cantidad_likes);
-            });
-            setCantidadCalificados(cantidadT);
-            setDatosMensuales(datosLikes);
-            setTotalCalificaciones(cantidadUsuarios*cantidadPlatillos);
-        
-            const porcentajeSiCalculado = (cantidadCalificados/totalCalificaciones)*100;
-            setPorcentajeSi(Number(porcentajeSiCalculado.toFixed(2)));
-            
-            const porcentajeNoCalculado = (totalCalificaciones-cantidadCalificados)/totalCalificaciones*100;
-            setPorcentajeNo(Number(porcentajeNoCalculado.toFixed(2)));
-            
-            porcentajeSiRef.current = porcentajeSi;
-            porcentajeNoRef.current = porcentajeNo;
-
-        }catch (error){
-            console.error('Error al obtener los datos: ',error);
-        }
-    };
-
-    fetchData();
-
-       
-        
-    });*/
 
     const dataSi = {
         datasets: [{
@@ -272,7 +220,7 @@ const dashboard = () => {
             </div>
 
             <div className="calificacionesEst">
-                <h3>Calificaciones Mensuales de 2023</h3>
+                <h3>Calificaciones Mensuales de {new Date().getFullYear()}</h3>
                 <div className='contenedorGrafico'>
                     <Line data={dataAnual} options={optionAnual}></Line>
                     <p className='cantidad'>Total: {cantidadCalificados}</p>
