@@ -13,7 +13,7 @@ import {
   Alert,
   Stack,
 } from "@mui/material";
-
+import './signUp.css'
 // Material UI Icon Imports
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -124,7 +124,7 @@ export default function Login() {
   const handleLogin = async () => {
     const url = 'http://18.116.106.247:3000/registro';
     const datos = new FormData();
-    datos.append("ident", 25);
+    datos.append("ident", 12);
     datos.append("usuario", usernameInput);
     datos.append("correo", emailInput);
     datos.append("contrasenia", passwordInput);

@@ -9,6 +9,7 @@ import MostrarPlatillos from '../../components/MostrarPlatillos/mostrarPlatillos
 import EditarPlatillos from '../../components/EditarPlatillo/EditarPlatillo'
 import Login from "../../components/Iniciar Sesion/Login Alternativa/LOGINV2"
 import Estadisticas from '../../components/Estadisticas/Estadisticas'
+import Recuperar from '../../components/Iniciar Sesion/Login Alternativa/recuperar'
 
 function Router() {
     return (
@@ -20,7 +21,8 @@ function Router() {
             <Route path='/registrar-platillo' element={<MyForm/>}/>
             <Route path='/mostrar-platillo/page/:id' element={<MostrarPlatillos/>}/>
             <Route path='/editar-platillo/:id' element={<EditarPlatillos/>}/>
-            <Route path='/Iniciar-sesion' element={<Login/>}/>
+            <Route path='/iniciar-sesion' element={<Login/>}/>
+            <Route path='/recuperar' element={<Recuperar/>}/>
         </Routes>
     );
 } 

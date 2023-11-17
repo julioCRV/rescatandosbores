@@ -6,7 +6,7 @@ const ButtonLogout = () => {
 
   const removeToken = () => {
     const token=localStorage.getItem('token');
-    console.log("Antes de eliminar:", localStorage.getItem("token"), localStorage.getItem("email"));
+    //console.log("Antes de eliminar:", localStorage.getItem("token"), localStorage.getItem("email"));
     localStorage.removeItem('token');
     const recordar = localStorage.getItem('recordar');
     if(recordar=='no'){

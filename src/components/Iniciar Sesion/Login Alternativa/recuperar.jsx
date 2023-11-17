@@ -19,6 +19,7 @@ import {
   Alert,
   Stack,
 } from "@mui/material";
+import './LoginV2.css'
 
 // Material UI Icon Imports
 import Visibility from "@mui/icons-material/Visibility";
@@ -200,7 +201,8 @@ export default function Login() {
   };
   const miToken=localStorage.getItem('token');
   return (
-    <div>
+    <div className='contenedor-Div'>
+        <div>
       <div style={{ marginTop: "5px" }}>
         <TextField
           label="Correo electrónico"
@@ -278,12 +280,6 @@ export default function Login() {
         </Link>
       </div>
 
-      <div style={{ marginTop: "15px" }}>
-      <Link to='/recuperar'>
-            olvido su contraseña
-        </Link>
-      </div>
-
       {/* Show Form Error if any */}
       {formValid && (
         <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
@@ -301,6 +297,7 @@ export default function Login() {
           </Alert>
         </Stack>
       )}
+      </div>
     </div>
   );
 }
