@@ -87,20 +87,23 @@ const Recipe = () => {
       try {
         const response = await fetch(`http://18.116.106.247:3000/obtenerCalificacion/${platilloData.identificador}`, axiosConfig);
         console.log(response)
-        if (response.ok) {
+        if (response.status=="200") {
           const data = await response.json();
           console.log(data.ok)
-          data.ok===1 && setLikeClick(true);
+          console.log("exito al obtener calificacion")
+          data.ok==1 && setLikeClick(true)
 
         } else {
-          console.error('Error');
+          setLikeClick(false)
+          console.log("1 respuesta")
+          console.error('Errores');
         }
       } catch (error) {
         console.error('Error en la solicitud:', error);
       }
     }
     fetchPlatillos()
-  }, [likeClick]);
+  }, []);
   useEffect(() => {
     console.log(token)
     var valoresToken = JSON.parse(atob(token.split('.')[1]));
