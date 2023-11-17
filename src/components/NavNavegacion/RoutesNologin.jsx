@@ -2,12 +2,12 @@ import Reac, {useState} from 'react';
 import {Routes, Route} from 'react-router-dom';
 
 import Menu from '../MenuPlatillos/menuPlatillos';
-import Home from '../../Home/BannerPresentacion/BannerPresentacion';
-import Buscador from '../../Home/Buscador'
-import MyForm from '../../RegistroPlatillo/registrarPlatillo';
-import MostrarPlatillos from '../../MostrarPlatillos/mostrarPlatillos';
-import EditarPlatillos from '../../EditarPlatillo/EditarPlatillo'
-import Login from "../../Iniciar Sesion/Login Alternativa/LOGINV2"
+import Home from '../Home/BannerPresentacion/BannerPresentacion';
+import Buscador from '../Home/Buscador'
+import MyForm from '../RegistroPlatillo/registrarPlatillo';
+import MostrarPlatillos from '../MostrarPlatillos/mostrarPlatillos';
+import EditarPlatillos from '../EditarPlatillo/EditarPlatillo'
+import Login from "../Iniciar Sesion/Login Alternativa/LOGINV2"
 
 function Router() {
     return (

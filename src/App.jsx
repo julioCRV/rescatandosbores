@@ -7,34 +7,12 @@ import { BrowserRouter as Router, Route,Routes, Link, Navigate } from 'react-rou
 import ViewNologin from './views/vistaInicioUsuarioNoLogIn'
 import ViewLogin from './views/vistaInicioUsuarioLogin'
 import ViewAdmin from './views/vistaInicioAdmin'
-import Pr from './components/Iniciar Sesion/prueba'
 
 function App() {
   const [mostrarLogin, setMostrarLogin] = useState(false);
 
 
   const [esAdministrador, setAdministrador] = useState(true);
-  const [esUsuarioSincuenta, setUsuarioSincuenta] = useState(false);
-  const [esUsuario, setUsuario] = useState(false);
-
-  const handleClick = (tipo) => {
-    if (tipo === 'administrador') {
-      setAdministrador(true);
-      setUsuarioSincuenta(false);
-      setUsuario(false);
-    } else if (tipo === 'usuarioSincuenta') {
-      setAdministrador(false);
-      setUsuarioSincuenta(true);
-      setUsuario(false);
-    } else if (tipo === 'usuario') {
-      setAdministrador(false);
-      setUsuarioSincuenta(false);
-      setUsuario(true);
-    }
-  };
-
-
-
   const token=localStorage.getItem('token');
 
   const mostrarToken = () => {
@@ -46,12 +24,11 @@ console.log('CORREOOOOOO',miConstanteRecuperada); // Mostrará el objeto origina
 
   }
 
-   const [enPaginaIniciarSesion, setEnPaginaIniciarSesion] = useState(false);
 
   return (
     
     <div>
-      {esUsuarioSincuenta ? (
+      {/*{esUsuarioSincuenta ? (
         <Router>
         <div className="App">
         <ViewNologin /> 
@@ -61,18 +38,9 @@ console.log('CORREOOOOOO',miConstanteRecuperada); // Mostrará el objeto origina
       ) : (
         <div>
         </div>
-      )}
+      )}*/}
 
-      {esUsuario ? (
-        <Router>
-       <div className="App">
-        <ViewLogin /> 
-      </div>
-        </Router>
-      ) : (
-        <div>
-        </div>
-      )} 
+  
 
 {esAdministrador ? (
         <Router>
@@ -85,18 +53,6 @@ console.log('CORREOOOOOO',miConstanteRecuperada); // Mostrará el objeto origina
         </div>
       )}
 
-       <div>
-        <button onClick={() => handleClick('administrador')} disabled={esAdministrador}>
-        Administrador
-      </button>
-      <button onClick={() => handleClick('usuarioSincuenta')} disabled={esUsuarioSincuenta}>
-        Usuario Sin cuenta
-      </button>
-      <button onClick={() => handleClick('usuario')} disabled={esUsuario}>
-        Usuario 
-      </button>
-      <button onClick={mostrarToken}>VER TOKEN</button>
-      </div>
     </div>
   );
 }

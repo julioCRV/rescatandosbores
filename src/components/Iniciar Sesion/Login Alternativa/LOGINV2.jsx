@@ -24,11 +24,12 @@ function vistaLogin() {
 
   return (
     <div className='contenedor-Div'>
-    <div className='contenedor-Login'>
-        <Paper elevation={3} style={{ padding: "20px", paddingBottom: "150px" }}>
+    <div >
+    <Paper elevation={3} style={{backgroundColor:"#FBDCC4", boxShadow:"0px 4px 8px 0px rgba(0, 0, 0, 0.6)"}} className='contenedorLogin' >
         <div align="center">
           {checked ? (
             <Chip
+            className='DivIniSesion'
               icon={<LockIcon />}
               label="Iniciar sesión"
               variant="outlined"
@@ -36,6 +37,7 @@ function vistaLogin() {
             />
           ) : (
             <Chip
+            className='DivIniSesion'
               icon={<FaceIcon />}
               label="Registrarse"
               variant="outlined"

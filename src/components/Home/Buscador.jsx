@@ -3,10 +3,9 @@ import React, { useEffect, useState ,useRef } from 'react';
 import axios from 'axios';
 import { Input, Button, AutoComplete, Space} from 'antd';
 import './Home.css'
-import { Link, useLocation } from 'react-router-dom';
-import MenuItem from '../sprint2/MenuItem/MenuItem'
-import '../sprint2/MenuItem/MenuItem.css'
-import { HistoryOutlined, SearchOutlined, CloseOutlined,CloseCircleOutlined, CloseSquareFilled } from '@ant-design/icons';
+import MenuItem from '../MenuItem/MenuItem'
+import '../MenuItem/MenuItem.css'
+import { HistoryOutlined, SearchOutlined, CloseOutlined} from '@ant-design/icons';
 import './Buscador.css'
 
 const Buscador  = ({ onSearch }) => {

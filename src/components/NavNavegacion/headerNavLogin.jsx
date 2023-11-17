@@ -7,7 +7,7 @@ import './headerNav.css'
 import { Content } from 'antd/es/layout/layout';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCircleUser} from '@fortawesome/free-regular-svg-icons'
-import BLogout from '../../Iniciar Sesion/logout'
+import BLogout from '../../components/Iniciar Sesion/logout'
 
 
 //Es el mismo Nav de navegacion, se le quito el submenu de platillos tradicionales
@@ -15,6 +15,9 @@ const { Header, Footer } = Layout;
 const { SubMenu } = Menu;
 
 const App2 = () => {
+  const miToken=localStorage.getItem('token');
+  const miEmail = JSON.parse(localStorage.getItem('email'));
+  console.log(miToken);
   const [submenu1Visible, setSubmenu1Visible] = useState(false);
   const [submenu2Visible, setSubmenu2Visible] = useState(false);
   const [isBotonLogin, setisBotonLogin] = useState(true);
@@ -40,7 +43,8 @@ const App2 = () => {
   };
 
   const mostrarBotonLL = () =>{
-    if(miEmail!=null){
+    console.log(miToken);
+    if(miToken!=null){
       setisBotonLogout(true);
       setisBotonLogin(false);
     }
@@ -49,7 +53,14 @@ const App2 = () => {
       setisBotonLogin(true);
     }
   }
-  const miEmail = JSON.parse(localStorage.getItem('email'));
+
+  function getEmail(){
+  if(miToken!=null){
+    return miEmail;
+  }else{
+    return '';
+  }
+}
 
   return (
     <Layout className="layout">
@@ -72,12 +83,6 @@ const App2 = () => {
               onTitleClick={handleSubmenu1Click}
               visible={submenu1Visible}
               >
-             
-              <Menu.Item key="Registrar Platillo" className={location.pathname === '/registrar-platillo' ? 'selected-menu-item' : ''}>
-                <Link to="/registrar-platillo" className={`${'menu-icon'} ${'prueba'}`}>
-                  Registrar Platillo
-                </Link> 
-              </Menu.Item>
               <Menu.Item key="Mostrar Platillo" className={location.pathname === '/mostrar-platillo/page/1' ? 'selected-menu-item' : ''}>
                 <Link to="/mostrar-platillo/page/1" className={`${'menu-icon'} ${'prueba'}`}>
                   Mostrar Platillo
@@ -89,13 +94,12 @@ const App2 = () => {
             icon={<FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30 }}/>}
             onTitleClick={handleSubmenu2Click}
             visible={submenu2Visible}>
-         
              <Menu.Item  style={{ textAlign: 'center', }}>   
              <div>
-                  <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30, alignItems: 'center' }} /> {miEmail}
+                  <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30, alignItems: 'center' }} /> {getEmail()}
              </div>
              </Menu.Item>
-             {miEmail ? (
+             {miToken ? (
               <Menu.Item onClick={mostrarBotonLL}> <BLogout/> </Menu.Item>
              ) :(
              

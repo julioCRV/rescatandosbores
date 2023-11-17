@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import './loginv.css'
+import ViewLogin from '../../../views/vistaInicioUsuarioLogin'
+import ViewAdmin from '../../../views/vistaInicioAdmin'
 
 // Material UI Imports
 import {
@@ -26,10 +29,13 @@ const isEmail = (email) =>
   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
 export default function Login() {
+  const dataEmail = JSON.parse(localStorage.getItem('emailSave'));
+  const recordar = localStorage.getItem('recordar');
+  const [token, setToken] = useState();
   const [showPassword, setShowPassword] = React.useState(false);
 
   //Inputs
-  const [emailInput, setEmailInput] = useState();
+  const [emailInput, setEmailInput] = useState(dataEmail || ''); 
   const [passwordInput, setPasswordInput] = useState();
   const [rememberMe, setRememberMe] = useState();
 
@@ -75,6 +81,7 @@ export default function Login() {
     setPasswordError(false);
   };
 
+
   //handle Submittion
   const handleSubmit = () => {
     setSuccess(null);
@@ -95,14 +102,15 @@ export default function Login() {
     }
     setFormValid(null);
 
-    // Proceed to use the information passed
-    console.log("Email : " + emailInput);
-    console.log("Password : " + passwordInput);
-    console.log("Remember : " + rememberMe);
-
     //Show Successfull Submittion
-    setSuccess("Formulario enviado exitosamente");
+    if(token!=undefined){
+      setSuccess("Inicio de sesión realizado exitosamente");
+    }else{
+      setFormValid("Datos de usuario incorrectos");
+    }
+   
   };
+
 
   const handleLogin = async () => {
     const url = 'http://18.116.106.247:3000/login';
@@ -131,9 +139,7 @@ export default function Login() {
         setToken(data.token);
         // Almacenamiento del token después del inicio de sesión
         localStorage.setItem('token', data.token);
-
-        //console.log('Token recibido:', data.token);
-
+        console.log('Token recibido:', data.token);
         // Puedes hacer algo con el token, como almacenarlo en el estado o en localStorage
       } else {
         const errorData = await response.json();
@@ -143,22 +149,26 @@ export default function Login() {
       console.error('Error en la solicitud:', error);
     }
   };
-  const [token, setToken] = useState();
+
+
 
   useEffect(() => {
     if (token) {
       //console.log(token);
       var valoresToken = JSON.parse(atob(token.split('.')[1]));
       //console.log(valoresToken);
+      //console.log(passwordInput)
       //console.log(valoresToken.email);
-      //console.log(valoresToken.rol);
+      console.log(valoresToken.rol);
       localStorage.setItem('email', JSON.stringify(valoresToken.email));
+      localStorage.setItem('rol', JSON.stringify(valoresToken.rol));
+      localStorage.setItem('password', passwordInput)
       const user = { username: valoresToken.email, role: valoresToken.rol, token: token};
       handleLogin(user);
       if (valoresToken.rol === 'administrador') {
         console.log('Inicio de sesión como Administrador');
-      } else if (valoresToken.rol === 'usuario') {
-        console.log('Inicio de sesión como Usuario');
+      } else if (valoresToken.rol === 'cliente') {
+        console.log('Inicio de sesión como cliente');
       }
     }
   }, [token]);
@@ -166,8 +176,30 @@ export default function Login() {
   const submitYlogin = () => {
     handleSubmit();
     handleLogin();
+    if(rememberMe){
+      localStorage.setItem('emailSave', JSON.stringify(emailInput));
+    }
+    console.log(rememberMe);
+    //bloquearBoton();
   };
 
+  function bloquearBoton() {
+    // Deshabilitar el botón después de hacer clic
+    document.getElementById("botonLogin").disabled = true;
+  }
+
+  //Recordar datos
+  const handleCheckboxChange = (event) => {
+    setRememberMe(event.target.checked);
+
+    // Guardar información cuando el checkbox está marcado
+    if (event.target.checked) {
+      localStorage.setItem('recordar', 'si');
+    } else {
+      localStorage.setItem('recordar', 'no');
+    }
+  };
+ 
   return (
     <div>
       <div style={{ marginTop: "5px" }}>
@@ -181,6 +213,7 @@ export default function Login() {
           value={emailInput}
           InputProps={{}}
           size="small"
+         
           onBlur={handleEmail}
           /*onChange={(e) => setUsername(e.target.value)} */
           onChange={(event) => {
@@ -225,7 +258,7 @@ export default function Login() {
         <Checkbox
           {...label}
           size="small"
-          onChange={(event) => setRememberMe(event.target.checked)}
+          onChange={handleCheckboxChange}
         />
         Recordar
       </div>
@@ -233,17 +266,16 @@ export default function Login() {
       <div style={{ marginTop: "15px" }}>
       {/*<Link to="/">**/}
         <Button
+          id="botonLogin"
           variant="contained"
           fullWidth
           startIcon={<LoginIcon />}
           onClick={submitYlogin}
+          style={{ textTransform: 'none' }}
         >
           Iniciar sesión
         </Button>
        {/*  </Link>*/}
-        <Link to="/">
-      <button>Salir</button>
-    </Link>
       </div>
 
       {/* Show Form Error if any */}

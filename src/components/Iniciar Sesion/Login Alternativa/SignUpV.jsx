@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Material UI Imports
 import {
@@ -114,13 +114,80 @@ export default function Login() {
     }
     setFormValid(null);
 
-    // Proceed to use the information passed
-    console.log("Username : " + usernameInput);
-    console.log("Email : " + emailInput);
-    console.log("Password : " + passwordInput);
-
     //Show Successfull Submittion
     setSuccess("Formulario enviado exitosamente");
+  };
+
+  //ENVIAR FORMULARIO 
+  const [token, setToken] = useState();
+
+  const handleLogin = async () => {
+    const url = 'http://18.116.106.247:3000/registro';
+    const datos = new FormData();
+    datos.append("ident", 25);
+    datos.append("usuario", usernameInput);
+    datos.append("correo", emailInput);
+    datos.append("contrasenia", passwordInput);
+
+    console.log(datos.get("ident"));
+    console.log(datos.get("usuario"));
+    console.log(datos.get("correo"));
+    console.log(datos.get("contrasenia"));
+    const credentials = {
+      id: datos.get("ident"),
+      username: datos.get("usuario"),
+      email: datos.get("correo"),
+      password: datos.get("contrasenia"),
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setToken(data.token);
+        // Almacenamiento del token después del inicio de sesión
+        localStorage.setItem('token', data.token);
+
+        //console.log('Token recibido:', data.token);
+
+        // Puedes hacer algo con el token, como almacenarlo en el estado o en localStorage
+      } else {
+        const errorData = await response.json();
+        console.error('Error al iniciar sesión:', errorData.message);
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      //console.log(token);
+      var valoresToken = JSON.parse(atob(token.split('.')[1]));
+      console.log(valoresToken);
+      //console.log(valoresToken.email);
+      //console.log(valoresToken.rol);
+      localStorage.setItem('email', JSON.stringify(valoresToken.email));
+      const user = { username: valoresToken.email, role: valoresToken.rol, token: token};
+      handleLogin(user);
+      if (valoresToken.rol === 'administrador') {
+        console.log('Inicio de sesión como Administrador');
+      } else if (valoresToken.rol === 'usuario') {
+        console.log('Inicio de sesión como Usuario');
+      }
+    }
+  }, [token]);
+
+  const submitYsingup = () => {
+    handleSubmit();
+    handleLogin();
   };
 
   return (
@@ -196,7 +263,8 @@ export default function Login() {
           variant="contained"
           fullWidth
           startIcon={<LoginIcon />}
-          onClick={handleSubmit}
+          onClick={submitYsingup}
+          style={{ textTransform: 'none' }}
         >
           Registrarse
         </Button>

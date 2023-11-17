@@ -2,17 +2,19 @@ import Reac, {useState} from 'react';
 import {Routes, Route} from 'react-router-dom';
 
 import Menu from '../MenuPlatillos/menuPlatillos';
-import Home from '../../Home/BannerPresentacion/BannerPresentacion';
-import Buscador from '../../Home/Buscador'
-import MyForm from '../../RegistroPlatillo/registrarPlatillo';
-import MostrarPlatillos from '../../MostrarPlatillos/mostrarPlatillos';
-import EditarPlatillos from '../../EditarPlatillo/EditarPlatillo'
-import Login from "../../Iniciar Sesion/Login Alternativa/LOGINV2"
+import Home from '../../components/Home/BannerPresentacion/BannerPresentacion';
+import Buscador from '../../components/Home/Buscador'
+import MyForm from '../../components/RegistroPlatillo/registrarPlatillo';
+import MostrarPlatillos from '../../components/MostrarPlatillos/mostrarPlatillos';
+import EditarPlatillos from '../../components/EditarPlatillo/EditarPlatillo'
+import Login from "../../components/Iniciar Sesion/Login Alternativa/LOGINV2"
+import Estadisticas from '../../components/Estadisticas/Estadisticas'
 
 function Router() {
     return (
         <Routes>
             <Route path='/' element={<Home/>}/>
+            <Route path='/platillos-tradicionales' element={<Estadisticas />} />
             <Route path='/menu-platillos' element={<Menu/>}/>
             <Route path='/buscador' element={<Buscador/>}/>
             <Route path='/registrar-platillo' element={<MyForm/>}/>
