@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import Routes from '../../NavNavegacion/Routes';
 import { Link } from 'react-router-dom';
+import Paper from "@mui/material/Paper";
 
 import ViewLogin from '../../../views/vistaInicioUsuarioLogin'
 import ViewAdmin from '../../../views/vistaInicioAdmin'
-
+import "./LOGINV2.css"
 // Material UI Imports
 import {
   TextField,
@@ -203,7 +204,13 @@ export default function Login() {
   return (
     <div className='contenedor-Div'>
         <div>
-      <div style={{ marginTop: "5px" }}>
+        <Paper elevation={3} style={{backgroundColor:"#FBDCC4", boxShadow:"0px 4px 8px 0px rgba(0, 0, 0, 0.6)"}} className='contenedorLogin' >
+      <div align="center">
+          <div >
+                  <img  class="imgA" src="/src/assets/logo.png" alt="logo" />
+          </div>
+          <h3>¿Olvidaste tu contraseña?</h3>
+          <h3>Introduzca su direccion de correo electronico y le enviaremos un correo electronico con instrucciones para restablecer su contraseña.</h3>
         <TextField
           label="Correo electrónico"
           fullWidth
@@ -222,49 +229,8 @@ export default function Login() {
           }}
         />
       </div>
-      <div style={{ marginTop: "5px" }}>
-        <FormControl sx={{ width: "100%" }} variant="standard">
-          <InputLabel
-            error={passwordError}
-            htmlFor="standard-adornment-password"
-          >
-            Contraseña
-          </InputLabel>
-          <Input
-            error={passwordError}
-            onBlur={handlePassword}
-            id="standard-adornment-password"
-            type={showPassword ? "text" : "password"}
-            /*onChange={(e) => setPassword(e.target.value)}*/
-            onChange={(event) => {
-              setPasswordInput(event.target.value)
-            }}
-            value={passwordInput}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-      </div>
 
-      <div style={{ fontSize: "10px" }}>
-        <Checkbox
-          {...label}
-          size="small"
-          onChange={handleCheckboxChange}
-        />
-        Recordar
-      </div>
-
-      <div style={{ marginTop: "15px" }}>
+      <div style={{ marginTop: "30px" }}>
       <Link to={token !== undefined ? '/' : '/Iniciar-sesion'}>
         <Button
           id="botonLogin"
@@ -274,10 +240,14 @@ export default function Login() {
           onClick={submitYlogin}
           style={{ textTransform: 'capitalize',backgroundColor:"#66072c"  }}
         >
-          Iniciar sesión
+          enviar correo electrónico
         </Button>
-        
         </Link>
+        <div align="center" style={{ marginTop: "15px" }}>
+          <Link to='/recuperar'>
+                Volver a Inicio de Sesion
+          </Link>
+      </div>
       </div>
 
       {/* Show Form Error if any */}
@@ -297,6 +267,7 @@ export default function Login() {
           </Alert>
         </Stack>
       )}
+      </Paper>
       </div>
     </div>
   );
