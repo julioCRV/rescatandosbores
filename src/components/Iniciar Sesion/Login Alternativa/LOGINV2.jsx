@@ -10,7 +10,7 @@ import Switch from "@mui/material/Switch";
 
 import Login from "./LoginV";
 import Signup from "./SignUpV";
-import './LoginV2.css'
+import './LOGINV2.css'
 import { Box } from '@mui/material';
 
 
