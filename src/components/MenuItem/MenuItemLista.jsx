@@ -21,11 +21,11 @@ function MenuItem({ image, name, id, idPlatillo}) {
       try {
         const response = await fetch(`http://18.116.106.247:3000/obtenerCalificacion/${idPlatillo}`, axiosConfig);
         console.log(response)
-        if (response.ok) {
+        if (response.status=="200") {
           const data = await response.json();
-          console.log(data)
-          data.ok===1 && setLikeClick(true)
-          console.log("1 respuesta")
+          console.log(data.ok)
+          console.log("exito al obtener calificacion")
+          data.ok==1 && setLikeClick(true)
 
         } else {
           setLikeClick(false)
@@ -37,7 +37,7 @@ function MenuItem({ image, name, id, idPlatillo}) {
       }
     }
     fetchPlatillos()
-  }, [likeClick]);
+  }, []);
   const hoverTrue=()=>{
     setHoverTitulo(true);
   }

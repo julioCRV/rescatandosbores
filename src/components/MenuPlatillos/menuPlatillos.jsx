@@ -51,6 +51,7 @@ const MenuPlatillos= () => {
               image={menuItemLista.imagen_platillo}
               name={menuItemLista.titulo_platillo}
               id={key+1}
+              idPlatillo={menuItemLista.id_platillo}
             />
           );
         })}
