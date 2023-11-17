@@ -3,7 +3,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { Link} from 'react-router-dom';
 import axios from 'axios';
-import './editarPlatillo.css';
+import './EditarPlatillo.css';
 import { useParams } from 'react-router-dom';
 
 const { Title } = Typography;
