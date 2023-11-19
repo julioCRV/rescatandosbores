@@ -102,11 +102,21 @@ const App2 = () => {
               </Link> 
               </Menu.Item> : null
             }
+
+            {rol === 'administrador' ? 
+              <Menu.Item key="Registrar Platillo" className={location.pathname === '/registrar-platillo' ? 'selected-menu-item' : ''}>
+              <Link to="/registrar-platillo" className={`${'menu-icon'} ${'prueba'}`}>
+                Mostrar Estadisticas
+              </Link> 
+              </Menu.Item> : null
+            }
+
               <Menu.Item key="Mostrar Platillo" className={location.pathname === '/mostrar-platillo/page/1' ? 'selected-menu-item' : ''}>
                 <Link to="/mostrar-platillo/page/1" className={`${'menu-icon'} ${'prueba'}`}>
                   Mostrar Platillo
                 </Link> 
               </Menu.Item>
+
           </SubMenu>
 
           <SubMenu style={{ position: 'absolute', left: '90.5%', top: '10%' }}

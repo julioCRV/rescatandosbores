@@ -21,7 +21,7 @@ ChartJS.register(ArcElement,Tooltip,Legend,LineElement,CategoryScale,LinearScale
 
 
 
-const dashboard = () => {
+const Dashboard = () => {
 
     const [cantidadPlatillos,setCantidadPlatillos] = useState(0);
     const [cantidadUsuarios,setCantidadUsuarios] = useState(0);
