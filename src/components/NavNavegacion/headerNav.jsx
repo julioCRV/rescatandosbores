@@ -84,11 +84,11 @@ const App2 = () => {
           
           title={
               ...miToken !== null ? 
-                (<Link to="/platillos-tradicionales" className='menu-icon'>
+                (
                 <span>
                   <UnorderedListOutlined /> Platillos Tradicionales
                 </span>
-                 </Link>    )
+                     )
                 :null
           }
             onTitleClick={handleSubmenu1Click}
