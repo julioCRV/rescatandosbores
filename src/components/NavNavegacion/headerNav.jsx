@@ -18,8 +18,8 @@ const App2 = () => {
   const miToken=localStorage.getItem('token');
   const miEmail = JSON.parse(localStorage.getItem('email'));
   const rol = JSON.parse(localStorage.getItem('rol'));
-  console.log("El rol es: ",miToken);
-  console.log('tu token en MenuNav: ',miToken);
+  console.log("El rol es: ",rol);
+  //console.log('tu token en MenuNav: ',miToken);
   const [submenu1Visible, setSubmenu1Visible] = useState(false);
   const [submenu2Visible, setSubmenu2Visible] = useState(false);
   const [isBotonLogin, setisBotonLogin] = useState(true);
@@ -77,7 +77,7 @@ const App2 = () => {
             </Link> 
             </div>
             
-          </Menu.Item>     
+          </Menu.Item> 
           </div>
           <SubMenu theme='dark' className= {`${location.pathname === '/platillos-tradicionales' ? 'selected-menu-item' : ''} ${'menu'}`}
           
@@ -95,12 +95,13 @@ const App2 = () => {
             visible={submenu1Visible}
           >
 
-            
+            {rol === 'administrador' ? 
               <Menu.Item key="Registrar Platillo" className={location.pathname === '/registrar-platillo' ? 'selected-menu-item' : ''}>
-                <Link to="/registrar-platillo" className={`${'menu-icon'} ${'prueba'}`}>
-                  Registrar Platillo
-                </Link> 
-              </Menu.Item>
+              <Link to="/registrar-platillo" className={`${'menu-icon'} ${'prueba'}`}>
+                Registrar Platillo
+              </Link> 
+              </Menu.Item> : null
+            }
               <Menu.Item key="Mostrar Platillo" className={location.pathname === '/mostrar-platillo/page/1' ? 'selected-menu-item' : ''}>
                 <Link to="/mostrar-platillo/page/1" className={`${'menu-icon'} ${'prueba'}`}>
                   Mostrar Platillo
