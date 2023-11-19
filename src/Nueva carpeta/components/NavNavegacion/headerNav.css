@@ -1,0 +1,112 @@
+.selected-menu-item {
+  background-color: #31112C !important;
+  color: #fff !important;
+}
+
+.submenu-platillos {
+  background-color: #173111 !important;
+  color: #fff !important;
+}
+
+.menu-icon {
+  color: #fff !important;
+
+}
+
+.menu-search-container {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Empuja el Input.Search al lado derecho del menú */
+}
+.white-text {
+  color: white;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+  background-color: #FBDCC4;
+  padding: 30px;
+}
+
+.uno{
+  left: 95%;
+}
+.menu-button {
+  display: none; /* Ocultar el botón en pantallas grandes */
+}
+.menu-open {
+  display: block; /* Mostrar el menú desplegable en pantallas pequeñas */
+}
+
+/*PARTE RESPONSIVE*/
+@media (min-width: 320px) and (max-width: 481px){
+  .menu {
+    font-size: 10px;
+    margin-left: -30px;
+    height: 40px;
+    top: -28%;
+    
+  }
+  .alMedio{
+    margin-top: -10px;
+  }
+  .header {
+      height: 40px;
+  }
+
+  .prueba{
+    font-size: 10px;
+  }
+
+  :where(.css-dev-only-do-not-override-pr0fja).ant-menu ul, :where(.css-dev-only-do-not-override-pr0fja).ant-menu ol {
+    margin-top: -21px;
+    margin-left: -5%;
+    padding: 0;
+    list-style: none;
+  }
+
+  :where(.css-dev-only-do-not-override-pr0fja).ant-menu-submenu-popup .ant-menu-vertical.ant-menu-sub {
+    min-width: 60px;
+    max-height: 100px;
+    padding: 0;
+    overflow: hidden;
+    border-inline-end: 0;
+}
+}
+@media screen and (max-width:1050px){
+  .uno{
+    left: 93%;
+  }
+  
+}
+@media screen and (max-width:800px){
+  .uno{
+    left: 91%;
+  }
+  
+}
+@media screen and (max-width:600px){
+  .uno{
+    left: 88%;
+  }
+  
+}
+@media screen and (max-width:500px){
+  .uno{
+    left: 85%;
+  }
+  
+}
+@media screen and (max-width:350px){
+  .uno{
+    left: 80%;
+  }
+  
+}

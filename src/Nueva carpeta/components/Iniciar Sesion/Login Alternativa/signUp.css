@@ -1,0 +1,12 @@
+.recInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+}
+
+.recInfo h3{
+    margin-top: 30px;
+    margin-bottom: 0;
+ }

@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route,Routes, Link, Navigate } from 'react-rou
 import ViewNologin from './views/vistaInicioUsuarioNoLogIn'
 import ViewLogin from './views/vistaInicioUsuarioLogin'
 import ViewAdmin from './views/vistaInicioAdmin'
+import Pr from './components/Iniciar Sesion/prueba'
 
 function App() {
   const [mostrarLogin, setMostrarLogin] = useState(false);
@@ -41,9 +42,11 @@ console.log('CORREOOOOOO',miConstanteRecuperada); // Mostrará el objeto origina
       )}*/}
 
   
-
+<Pr />
 {esAdministrador ? (
-        <Router>
+
+<Router>
+
           <div className="App">
         <ViewAdmin /> 
       </div>

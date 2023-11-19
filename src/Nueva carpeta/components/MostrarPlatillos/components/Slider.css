@@ -1,0 +1,81 @@
+/* Estilo para el contenedor del slider */
+.slider-container {
+  width: 90%;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.espacio{
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px; 
+}
+
+.slider-controls{
+  margin-top: 20px; 
+  display: flex;
+  justify-content: right;
+}
+
+/* Estilo para los puntos de navegación (dots) */
+.slick-dots {
+  text-align: center;
+}
+
+/* Estilo para cada punto de navegación */
+.slick-dots li {
+  display: inline-block;
+  margin: 0 10px; /* Ajusta el margen según sea necesario */
+}
+
+/* Estilo para los números de página en los puntos de navegación */
+.slick-dots li button {
+  width: 30px;
+  height: 30px;
+  background-color: #070707; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  border: 2px solid #070707;
+  font-size: 16px;
+  line-height: 30px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+/* Estilo para el punto de navegación activo */
+.slick-dots li.slick-active button {
+  background-color: #fff; /* Color de fondo cuando está activo */
+  color: #007bff; /* Color del texto cuando está activo */
+}
+
+/* Estilo para hacer el botón invisible */
+.invisible-button {
+  display: none;
+}
+
+/* Estilo para el icono de prohibido al pasar el cursor */
+.invisible-button:hover {
+  cursor: not-allowed;
+}
+
+/*RESPONSIVE*/
+@media (min-width: 320px) and (max-width: 380px) {
+  .slider-container{
+    width: 120%;
+    margin-left: -10%;
+  }
+}
+
+@media (min-width: 381px) and (max-width: 535px) {
+  .slider-container{
+    width: 112%;
+    margin-left: -6%;
+  }
+}
+
+@media (min-width: 536px) and (max-width: 591px) {
+  .slider-container{
+    width: 100%;
+    margin-left: -1%;
+  }
+}

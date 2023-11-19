@@ -17,7 +17,7 @@ const { SubMenu } = Menu;
 const App2 = () => {
   const miToken=localStorage.getItem('token');
   const miEmail = JSON.parse(localStorage.getItem('email'));
-  console.log(miToken);
+  console.log('tu token en MenuNav: ',miToken);
   const [submenu1Visible, setSubmenu1Visible] = useState(false);
   const [submenu2Visible, setSubmenu2Visible] = useState(false);
   const [isBotonLogin, setisBotonLogin] = useState(true);
@@ -103,14 +103,14 @@ const App2 = () => {
               </Menu.Item>
           </SubMenu>
 
-          <SubMenu style={{ position: 'absolute', left: '94.5%', top: '10%' }}
-            icon={<FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30 }}/>}
+          <SubMenu style={{ position: 'absolute', left: '90.5%', top: '10%' }}
+            icon={<FontAwesomeIcon icon={faCircleUser} style={{fontSize: 30 }}/>}
             onTitleClick={handleSubmenu2Click}
             visible={submenu2Visible}>
          
              <Menu.Item  style={{ textAlign: 'center', }}>   
              <div>
-                  <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30, alignItems: 'center' }} /> {getEmail()}
+                  <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30, alignItems: 'center'}} /> {getEmail()}
              </div>
              </Menu.Item>
              {miToken ? (
@@ -119,14 +119,14 @@ const App2 = () => {
              
              <Menu.Item> 
                 <Link  to="/Iniciar-sesion">
-                    <Button onClick={mostrarBotonLL} icon={<LoginOutlined />}>Iniciar Sesison</Button>
+                    <Button onClick={mostrarBotonLL} icon={<LoginOutlined />}>Iniciar Sesión</Button>
                 </Link>
              </Menu.Item>
              )}
            </SubMenu>
 
             {location.pathname === '/' && (
-              <Menu.Item key="Buscar" className={`uno ${location.pathname === '/buscador' ? 'selected-menu-item' : ''}`} style={{  position: 'absolute', left:'91%'  }}>
+              <Menu.Item key="Buscar" className={`uno ${location.pathname === '/buscador' ? 'selected-menu-item' : ''}`} style={{  position: 'absolute', left:'81%'  }}>
                 <Link to="/buscador">
                   <Button
                     icon={<SearchOutlined />}

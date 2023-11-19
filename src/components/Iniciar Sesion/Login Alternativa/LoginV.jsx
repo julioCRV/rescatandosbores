@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+
 import { Link } from 'react-router-dom';
-import './loginv.css'
+
 import ViewLogin from '../../../views/vistaInicioUsuarioLogin'
 import ViewAdmin from '../../../views/vistaInicioAdmin'
+import './LoginV.css'
 
 // Material UI Imports
 import {
@@ -25,8 +26,11 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import LoginIcon from "@mui/icons-material/Login";
 
 // Email Validation
+const isEmailGmail = (email) =>
+  /^[A-Z0-9._%+-]+@gmail+\.com$/i.test(email);
+
 const isEmail = (email) =>
-  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
 export default function Login() {
   const dataEmail = JSON.parse(localStorage.getItem('emailSave'));
@@ -42,7 +46,9 @@ export default function Login() {
   // Inputs Errors
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-
+  const [passwordErrorMax, setPasswordErrorMax] = useState(false);
+  const [passwordErrorMin, setPasswordErrorMin] = useState(false); 
+  
   // Overall Form Validity
   const [formValid, setFormValid] = useState();
   const [success, setSuccess] = useState();
@@ -58,12 +64,11 @@ export default function Login() {
 
   // Validation for onBlur Email
   const handleEmail = () => {
-    console.log(isEmail(emailInput));
-    if (!isEmail(emailInput)) {
+    console.log(isEmailGmail(emailInput));
+    if (!isEmailGmail(emailInput)) {
       setEmailError(true);
       return;
     }
-
     setEmailError(false);
   };
 
@@ -71,45 +76,102 @@ export default function Login() {
   const handlePassword = () => {
     if (
       !passwordInput ||
-      passwordInput.length < 5 ||
-      passwordInput.length > 20
+      passwordInput.length > 16
     ) {
       setPasswordError(true);
+      setPasswordErrorMax(true);
       return;
     }
-
     setPasswordError(false);
+    setPasswordErrorMax(false);
+    if (
+      !passwordInput ||
+      passwordInput.length < 8 
+    ) {
+      setPasswordError(true);
+      setPasswordErrorMin(true);
+      return;
+    }
+    setPasswordError(false);
+    setPasswordErrorMin(false);
   };
 
 
   //handle Submittion
   const handleSubmit = () => {
+    console.log('EMAIL ERROR:    ',emailError)
+    console.log('Input email: ',emailInput)
+    console.log('PASSWORD ERROR:      ',passwordError)
+    console.log('Impurt password: ',passwordInput)
+
     setSuccess(null);
     //First of all Check for Errors
+    // Si existe campos vacios
+    if (!emailInput && !passwordInput) {
+      setPasswordError(true);
+      setEmailError(true);
+      setFormValid("Campos obligatorios.Por favor ingrese un correo electrónico y contraseña");
+      return;
+    }
 
     // If Email error is true
     if (emailError || !emailInput) {
-      setFormValid("El correo electrónico es invalido. Por favor vuelva a ingresar");
+      
+      if(!passwordError && passwordInput && !emailInput){
+        setEmailError(true);
+        setFormValid("Correo obligatorio. Por favor ingrese un correo electrónico");
+        return;
+      }else{
+        setEmailError(true);
+        if(passwordError){
+        setPasswordError(true);
+        }
+        if(isEmail(emailInput)){
+          setFormValid("El correo electrónico es inválido. Por favor ingrese solo correos con el dominio de @gmail.com ");
       return;
+        }else{
+          setFormValid("Formato de correo inválido. Por favor ingrese un correo electrónico válido");
+      return;
+        }
+      }
     }
 
-    // If Password error is true
-    if (passwordError || !passwordInput) {
+    if(!passwordInput){
+      setPasswordError(true);
       setFormValid(
-        "La contraseña se establece entre 5 y 20 caracteres. Por favor vuelva a ingresar"
+        "Contraseña obligatoria. Por favor ingrese una contraseña"
       );
       return;
     }
+    // If Password error is true
+    if (passwordErrorMax || !passwordInput) {
+      setPasswordError(true);
+      setFormValid(
+        "La contraseña debe ser menor o igual a 16 caracteres."
+      );
+      return;
+    }
+
+    if (passwordErrorMin || !passwordInput) {
+      setPasswordError(true);
+      setFormValid(
+        "La contraseña debe ser mayor o igual a 8 caracteres."
+      );
+      return;
+    }
+
     setFormValid(null);
 
     //Show Successfull Submittion
-    if(token!=undefined){
-      setSuccess("Inicio de sesión realizado exitosamente");
+    const miToken=localStorage.getItem('token');
+    if(miToken!=undefined){
+      setSuccess("Inicio de sesión realizado exitosamente"); 
     }else{
-      setFormValid("Datos de usuario incorrectos");
+      setPasswordError(true);
+      setFormValid("Contraseña inválida. Por favor intente nuevamente");
     }
    
-  };
+   };
 
 
   const handleLogin = async () => {
@@ -118,8 +180,8 @@ export default function Login() {
     datos.append("usuario", emailInput);
     datos.append("contrasenia", passwordInput);
 
-    //console.log(datos.get("usuario"));
-    //console.log(datos.get("contrasenia"));
+    console.log(datos.get("usuario"));
+    console.log(datos.get("contrasenia"));
     const credentials = {
       email: datos.get("usuario"),
       password: datos.get("contrasenia"),
@@ -139,7 +201,7 @@ export default function Login() {
         setToken(data.token);
         // Almacenamiento del token después del inicio de sesión
         localStorage.setItem('token', data.token);
-        console.log('Token recibido:', data.token);
+        //console.log('Token recibido:', data.token);
         // Puedes hacer algo con el token, como almacenarlo en el estado o en localStorage
       } else {
         const errorData = await response.json();
@@ -150,13 +212,11 @@ export default function Login() {
     }
   };
 
-
-
   useEffect(() => {
     if (token) {
       //console.log(token);
       var valoresToken = JSON.parse(atob(token.split('.')[1]));
-      //console.log(valoresToken);
+      console.log(valoresToken);
       //console.log(passwordInput)
       //console.log(valoresToken.email);
       console.log(valoresToken.rol);
@@ -164,23 +224,22 @@ export default function Login() {
       localStorage.setItem('rol', JSON.stringify(valoresToken.rol));
       localStorage.setItem('password', passwordInput)
       const user = { username: valoresToken.email, role: valoresToken.rol, token: token};
-      handleLogin(user);
-      if (valoresToken.rol === 'administrador') {
-        console.log('Inicio de sesión como Administrador');
-      } else if (valoresToken.rol === 'cliente') {
-        console.log('Inicio de sesión como cliente');
-      }
+      console.log('Inicio de sesión como:', valoresToken.rol );
     }
   }, [token]);
 
-  const submitYlogin = () => {
+  const submitYlogin = async () => {
+    try {
+      await handleLogin();
+      // La función handleSubmit se ejecutará solo después de que handleLogin se haya completado
+    } catch (error) {
+      console.error('Error en submitYlogin:', error);
+    }
     handleSubmit();
-    handleLogin();
     if(rememberMe){
       localStorage.setItem('emailSave', JSON.stringify(emailInput));
     }
-    console.log(rememberMe);
-    //bloquearBoton();
+    console.log('solo estado checkbox:', rememberMe);
   };
 
   function bloquearBoton() {
@@ -199,8 +258,9 @@ export default function Login() {
       localStorage.setItem('recordar', 'no');
     }
   };
- 
+  const miToken=localStorage.getItem('token');
   return (
+    <>
     <div>
       <div style={{ marginTop: "5px" }}>
         <TextField
@@ -209,7 +269,7 @@ export default function Login() {
           error={emailError}
           id="standard-basic"
           variant="standard"
-          sx={{ width: "100%" }}
+          //sx={{ width: "100%" }}
           value={emailInput}
           InputProps={{}}
           size="small"
@@ -264,23 +324,31 @@ export default function Login() {
       </div>
 
       <div style={{ marginTop: "15px" }}>
-      {/*<Link to="/">**/}
+      <Link to={token !== undefined ? '/' : '/Iniciar-sesion'}>
         <Button
           id="botonLogin"
           variant="contained"
           fullWidth
           startIcon={<LoginIcon />}
           onClick={submitYlogin}
-          style={{ textTransform: 'none' }}
+          style={{ textTransform: 'capitalize',backgroundColor:"#66072c"  }}
         >
           Iniciar sesión
         </Button>
-       {/*  </Link>*/}
+        
+        </Link>
       </div>
 
+      <div style={{ marginTop: "15px" }}>
+      <Link to='/recuperar'>
+            olvido su contraseña
+        </Link>
+      </div>
+      </div>
+<div className="intenta">
       {/* Show Form Error if any */}
       {formValid && (
-        <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
+        <Stack sx={{  paddingTop: "10px" }} >
           <Alert severity="error" size="small">
             {formValid}
           </Alert>
@@ -289,12 +357,13 @@ export default function Login() {
 
       {/* Show Success if no issues */}
       {success && (
-        <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
+        <Stack sx={{ paddingTop: "10px" }}>
           <Alert severity="success" size="small">
             {success}
           </Alert>
         </Stack>
       )}
-    </div>
+      </div>
+   </>
   );
 }
