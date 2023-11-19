@@ -17,6 +17,8 @@ const { SubMenu } = Menu;
 const App2 = () => {
   const miToken=localStorage.getItem('token');
   const miEmail = JSON.parse(localStorage.getItem('email'));
+  const rol = JSON.parse(localStorage.getItem('rol'));
+  console.log("El rol es: ",miToken);
   console.log('tu token en MenuNav: ',miToken);
   const [submenu1Visible, setSubmenu1Visible] = useState(false);
   const [submenu2Visible, setSubmenu2Visible] = useState(false);
@@ -79,13 +81,16 @@ const App2 = () => {
           </div>
           <SubMenu theme='dark' className= {`${location.pathname === '/platillos-tradicionales' ? 'selected-menu-item' : ''} ${'menu'}`}
           
+          
           title={
-              <Link to="/platillos-tradicionales" className='menu-icon'>
-                <span>          
+              ...miToken !== null ? 
+                (<Link to="/platillos-tradicionales" className='menu-icon'>
+                <span>
                   <UnorderedListOutlined /> Platillos Tradicionales
                 </span>
-                 </Link>    
-            }
+                 </Link>    )
+                :null
+          }
             onTitleClick={handleSubmenu1Click}
             visible={submenu1Visible}
           >
