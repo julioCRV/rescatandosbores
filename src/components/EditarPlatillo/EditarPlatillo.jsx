@@ -238,7 +238,7 @@ const onFinish = async (values) => {
             value={text}
             maxLength={51}
           />
-          <div style={{ position: 'absolute', top: 0, right: 0, padding: '8px', color: 'gray' }}>
+          <div style={{color: 'gray' }}>
             {text.length} / 50
           </div>
         </div>
@@ -285,7 +285,7 @@ const onFinish = async (values) => {
             value={text2}
             maxLength={501}
           />
-          <div style={{ position: 'absolute', top: 0, right: 0, padding: '8px', color: 'gray' }}>
+          <div style={{color: 'gray' }}>
             {text2.length} / 500
           </div>
         </div>
