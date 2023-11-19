@@ -20,7 +20,7 @@ function Router() {
             <Route path='/menu-platillos' element={<Menu/>}/>
             <Route path='/buscador' element={<Buscador/>}/>
             <Route path='/registrar-platillo' element={<MyForm/>}/>
-            <Route path='/estadisticas' element={<Dashboard/>}/>
+            <Route path='/mostrar-estadisticas' element={<Dashboard/>}/>
             <Route path='/mostrar-platillo/page/:id' element={<MostrarPlatillos/>}/>
             <Route path='/editar-platillo/:id' element={<EditarPlatillos/>}/>
             <Route path='/iniciar-sesion' element={<Login/>}/>
