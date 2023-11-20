@@ -231,7 +231,7 @@ const onFinish = async (values) => {
           { required: bandTitulo, message: 'Ingresa el título del platillo'},
           { max: 50, message: 'El título no puede tener más de 50 caracteres'},
           { min: 6, message: 'El título debe tener al menos 6 caracteres' },
-          { pattern: /^[A-Za-z][a-zA-Z ]*$/, message: 'verifique que no contenga caracteres numericos ó extraños'},
+          { pattern: /^[A-Za-zÑñ][a-zA-ZÑñ ]*$/, message: 'verifique que no contenga caracteres numericos ó extraños'},
         ]}
 
         labelCol={{ span: 6 }} // Configura el ancho de la etiqueta
@@ -245,10 +245,10 @@ const onFinish = async (values) => {
             autoComplete="off"
             onChange={handleTextChange}
             value={text}
-            maxLength={51}
+            maxLength={50}
           />
           <div style={{color: 'gray' }}>
-            {text.length} / 50
+          Caracteres disponibles: {50-text.length}
           </div>
         </div>
       </Form.Item>
@@ -292,10 +292,10 @@ const onFinish = async (values) => {
             autoSize={{ minRows: 3, maxRows: 6 }}
             onChange={handleTextChange2}
             value={text2}
-            maxLength={501}
+            maxLength={500}
           />
           <div style={{color: 'gray' }}>
-            {text2.length} / 500
+          Caracteres disponibles: {500-text2.length}
           </div>
         </div>
       </Form.Item>
