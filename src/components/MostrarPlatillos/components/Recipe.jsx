@@ -12,12 +12,14 @@ import '../../NavNavegacion/headerNav.css'
 import Icon, { HeartOutlined } from '@ant-design/icons';
 import "../../MenuItem/MenuItem"
 
+
 const uri = 'http://18.116.106.247:3000/media/';
 
 
 const Recipe = () => {
     const {id} = useParams();
     const [likeClick, setLikeClick] = useState(false)
+    const [continuar, setContinuar] = useState(false);
   const [platilloData, setPlatilloData] = useState({
     nombre: '',
     descripcion: '',
@@ -76,38 +78,47 @@ const Recipe = () => {
           identificador: platillo.id,
           video: platillo.video,
         });
+        setContinuar(true);
       })
       .catch((error) => {
         console.log('Algun problema muy malevolo me hicieron:v')
         console.error('Error al obtener el platillo:', error);
       });
   }, [id]);
+
   useEffect(() => {
     async function fetchPlatillos() {
-      try {
-        const response = await fetch(`http://18.116.106.247:3000/obtenerCalificacion/${platilloData.identificador}`, axiosConfig);
-        console.log(response)
-        if (response.status=="200") {
-          const data = await response.json();
-          console.log(data.ok)
-          console.log("exito al obtener calificacion")
-          data.ok==1 && setLikeClick(true)
-
-        } else {
-          setLikeClick(false)
-          console.log("1 respuesta")
-          console.error('Errores');
+      if(continuar){
+        setContinuar(false)
+        try {
+          const response = await fetch(`http://18.116.106.247:3000/obtenerCalificacion/${platilloData.identificador}`, axiosConfig);
+          console.log(response)
+          if (response.status=="200") {
+            const data = await response.json();
+            console.log(data.ok)
+            console.log("exito al obtener calificacion")
+            data.ok==1 ? setLikeClick(true):setLikeClick(false)
+            console.log('2' )
+  
+          } else {
+            setLikeClick(false)
+            console.error('Error al obener calificacion');
+          }
+        } catch (error) {
+          console.error('Error en la solicitud:', error);
         }
-      } catch (error) {
-        console.error('Error en la solicitud:', error);
       }
-    }
+      else{
+        console.log("no se puede continuar")
+      }
+}
     fetchPlatillos()
-  }, []);
+  }, [continuar]);
   useEffect(() => {
-    console.log(token)
-    var valoresToken = JSON.parse(atob(token.split('.')[1]));
-    valoresToken.rol==='administrador'? setAdministrador(true): setAdministrador(false)
+    if(token != null){
+      var valoresToken = JSON.parse(atob(token.split('.')[1]));
+      valoresToken.rol==='administrador'? setAdministrador(true): setAdministrador(false)
+    }
   }, []);
 
   return (
@@ -126,8 +137,8 @@ const Recipe = () => {
             <div className="recipe-text">
               <p>{platilloData.descripcion}</p>
             </div>
-            <div className="recipe-buttons">
-            {!likeClick ? <HeartOutlined className="classHeart " onClick={like}/> : <HeartIcon onClick={like} style={{color:"red",}} className="classHeartLike"/>}
+            {token != null && <div className="recipe-buttons">
+            { !likeClick ? <HeartOutlined className="classHeart " onClick={like}/> : <HeartIcon onClick={like} style={{color:"red",}} className="classHeartLike"/>}
             {//cambiar por admistrador para ver usuario final
             }
             {esAdministrador===true &&            <div className='buttonn'>
@@ -140,7 +151,7 @@ const Recipe = () => {
             </div>}
  
 
-          </div>
+          </div>}
           </div>
         <div className='recipe-video'>
             <h1></h1>
