@@ -165,7 +165,6 @@ export const EditarPlatillo = () =>{
 
   //Se ejecuta cuando se da a actualizar
 const onFinish = async (values) => {
-  if(keyImagen === true && keyVideo === true){
     setIsLoading(true);
     try {
       //Cargo los datos de los inputs para poder subirlo a la bd
@@ -173,17 +172,28 @@ const onFinish = async (values) => {
       formData.append('nombre', values.titulo ?? text);
       formData.append('descripcion', values.descripcion ?? text2);
       formData.append('id', platilloData.identificador);
-      const videoFile = values.video.file;
-      const imagenFile = values.imagen.file;
-      formData.append('imagen', new Blob([imagenFile], { type: imagenFile.type }), imagenFile.name);
-      formData.append('video', new Blob([videoFile], { type: videoFile.type }), videoFile.name);
-      console.log(formData);
+      if(values.imagen === undefined){
+        formData.append('imagen',null);
+      }else{
+        const imagenFile = values.imagen.file;
+        formData.append('imagen', new Blob([imagenFile], { type: imagenFile.type }), imagenFile.name);
+      }
+
+      if(values.video === undefined){
+        formData.append('video',null);
+      }else{
+        const videoFile = values.video.file;
+        formData.append('video', new Blob([videoFile], { type: videoFile.type }), videoFile.name);
+      }
+            
       console.log('Realizando llamada');
+
       const response = await axios.put(`http://18.116.106.247:3000/modificarPlatillo/${platilloData.identificador}`,formData,{
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+
       console.log('Llega la llamada');
       console.log(response);
       if (response.status === 200) {
@@ -198,9 +208,7 @@ const onFinish = async (values) => {
       setIsLoading(false); //Desactiva la interfaz de carga
       showModalEditar();
     }
-  }else{
-    message.error(`Verifique que todo los datos esten correctos`);
-  }
+  
 };
 
 
@@ -252,14 +260,14 @@ const onFinish = async (values) => {
         }
         name="imagen"
         colon={false}
-        rules={[{ required: true, message: 'No se ha subido ninguna imagen' }]}
+        rules={[{ required: false, message: 'No se ha subido ninguna imagen' }]}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 24 }}
       >
         <Upload {...verificarImagen} maxCount={1} accept='image/*'>
           <Button style={buttonStyle} icon={<UploadOutlined />} className='sms'>Subir Imagen</Button>
           {imageUploaded }
-          {!imageUploaded && <span className='mensaje-transparenteI'> No se ha seleccionado ningún archivo</span>}
+          {!imageUploaded && <span className='mensaje-transparenteI'>{nombreImagen}</span>}
         </Upload>
       </Form.Item>
 
@@ -297,14 +305,14 @@ const onFinish = async (values) => {
         label={<span className='item-txt' onClick={(e)=>{e.preventDefault()}}>Video:</span>}
         name="video"
         colon={false}
-        rules={[{ required: true, message: 'No se ha subido ningun video' }]}
+        rules={[{ required: false, message: 'No se ha subido ningun video' }]}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 24 }}
       >
         <Upload {...verificarVideo} maxCount={1} accept='video/mp4'>
           <Button style={buttonStyle} icon={<UploadOutlined /> }className='sms'>Subir Video</Button>
           {videoUploaded}
-          {!videoUploaded && <span className='mensaje-transparenteV'>No se ha seleccionado ningún video</span>}
+          {!videoUploaded && <span className='mensaje-transparenteV'>{nombreVideo}</span>}
         </Upload>
       </Form.Item>
 
