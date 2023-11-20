@@ -172,6 +172,7 @@ const onFinish = async (values) => {
       formData.append('nombre', values.titulo ?? text);
       formData.append('descripcion', values.descripcion ?? text2);
       formData.append('id', platilloData.identificador);
+      
       if(values.imagen === undefined){
         formData.append('imagen',null);
       }else{
