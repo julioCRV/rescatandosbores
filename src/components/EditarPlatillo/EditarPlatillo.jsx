@@ -102,7 +102,9 @@ export const EditarPlatillo = () =>{
   const handleTextChange2 = (e) => {
     setBandDescripcion(true);
     const newText2 = e.target.value;
-    setText2(newText2);
+    if (newText2.length <= 501){
+      setText2(newText2);
+    }
   };
 
   const verificarImagen = {
@@ -245,10 +247,11 @@ const onFinish = async (values) => {
             autoComplete="off"
             onChange={handleTextChange}
             value={text}
-            maxLength={50}
+            maxLength={51}
           />
           <div style={{color: 'gray' }}>
-          Caracteres disponibles: {50-text.length}
+            {/*Caracteres disponibles: {50-text.length}*/}
+            { 50-text.length >= 0 ? (50-text.length < 10 ? "0"+(50-text.length) : 50-text.length)+"/"+50 : "00/"+50}
           </div>
         </div>
       </Form.Item>
@@ -295,12 +298,12 @@ const onFinish = async (values) => {
             maxLength={500}
           />
           <div style={{color: 'gray' }}>
-          Caracteres disponibles: {500-text2.length}
+          {/*Caracteres disponibles: {500-text2.length}*/}
+          {500-text2.length >= 0 ? (500-text2.length > 9 && 500-text2.length < 100? "0"+(500-text2.length) : 500-text2.length >= 0 && 500-text2.length < 10? "00"+(500-text2.length) : 500-text2.length)+"/"+500 : "000"+"/"+500}
+          
           </div>
         </div>
       </Form.Item>
-
-
 
       <Form.Item className='componente-limite'
         label={<span className='item-txt' onClick={(e)=>{e.preventDefault()}}>Video:</span>}
