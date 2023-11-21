@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-
+import { Modal, Result } from 'antd';
+import { Link } from 'react-router-dom';
 // Material UI Imports
 import {
   TextField,
@@ -26,7 +27,9 @@ const isEmail = (email) =>
   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
 export default function Login() {
+  const [visible, setVisible] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
+  const [token, setToken] = useState();
 
   //Inputs
   const [usernameInput, setUsernameInput] = useState();
@@ -37,6 +40,8 @@ export default function Login() {
   const [usernameError, setUsernameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorMax, setPasswordErrorMax] = useState(false);
+  const [passwordErrorMin, setPasswordErrorMin] = useState(false); 
 
   // Overall Form Validity
   const [formValid, setFormValid] = useState();
@@ -86,55 +91,88 @@ export default function Login() {
     setPasswordError(false);
   };
 
+  //----------------------------------------------------------------------------------------------------------------------------
   //handle Submittion
   const handleSubmit = () => {
     setSuccess(null);
     //First of all Check for Errors
-
-    // IF username error is true
-    if (usernameError || !usernameInput) {
-      setFormValid(
-        "El nombre de usuario se establece entre 5 y 15 caracteres. Por favor vuelva a ingresar"
-      );
+    // Si existe campos vacios
+    if (!emailInput && !passwordInput) {
+      setUsernameError(true)
+      setPasswordError(true);
+      setEmailError(true);
+      setFormValid("Por favor, completa todos los campos obligatorios");
       return;
     }
 
     // If Email error is true
     if (emailError || !emailInput) {
-      setFormValid("El correo electrónico es invalido. Por favor vuelva a ingresar");
+      
+      if(!passwordError && passwordInput && !emailInput){
+        setEmailError(true);
+        setFormValid("Correo obligatorio. Por favor ingrese un correo electrónico");
+        return;
+      }else{
+        setEmailError(true);
+        if(passwordError){
+        setPasswordError(true);
+        }
+        if(isEmail(emailInput)){
+          setFormValid("El correo electrónico es inválido. Por favor ingrese solo correos con el dominio de @gmail.com ");
       return;
+        }else{
+          setFormValid("Formato de correo inválido. Por favor ingrese un correo electrónico válido");
+      return;
+        }
+      }
     }
 
-    // If Password error is true
-    if (passwordError || !passwordInput) {
+    if(!passwordInput){
+      setPasswordError(true);
       setFormValid(
-        "La contraseña se establece entre 5 y 20 caracteres. Por favor vuelva a ingresar"
+        "Contraseña obligatoria. Por favor ingrese una contraseña"
       );
       return;
     }
+    // If Password error is true
+    if (passwordErrorMax || !passwordInput) {
+      setPasswordError(true);
+      setFormValid(
+        "La contraseña debe ser menor o igual a 16 caracteres."
+      );
+      return;
+    }
+
+    if (passwordErrorMin || !passwordInput) {
+      setPasswordError(true);
+      setFormValid(
+        "La contraseña debe ser mayor o igual a 8 caracteres."
+      );
+      return;
+    }
+
+    
     setFormValid(null);
 
     //Show Successfull Submittion
+    showConfirmationModal();
     setSuccess("Formulario enviado exitosamente");
   };
 
-  //ENVIAR FORMULARIO 
-  const [token, setToken] = useState();
+  //--------------------------------------------------------------------------------------------------------------------------------------------
 
+  //ENVIAR FORMULARIO 
   const handleLogin = async () => {
     const url = 'http://18.116.106.247:3000/registro';
     const datos = new FormData();
-    datos.append("ident", 12);
     datos.append("usuario", usernameInput);
     datos.append("correo", emailInput);
     datos.append("contrasenia", passwordInput);
 
-    console.log(datos.get("ident"));
     console.log(datos.get("usuario"));
     console.log(datos.get("correo"));
     console.log(datos.get("contrasenia"));
     const credentials = {
-      id: datos.get("ident"),
       username: datos.get("usuario"),
       email: datos.get("correo"),
       password: datos.get("contrasenia"),
@@ -149,18 +187,16 @@ export default function Login() {
         body: JSON.stringify(credentials),
       });
 
+      const data = await response.json();
       if (response.ok) {
-        const data = await response.json();
         setToken(data.token);
-        // Almacenamiento del token después del inicio de sesión
+        console.log(data.token);
         localStorage.setItem('token', data.token);
-
-        //console.log('Token recibido:', data.token);
-
-        // Puedes hacer algo con el token, como almacenarlo en el estado o en localStorage
+        // El registro fue exitoso
+        console.log('Usuario registrado correctamente:', data.message);
       } else {
-        const errorData = await response.json();
-        console.error('Error al iniciar sesión:', errorData.message);
+        // Hubo un error en el registro
+        console.error('Error al registrar usuario:', data.message);
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
@@ -172,10 +208,12 @@ export default function Login() {
       //console.log(token);
       var valoresToken = JSON.parse(atob(token.split('.')[1]));
       console.log(valoresToken);
-      //console.log(valoresToken.email);
-      //console.log(valoresToken.rol);
+      console.log(valoresToken.username);
+      console.log(valoresToken.rol);
       localStorage.setItem('email', JSON.stringify(valoresToken.email));
-      const user = { username: valoresToken.email, role: valoresToken.rol, token: token};
+      localStorage.setItem('username', JSON.stringify(valoresToken.username));
+      localStorage.setItem('password', JSON.stringify(valoresToken.password));
+      const user = { username: valoresToken.username, email: valoresToken.email, token: token};
       handleLogin(user);
       if (valoresToken.rol === 'administrador') {
         console.log('Inicio de sesión como Administrador');
@@ -190,7 +228,22 @@ export default function Login() {
     handleLogin();
   };
 
+  
+  const showConfirmationModal = () => {
+    showModal(); 
+  };
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleOk = () => {
+    setVisible(false);
+    //
+  }
+
   return (
+    <>
     <div>
       <div style={{ marginTop: "10px" }}>
         <TextField
@@ -269,8 +322,9 @@ export default function Login() {
           Registrarse
         </Button>
       </div>
-
+      </div>
       {/* Show Form Error if any */}
+      <div className="intenta">
       {formValid && (
         <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
           <Alert severity="error" size="small">
@@ -281,13 +335,28 @@ export default function Login() {
 
       {/* Show Success if no issues */}
       {success && (
-        <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
-          <Alert severity="success" size="small">
-            {success}
-          </Alert>
-        </Stack>
+        <Modal
+        visible={visible}
+        closable={false}
+        onOk={handleOk}
+        onCancel={handleOk}
+        width={400}
+        style={{ top: '50%', transform: 'translateY(-50%)' }} // Centra verticalmente
+        footer={[
+          <Link to='/' key="ok">
+            <Button type="primary" onClick={handleOk}>
+              OK
+            </Button>
+          </Link>,
+        ]}
+      >
+        <Result
+          status="success"
+          title={<div style={{ fontSize: '20px' }}>Usuario registrado correctamente</div>}
+        />
+      </Modal>
       )}
-
     </div>
+    </>
   );
 }

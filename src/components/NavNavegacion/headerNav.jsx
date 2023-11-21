@@ -17,6 +17,7 @@ const { SubMenu } = Menu;
 const App2 = () => {
   const miToken=localStorage.getItem('token');
   const miEmail = JSON.parse(localStorage.getItem('email'));
+  const miUser = JSON.parse(localStorage.getItem('username'));
   const rol = JSON.parse(localStorage.getItem('rol'));
   console.log("El rol es: ",rol);
   //console.log('tu token en MenuNav: ',miToken);
@@ -119,14 +120,19 @@ const App2 = () => {
 
           </SubMenu>
 
-          <SubMenu style={{ position: 'absolute', left: '90.5%', top: '10%' }}
+          <SubMenu style={{ position: 'absolute', left: '90.5%', top: '10%'}}
             icon={<FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30 }}/>}
             onTitleClick={handleSubmenu2Click}
             visible={submenu2Visible}>
          
+         <Menu.Item  style={{ textAlign: 'center' }}>   
+             <div >
+                  <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30, alignItems: 'center' }} /> {miUser}
+             </div>
+             </Menu.Item>
              <Menu.Item  style={{ textAlign: 'center', }}>   
              <div>
-                  <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30, alignItems: 'center' }} /> {getEmail()}
+               {getEmail()}
              </div>
              </Menu.Item>
              {miToken ? (

@@ -2,16 +2,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 90vh;
 }
 
 .contenedorLogin{
+  
   padding: 30px;
   padding-top: 60px;
   padding-bottom: 60px;
-  width: 100%; /* El div ocupa el 80% del ancho de su contenedor */
-  height: 530px;
-  max-width:530px; /* Tamaño máximo del div en anchura */
+  width:380px; /* El div ocupa el 80% del ancho de su contenedor */
+  height: 580px;
+  max-width:380px; /* Tamaño máximo del div en anchura */
 }
 
 .DivIniSesion{

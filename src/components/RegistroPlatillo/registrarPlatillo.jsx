@@ -35,9 +35,6 @@ function MyForm() {
   const handleTextChange2 = (e) => {
     const newText2 = e.target.value;
     setText2(newText2);
-    if (newText2.length <= 501){
-      setText2(newText2);
-    }
   };
 
   const verificarImagen = {
@@ -45,13 +42,13 @@ function MyForm() {
 
       let extension = file.name.split('.');
       extension = extension[extension.length-1].toLowerCase();
-      if (extension!='jpg'&&extension!='png') {
+      if (extension!='jpeg'&&extension!='jpg'&&extension!='png') {
         message.error('Solo se permite archivos jpg y png.');
         return true;
-      } else if (file.size > 6000000) {
-        message.error('El tamaño de la imagen no puede exceder 6MB');
-      } else if (file.size < 100000) {
-        message.error('El tamaño de la imagen no puede ser menor a 100 KB');
+      } 
+      const tam = 6*1024*1024; 
+      if (file.size>tam) {
+        setImageModalVisible(true);
       } else {
         setImageUploaded(true);
         message.success(`${file.name} subido correctamente.`);
@@ -71,13 +68,13 @@ function MyForm() {
       let extension = file.name.split('.');
       extension = extension[extension.length-1].toLowerCase();
       if (extension!='mp4') {
-        message.error('Solo permite archivos mp4');
+        message.error('Solo permite archivos mp4'); 
         return true;
-      }else if(file.size > 900000000) {
-        message.error('El tamaño del video no puede exceder 900MB');
-      } else if(file.size < 10000000){
-        message.error('El tamaño del video no puede ser menor de 10MB');
-      }else{
+      }
+      const tam = 150*1024*1024; 
+      if(file.size>tam) {
+        setVideoModalVisible(true);
+      } else {
         setVideoUploaded(true);
         message.success(`${file.name} subido correctamente.`);
         return false;
@@ -177,11 +174,9 @@ const onFinish = async (values) => {
             autoComplete="off"
             onChange={handleTextChange}
             value={text}
-            maxLength={51}
           />
           <div style={{ position: 'relative', top: 0, right: 0, padding: '8px', color: 'gray' }}>
-            {/*Caracteres disponibles: {50-text.length}*/}
-            { 50-text.length >= 0 ? (50-text.length < 10 ? "0"+(50-text.length) : 50-text.length)+"/"+50 : "00/"+50}
+            {text.length} / 50
           </div>
         </div>
       </Form.Item>
@@ -223,11 +218,10 @@ const onFinish = async (values) => {
             autoSize={{ minRows: 3, maxRows: 6 }}
             onChange={handleTextChange2}
             value={text2}
-            maxLength={500} // Limitar a 500 caracteres
+            //maxLength={500} // Limitar a 500 caracteres
           />
           <div style={{ position: 'relative', top: 0, right: 0, padding: '8px', color: 'gray' }}>
-            {/*Caracteres disponibles: {500-text2.length}*/}
-          {500-text2.length >= 0 ? (500-text2.length > 9 && 500-text2.length < 100? "0"+(500-text2.length) : 500-text2.length >= 0 && 500-text2.length < 10? "00"+(500-text2.length) : 500-text2.length)+"/"+500 : "000"+"/"+500}
+            {text2.length} / 500
       </div>
         </div>
       </Form.Item>

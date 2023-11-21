@@ -1,12 +1,10 @@
 import React from 'react';
-import './App.css';
 
 import { useState } from 'react';
 import { BrowserRouter as Router, Route,Routes, Link, Navigate } from 'react-router-dom';
-
 import ViewNologin from './views/vistaInicioUsuarioNoLogIn'
 import ViewLogin from './views/vistaInicioUsuarioLogin'
-import ViewAdmin from './views/vistaInicioAdmin'
+import ViewAdmin from './views/vistaInicioAdmin' 
 
 function App() {
   const [mostrarLogin, setMostrarLogin] = useState(false);
@@ -43,7 +41,9 @@ console.log('CORREOOOOOO',miConstanteRecuperada); // Mostrará el objeto origina
   
 
 {esAdministrador ? (
-        <Router>
+
+<Router>
+
           <div className="App">
         <ViewAdmin /> 
       </div>

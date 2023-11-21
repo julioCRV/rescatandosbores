@@ -7,6 +7,7 @@
     align-items: center;
 }
 
+
 /*FOOTER RESPONSIVE*/
 @media (min-width:1025px){
     .footerA{
@@ -46,4 +47,3 @@
         font-size: 8px;
     }
 }
-

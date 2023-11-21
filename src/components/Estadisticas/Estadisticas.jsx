@@ -21,7 +21,7 @@ ChartJS.register(ArcElement,Tooltip,Legend,LineElement,CategoryScale,LinearScale
 
 
 
-const Dashboard = () => {
+const dashboard = () => {
 
     const [cantidadPlatillos,setCantidadPlatillos] = useState(0);
     const [cantidadUsuarios,setCantidadUsuarios] = useState(0);
@@ -158,7 +158,7 @@ const Dashboard = () => {
         <div className="estadistica">
 
             <div className="tituloest">
-                <h1>Dashboard - Análisis de calificación</h1>
+                <h1>Dashboard - Analisis de calificacion</h1>
             </div>
 
             <div className="tasasRoscas">
@@ -233,4 +233,4 @@ const Dashboard = () => {
     );
 }
 
-export default Dashboard;
+export default dashboard;
