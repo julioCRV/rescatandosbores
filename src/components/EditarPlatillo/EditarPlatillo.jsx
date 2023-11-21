@@ -10,6 +10,7 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 export const EditarPlatillo = () =>{
+  const token=localStorage.getItem('token');
   const [imageUploaded, setImageUploaded] = useState(false);
   const [videoUploaded, setVideoUploaded] = useState(false);
   const [text, setText] = useState('');
@@ -194,6 +195,7 @@ const onFinish = async (values) => {
       const response = await axios.put(`http://18.116.106.247:3000/modificarPlatillo/${platilloData.identificador}`,formData,{
         headers: {
           'Content-Type': 'multipart/form-data',
+          'Authorization': `${token}`,
         },
       });
 
