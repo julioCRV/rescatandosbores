@@ -120,7 +120,7 @@ export const EditarPlatillo = () =>{
         message.error('El tamaño de la imagen no puede ser menor a 100 KB');
       }else {
         setImageUploaded(true);
-        setKeyImagen(true)
+        setKeyImagen(true);
         message.success(`${file.name} subido correctamente.`);
         return false;
       }
