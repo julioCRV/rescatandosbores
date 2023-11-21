@@ -56,6 +56,7 @@ body {
   }
   .alMedio{
     margin-top: -10px;
+    margin-left: -20px;
   }
   .header {
       height: 40px;
@@ -102,7 +103,9 @@ body {
   .uno{
     left: 85%;
   }
-  
+  .alMedio{
+    margin-left: -20px;
+  }
 }
 @media screen and (max-width:350px){
   .uno{

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-
+import { Modal, Result } from 'antd';
 import { Link } from 'react-router-dom';
+
 
 import ViewLogin from '../../../views/vistaInicioUsuarioLogin'
 import ViewAdmin from '../../../views/vistaInicioAdmin'
@@ -33,6 +34,7 @@ const isEmail = (email) =>
 /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
 export default function Login() {
+  const [visible, setVisible] = useState(false);
   const dataEmail = JSON.parse(localStorage.getItem('emailSave'));
   const recordar = localStorage.getItem('recordar');
   const [token, setToken] = useState();
@@ -165,6 +167,7 @@ export default function Login() {
     //Show Successfull Submittion
     const miToken=localStorage.getItem('token');
     if(miToken!=undefined){
+      showConfirmationModal();
       setSuccess("Inicio de sesión realizado exitosamente"); 
     }else{
       setPasswordError(true);
@@ -174,73 +177,84 @@ export default function Login() {
    };
 
 
-  const handleLogin = async () => {
+   const handleLogin = () => {
     const url = 'http://18.116.106.247:3000/login';
     const datos = new FormData();
     datos.append("usuario", emailInput);
     datos.append("contrasenia", passwordInput);
-
+  
     console.log(datos.get("usuario"));
     console.log(datos.get("contrasenia"));
     const credentials = {
       email: datos.get("usuario"),
       password: datos.get("contrasenia"),
     };
-
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
+  
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(credentials),
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          return response.json().then(errorData => {
+            throw new Error(`Error al iniciar sesión: ${errorData.message}`);
+          });
+        }
+      })
+      .then(data => {
         setToken(data.token);
-        // Almacenamiento del token después del inicio de sesión
+        console.log(data.token.username);
         localStorage.setItem('token', data.token);
-        //console.log('Token recibido:', data.token);
         // Puedes hacer algo con el token, como almacenarlo en el estado o en localStorage
-      } else {
-        const errorData = await response.json();
-        console.error('Error al iniciar sesión:', errorData.message);
-      }
-    } catch (error) {
-      console.error('Error en la solicitud:', error);
-    }
+      })
+      .catch(error => {
+        console.error('Error en la solicitud:', error);
+      });
   };
+  
 
   useEffect(() => {
     if (token) {
       //console.log(token);
       var valoresToken = JSON.parse(atob(token.split('.')[1]));
       console.log(valoresToken);
-      //console.log(passwordInput)
+      console.log('acaaaaaaaaaaaaaaa',valoresToken.username)
       //console.log(valoresToken.email);
       console.log(valoresToken.rol);
       localStorage.setItem('email', JSON.stringify(valoresToken.email));
       localStorage.setItem('rol', JSON.stringify(valoresToken.rol));
+      localStorage.setItem('username', JSON.stringify(valoresToken.username));
+      console.log('USernameeeeeeeeeeeeeee:',valoresToken.username);
       localStorage.setItem('password', passwordInput)
       const user = { username: valoresToken.email, role: valoresToken.rol, token: token};
       console.log('Inicio de sesión como:', valoresToken.rol );
     }
   }, [token]);
 
-  const submitYlogin = async () => {
+  const submitYlogin = () => {
     try {
-      await handleLogin();
-      // La función handleSubmit se ejecutará solo después de que handleLogin se haya completado
+      handleLogin()
+        .then(() => {
+          // La función handleSubmit se ejecutará solo después de que handleLogin se haya completado
+          handleSubmit();
+          if (rememberMe) {
+            localStorage.setItem('emailSave', JSON.stringify(emailInput));
+          }
+          console.log('ESTADO ACTUAL DEL TOKEN', token);
+        })
+        .catch(error => {
+          console.error('Error en submitYlogin:', error);
+        });
     } catch (error) {
       console.error('Error en submitYlogin:', error);
     }
-    handleSubmit();
-    if(rememberMe){
-      localStorage.setItem('emailSave', JSON.stringify(emailInput));
-    }
-    console.log('solo estado checkbox:', rememberMe);
   };
+  
 
   function bloquearBoton() {
     // Deshabilitar el botón después de hacer clic
@@ -258,7 +272,22 @@ export default function Login() {
       localStorage.setItem('recordar', 'no');
     }
   };
-  const miToken=localStorage.getItem('token');
+
+  
+
+  const showConfirmationModal = () => {
+        showModal(); 
+    };
+    
+    const showModal = () => {
+      setVisible(true);
+    };
+  
+    const handleOk = () => {
+      setVisible(false);
+      //
+    }
+    
   return (
     <>
     <div>
@@ -324,7 +353,7 @@ export default function Login() {
       </div>
 
       <div style={{ marginTop: "15px" }}>
-      <Link to={token !== undefined ? '/' : '/Iniciar-sesion'}>
+      
         <Button
           id="botonLogin"
           variant="contained"
@@ -335,15 +364,10 @@ export default function Login() {
         >
           Iniciar sesión
         </Button>
-        
-        </Link>
+      
       </div>
 
-      <div style={{ marginTop: "15px" }}>
-      <Link to='/recuperar'>
-            olvido su contraseña
-        </Link>
-      </div>
+      
       </div>
 <div className="intenta">
       {/* Show Form Error if any */}
@@ -356,14 +380,31 @@ export default function Login() {
       )}
 
       {/* Show Success if no issues */}
+       
       {success && (
-        <Stack sx={{ paddingTop: "10px" }}>
-          <Alert severity="success" size="small">
-            {success}
-          </Alert>
-        </Stack>
+                <Modal
+                visible={visible}
+                closable={false}
+                onOk={handleOk}
+                onCancel={handleOk}
+                width={400}
+                style={{ top: '50%', transform: 'translateY(-50%)' }} // Centra verticalmente
+                footer={[
+                  <Link to='/' key="ok">
+                    <Button type="primary" onClick={handleOk}>
+                      OK
+                    </Button>
+                  </Link>,
+                ]}
+              >
+                <Result
+                  status="success"
+                  title={<div style={{ fontSize: '20px' }}>Inicio de Sesión Realizado Exitosamente</div>}
+                />
+              </Modal>
       )}
-      </div>
+    
+</div>
    </>
   );
 }

@@ -24,7 +24,7 @@ function vistaLogin() {
   return (
     <div className='contenedor-Div'>
     <div   >
-        <Paper elevation={3} style={{backgroundColor:"#FBDCC4", boxShadow:"0px 4px 8px 0px rgba(0, 0, 0, 0.6)"}} className='contenedorLogin' >
+        <Paper elevation={3} style={{backgroundColor:"#cfb5aa", boxShadow: '0 0 15px rgba(0,0,0,0.8)'}} className='contenedorLogin' >
         <div align="center">
         <div>
         <img class="imgA" src="/src/assets/logo.png" alt="logo" />

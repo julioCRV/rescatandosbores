@@ -23,7 +23,7 @@ function MenuItem({ image, name, id, idPlatillo}) {
         console.log(response)
         if (response.status=="200") {
           const data = await response.json();
-          console.log(data.ok)
+          console.log("ok: " + data.ok)
           console.log("exito al obtener calificacion")
           data.ok==1 && setLikeClick(true)
 
@@ -37,7 +37,7 @@ function MenuItem({ image, name, id, idPlatillo}) {
       }
     }
     fetchPlatillos()
-  }, []);
+  }, [likeClick]);
   const hoverTrue=()=>{
     setHoverTitulo(true);
   }
@@ -58,7 +58,7 @@ function MenuItem({ image, name, id, idPlatillo}) {
       if (response.ok) {
         const data = await response.json();
         setLikeClick(!likeClick);
-        console.log("se cambio el estado " + data.message)
+        console.log( data.message)
       } else {
         console.log("error al calificar platillo")
       }
@@ -86,14 +86,14 @@ const urlImagen = 'http://18.116.106.247:3000/media/imagen/' + image.replace(/ /
         </div>
       </Link>
      <div className="contenedorTitulo">
-      <Link to={`/mostrar-platillo/page/${id}`} className="ItemContenedorTitulo" state={{likeClick, setLikeClick, like}}>
+      <Link to={`/mostrar-platillo/page/${id}`} className="ItemContenedorTitulo" >
           <h3 className="menuItemTitulo"
           onMouseEnter={hoverTrue}
           onMouseLeave={hoverFalse}> {name} </h3>
           
         </Link>
       
-      {likeClick===false ? <HeartOutlined className="classHeart " onClick={like}/> : <HeartIcon onClick={like} style={{color:"red",}} className="classHeartLike"/>}
+      {token!=null ? likeClick===false ? <HeartOutlined className="classHeart " onClick={like}/> : <HeartIcon onClick={like} style={{color:"red",}} className="classHeartLike"/>: ""}
      </div>
   </div>
   );

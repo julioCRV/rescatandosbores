@@ -17,6 +17,9 @@ const { SubMenu } = Menu;
 const App2 = () => {
   const miToken=localStorage.getItem('token');
   const miEmail = JSON.parse(localStorage.getItem('email'));
+  const miUser = JSON.parse(localStorage.getItem('username'));
+  const rol = JSON.parse(localStorage.getItem('rol'));
+  console.log("El rol es: ",rol);
   console.log('tu token en MenuNav: ',miToken);
   const [submenu1Visible, setSubmenu1Visible] = useState(false);
   const [submenu2Visible, setSubmenu2Visible] = useState(false);
@@ -75,42 +78,61 @@ const App2 = () => {
             </Link> 
             </div>
             
-          </Menu.Item>     
+          </Menu.Item> 
           </div>
           <SubMenu theme='dark' className= {`${location.pathname === '/platillos-tradicionales' ? 'selected-menu-item' : ''} ${'menu'}`}
           
+          
           title={
-              <Link to="/platillos-tradicionales" className='menu-icon'>
-                <span>          
+              ...miToken !== null ? 
+                (
+                <span>
                   <UnorderedListOutlined /> Platillos Tradicionales
                 </span>
-                 </Link>    
-            }
+                     )
+                :null
+          }
             onTitleClick={handleSubmenu1Click}
             visible={submenu1Visible}
           >
 
-            
+            {rol === 'administrador' ? 
               <Menu.Item key="Registrar Platillo" className={location.pathname === '/registrar-platillo' ? 'selected-menu-item' : ''}>
-                <Link to="/registrar-platillo" className={`${'menu-icon'} ${'prueba'}`}>
-                  Registrar Platillo
-                </Link> 
-              </Menu.Item>
+              <Link to="/registrar-platillo" className={`${'menu-icon'} ${'prueba'}`}>
+                Registrar Platillo
+              </Link> 
+              </Menu.Item> : null
+            }
+
+            {rol === 'administrador' ? 
+              <Menu.Item key="Mostrar Estadisticas" className={location.pathname === '/mostrar-estadisticas' ? 'selected-menu-item' : ''}>
+              <Link to="/mostrar-estadisticas" className={`${'menu-icon'} ${'prueba'}`}>
+              Mostrar Estadísticas
+              </Link> 
+              </Menu.Item> : null
+            }
+
               <Menu.Item key="Mostrar Platillo" className={location.pathname === '/mostrar-platillo/page/1' ? 'selected-menu-item' : ''}>
                 <Link to="/mostrar-platillo/page/1" className={`${'menu-icon'} ${'prueba'}`}>
                   Mostrar Platillo
                 </Link> 
               </Menu.Item>
+
           </SubMenu>
 
-          <SubMenu style={{ position: 'absolute', left: '90.5%', top: '10%' }}
-            icon={<FontAwesomeIcon icon={faCircleUser} style={{fontSize: 30 }}/>}
+          <SubMenu style={{ position: 'absolute', left: '90.5%', top: '10%'}}
+            icon={<FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30 }}/>}
             onTitleClick={handleSubmenu2Click}
             visible={submenu2Visible}>
          
+         <Menu.Item  style={{ textAlign: 'center' }}>   
+             <div >
+                  <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30, alignItems: 'center' }} /> {miUser}
+             </div>
+             </Menu.Item>
              <Menu.Item  style={{ textAlign: 'center', }}>   
              <div>
-                  <FontAwesomeIcon icon={faCircleUser} style={{ fontSize: 30, alignItems: 'center'}} /> {getEmail()}
+               {getEmail()}
              </div>
              </Menu.Item>
              {miToken ? (

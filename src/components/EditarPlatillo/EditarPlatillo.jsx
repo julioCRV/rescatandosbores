@@ -10,6 +10,7 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 export const EditarPlatillo = () =>{
+  const token=localStorage.getItem('token');
   const [imageUploaded, setImageUploaded] = useState(false);
   const [videoUploaded, setVideoUploaded] = useState(false);
   const [text, setText] = useState('');
@@ -102,7 +103,9 @@ export const EditarPlatillo = () =>{
   const handleTextChange2 = (e) => {
     setBandDescripcion(true);
     const newText2 = e.target.value;
-    setText2(newText2);
+    if (newText2.length <= 501){
+      setText2(newText2);
+    }
   };
 
   const verificarImagen = {
@@ -118,7 +121,7 @@ export const EditarPlatillo = () =>{
         message.error('El tamaño de la imagen no puede ser menor a 100 KB');
       }else {
         setImageUploaded(true);
-        setKeyImagen(true)
+        setKeyImagen(true);
         message.success(`${file.name} subido correctamente.`);
         return false;
       }
@@ -165,7 +168,6 @@ export const EditarPlatillo = () =>{
 
   //Se ejecuta cuando se da a actualizar
 const onFinish = async (values) => {
-  if(keyImagen === true && keyVideo === true){
     setIsLoading(true);
     try {
       //Cargo los datos de los inputs para poder subirlo a la bd
@@ -173,17 +175,30 @@ const onFinish = async (values) => {
       formData.append('nombre', values.titulo ?? text);
       formData.append('descripcion', values.descripcion ?? text2);
       formData.append('id', platilloData.identificador);
-      const videoFile = values.video.file;
-      const imagenFile = values.imagen.file;
-      formData.append('imagen', new Blob([imagenFile], { type: imagenFile.type }), imagenFile.name);
-      formData.append('video', new Blob([videoFile], { type: videoFile.type }), videoFile.name);
-      console.log(formData);
+      
+      if(values.imagen === undefined){
+        formData.append('imagen',null);
+      }else{
+        const imagenFile = values.imagen.file;
+        formData.append('imagen', new Blob([imagenFile], { type: imagenFile.type }), imagenFile.name);
+      }
+
+      if(values.video === undefined){
+        formData.append('video',null);
+      }else{
+        const videoFile = values.video.file;
+        formData.append('video', new Blob([videoFile], { type: videoFile.type }), videoFile.name);
+      }
+            
       console.log('Realizando llamada');
+
       const response = await axios.put(`http://18.116.106.247:3000/modificarPlatillo/${platilloData.identificador}`,formData,{
         headers: {
           'Content-Type': 'multipart/form-data',
+          'Authorization': `${token}`,
         },
       });
+
       console.log('Llega la llamada');
       console.log(response);
       if (response.status === 200) {
@@ -198,11 +213,8 @@ const onFinish = async (values) => {
       setIsLoading(false); //Desactiva la interfaz de carga
       showModalEditar();
     }
-  }else{
-    message.error(`Verifique que todo los datos esten correctos`);
-  }
+  
 };
-
 
   return (
     <div>
@@ -222,7 +234,7 @@ const onFinish = async (values) => {
           { required: bandTitulo, message: 'Ingresa el título del platillo'},
           { max: 50, message: 'El título no puede tener más de 50 caracteres'},
           { min: 6, message: 'El título debe tener al menos 6 caracteres' },
-          { pattern: /^[A-Za-z][a-zA-Z ]*$/, message: 'verifique que no contenga caracteres numericos ó extraños'},
+          { pattern: /^[A-Za-zÑñ][a-zA-ZÑñ ]*$/, message: 'verifique que no contenga caracteres numericos ó extraños'},
         ]}
 
         labelCol={{ span: 6 }} // Configura el ancho de la etiqueta
@@ -238,8 +250,9 @@ const onFinish = async (values) => {
             value={text}
             maxLength={51}
           />
-          <div style={{ position: 'absolute', top: 0, right: 0, padding: '8px', color: 'gray' }}>
-            {text.length} / 50
+          <div style={{color: 'gray' }}>
+          {/*Caracteres disponibles: {50-text.length}*/}
+          { 50-text.length >= 0 ? (50-text.length < 10 ? "0"+(50-text.length) : 50-text.length)+"/"+50 : "00/"+50}
           </div>
         </div>
       </Form.Item>
@@ -252,14 +265,14 @@ const onFinish = async (values) => {
         }
         name="imagen"
         colon={false}
-        rules={[{ required: true, message: 'No se ha subido ninguna imagen' }]}
+        rules={[{ required: false, message: 'No se ha subido ninguna imagen' }]}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 24 }}
       >
         <Upload {...verificarImagen} maxCount={1} accept='image/*'>
           <Button style={buttonStyle} icon={<UploadOutlined />} className='sms'>Subir Imagen</Button>
           {imageUploaded }
-          {!imageUploaded && <span className='mensaje-transparenteI'> No se ha seleccionado ningún archivo</span>}
+          {!imageUploaded && <span className='mensaje-transparenteI'>{nombreImagen}</span>}
         </Upload>
       </Form.Item>
 
@@ -283,10 +296,10 @@ const onFinish = async (values) => {
             autoSize={{ minRows: 3, maxRows: 6 }}
             onChange={handleTextChange2}
             value={text2}
-            maxLength={501}
+            
           />
-          <div style={{ position: 'absolute', top: 0, right: 0, padding: '8px', color: 'gray' }}>
-            {text2.length} / 500
+          <div style={{color: 'gray' }}>
+          {500-text2.length >= 0 ? (500-text2.length > 9 && 500-text2.length < 100? "0"+(500-text2.length) : 500-text2.length >= 0 && 500-text2.length < 10? "00"+(500-text2.length) : 500-text2.length)+"/"+500 : "000"+"/"+500}
           </div>
         </div>
       </Form.Item>
@@ -297,14 +310,14 @@ const onFinish = async (values) => {
         label={<span className='item-txt' onClick={(e)=>{e.preventDefault()}}>Video:</span>}
         name="video"
         colon={false}
-        rules={[{ required: true, message: 'No se ha subido ningun video' }]}
+        rules={[{ required: false, message: 'No se ha subido ningun video' }]}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 24 }}
       >
         <Upload {...verificarVideo} maxCount={1} accept='video/mp4'>
           <Button style={buttonStyle} icon={<UploadOutlined /> }className='sms'>Subir Video</Button>
           {videoUploaded}
-          {!videoUploaded && <span className='mensaje-transparenteV'>No se ha seleccionado ningún video</span>}
+          {!videoUploaded && <span className='mensaje-transparenteV'>{nombreVideo}</span>}
         </Upload>
       </Form.Item>
 
