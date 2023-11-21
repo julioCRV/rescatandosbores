@@ -367,11 +367,7 @@ export default function Login() {
       
       </div>
 
-      <div style={{ marginTop: "15px" }}>
-      <Link to='/recuperar'>
-            olvido su contraseña
-        </Link>
-      </div>
+      
       </div>
 <div className="intenta">
       {/* Show Form Error if any */}
