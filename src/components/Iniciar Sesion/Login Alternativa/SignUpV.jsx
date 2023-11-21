@@ -239,6 +239,7 @@ export default function Login() {
 
   const handleOk = () => {
     setVisible(false);
+    window.location.reload();
     //
   }
 
@@ -343,7 +344,7 @@ export default function Login() {
         width={400}
         style={{ top: '50%', transform: 'translateY(-50%)' }} // Centra verticalmente
         footer={[
-          <Link to='/' key="ok">
+          <Link to='/iniciar-sesion' key="ok">
             <Button type="primary" onClick={handleOk}>
               OK
             </Button>

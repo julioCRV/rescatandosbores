@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './App.css'
 import { useState } from 'react';
 import { BrowserRouter as Router, Route,Routes, Link, Navigate } from 'react-router-dom';
 import ViewNologin from './views/vistaInicioUsuarioNoLogIn'

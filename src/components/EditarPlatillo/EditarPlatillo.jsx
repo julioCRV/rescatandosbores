@@ -102,7 +102,9 @@ export const EditarPlatillo = () =>{
   const handleTextChange2 = (e) => {
     setBandDescripcion(true);
     const newText2 = e.target.value;
-    setText2(newText2);
+    if (newText2.length <= 501){
+      setText2(newText2);
+    }
   };
 
   const verificarImagen = {
@@ -118,7 +120,7 @@ export const EditarPlatillo = () =>{
         message.error('El tamaño de la imagen no puede ser menor a 100 KB');
       }else {
         setImageUploaded(true);
-        setKeyImagen(true)
+        setKeyImagen(true);
         message.success(`${file.name} subido correctamente.`);
         return false;
       }
@@ -212,7 +214,6 @@ const onFinish = async (values) => {
   
 };
 
-
   return (
     <div>
     <div className="titulo-formato" style={{ marginBottom: '30px' }}>Editar Platillo</div  >
@@ -231,7 +232,7 @@ const onFinish = async (values) => {
           { required: bandTitulo, message: 'Ingresa el título del platillo'},
           { max: 50, message: 'El título no puede tener más de 50 caracteres'},
           { min: 6, message: 'El título debe tener al menos 6 caracteres' },
-          { pattern: /^[A-Za-z][a-zA-Z ]*$/, message: 'verifique que no contenga caracteres numericos ó extraños'},
+          { pattern: /^[A-Za-zÑñ][a-zA-ZÑñ ]*$/, message: 'verifique que no contenga caracteres numericos ó extraños'},
         ]}
 
         labelCol={{ span: 6 }} // Configura el ancho de la etiqueta
@@ -248,7 +249,8 @@ const onFinish = async (values) => {
             maxLength={51}
           />
           <div style={{color: 'gray' }}>
-            {text.length} / 50
+          {/*Caracteres disponibles: {50-text.length}*/}
+          { 50-text.length >= 0 ? (50-text.length < 10 ? "0"+(50-text.length) : 50-text.length)+"/"+50 : "00/"+50}
           </div>
         </div>
       </Form.Item>
@@ -292,10 +294,10 @@ const onFinish = async (values) => {
             autoSize={{ minRows: 3, maxRows: 6 }}
             onChange={handleTextChange2}
             value={text2}
-            maxLength={501}
+            
           />
           <div style={{color: 'gray' }}>
-            {text2.length} / 500
+          {500-text2.length >= 0 ? (500-text2.length > 9 && 500-text2.length < 100? "0"+(500-text2.length) : 500-text2.length >= 0 && 500-text2.length < 10? "00"+(500-text2.length) : 500-text2.length)+"/"+500 : "000"+"/"+500}
           </div>
         </div>
       </Form.Item>

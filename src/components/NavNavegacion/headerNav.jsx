@@ -20,7 +20,7 @@ const App2 = () => {
   const miUser = JSON.parse(localStorage.getItem('username'));
   const rol = JSON.parse(localStorage.getItem('rol'));
   console.log("El rol es: ",rol);
-  //console.log('tu token en MenuNav: ',miToken);
+  console.log('tu token en MenuNav: ',miToken);
   const [submenu1Visible, setSubmenu1Visible] = useState(false);
   const [submenu2Visible, setSubmenu2Visible] = useState(false);
   const [isBotonLogin, setisBotonLogin] = useState(true);
@@ -107,7 +107,7 @@ const App2 = () => {
             {rol === 'administrador' ? 
               <Menu.Item key="Mostrar Estadisticas" className={location.pathname === '/mostrar-estadisticas' ? 'selected-menu-item' : ''}>
               <Link to="/mostrar-estadisticas" className={`${'menu-icon'} ${'prueba'}`}>
-                Mostrar Estadisticas
+              Mostrar Estadísticas
               </Link> 
               </Menu.Item> : null
             }
@@ -141,7 +141,7 @@ const App2 = () => {
              
              <Menu.Item> 
                 <Link  to="/Iniciar-sesion">
-                    <Button onClick={mostrarBotonLL} icon={<LoginOutlined />}>Iniciar Sesison</Button>
+                    <Button onClick={mostrarBotonLL} icon={<LoginOutlined />}>Iniciar Sesión</Button>
                 </Link>
              </Menu.Item>
              )}

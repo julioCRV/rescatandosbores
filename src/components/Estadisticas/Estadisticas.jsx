@@ -158,7 +158,7 @@ const dashboard = () => {
         <div className="estadistica">
 
             <div className="tituloest">
-                <h1>Dashboard - Analisis de calificacion</h1>
+            <h1>Dashboard - Análisis de calificación</h1>
             </div>
 
             <div className="tasasRoscas">
