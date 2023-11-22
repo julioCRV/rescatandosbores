@@ -1,17 +1,17 @@
 import Reac, {useState} from 'react'; 
 import {Routes, Route} from 'react-router-dom';
 
-import Menu from '../MenuPlatillos/menuPlatillos';
-import Home from '../../components/Home/BannerPresentacion/BannerPresentacion';
-import Buscador from '../../components/Home/Buscador';
-import MyForm from '../../components/RegistroPlatillo/registrarPlatillo';
-import MostrarPlatillos from '../../components/MostrarPlatillos/mostrarPlatillos';
-import EditarPlatillos from '../../components/EditarPlatillo/EditarPlatillo';
-import Login from "../../components/Iniciar Sesion/Login Alternativa/LOGINV2";
-import Estadisticas from '../../components/Estadisticas/Estadisticas';
-import Recuperar from '../../components/Iniciar Sesion/Login Alternativa/recuperar';
-import Dashboard from '../../components/Estadisticas/Estadisticas';
-import IngresarContra from '../Iniciar Sesion/Login Alternativa/ingresarContra'
+import Menu from '../components/MenuPlatillos/MenuPlatillos';
+import Home from '../Home/BannerPresentacion';
+import Buscador from '../components/Buscador/Buscador';
+import MyForm from '../components/RegistroPlatillo/registrarPlatillo';
+import MostrarPlatillos from '../components/MostrarPlatillos/MostrarPlatillos';
+import EditarPlatillos from '../components/EditarPlatillo/EditarPlatillo';
+import Login from "../components/IniciaRSesion/DiseñoFormulario";
+import Estadisticas from '../components/Estadisticas/Estadisticas';
+import Recuperar from '../components/IniciarSesion/FormularioEmail';
+import Dashboard from '../components/Estadisticas/Estadisticas';
+import IngresarContra from '../components/IniciarSesion/FormularioRecuperarContraseña'
 function Router() {
     return (
         <Routes>

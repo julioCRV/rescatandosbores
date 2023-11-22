@@ -9,9 +9,9 @@ import LockIcon from "@mui/icons-material/Lock";
 import { Box } from '@mui/material';
 import Switch from "@mui/material/Switch";
 
-import Login from "./LoginV";
-import Signup from "./SignUpV";
-import './LOGINV2.css'
+import Login from "./FormularioLogin";
+import Signup from "./FormularioSingup";
+import './DiseñoFormulario.css'
 
 
 function vistaLogin() {

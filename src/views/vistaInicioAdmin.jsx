@@ -5,7 +5,7 @@ import React from 'react';
 import { useState } from 'react';
 import { BrowserRouter as Router,Link } from 'react-router-dom';
 import Header from '../components/MenuNavegacion/header';
-import MenuNav from '../components/NavNavegacion/headerNav';
+import MenuNav from '../components/NavNavegacion/HeaderNav';
 import Footer from '../components/Footer/Footer';
 
 

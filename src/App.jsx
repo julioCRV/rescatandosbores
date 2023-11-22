@@ -1,14 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
 import { BrowserRouter as Router, Route,Routes, Link, Navigate } from 'react-router-dom';
-import ViewNologin from './views/vistaInicioUsuarioNoLogIn'
-import ViewLogin from './views/vistaInicioUsuarioLogin'
 import ViewAdmin from './views/vistaInicioAdmin' 
 
 function App() {
-  const [mostrarLogin, setMostrarLogin] = useState(false);
-
-
   const [esAdministrador, setAdministrador] = useState(true);
   const token=localStorage.getItem('token');
 

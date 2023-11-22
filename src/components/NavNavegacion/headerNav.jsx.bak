@@ -107,7 +107,7 @@ const App2 = () => {
             {rol === 'administrador' ?
               <Menu.Item key="Mostrar Estadisticas" className={location.pathname === '/mostrar-estadisticas' ? 'selected-menu-item' : ''}>
                 <Link to="/mostrar-estadisticas" className={`${'menu-icon'} ${'prueba'}`}>
-                  Ver Estadísticas
+                  Mostrar Estadísticas
                 </Link>
               </Menu.Item> : null
             }

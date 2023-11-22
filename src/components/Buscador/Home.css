@@ -1,0 +1,45 @@
+.div-center{
+    font-family: sans-serif;
+  text-align: center;
+}
+.div-left{
+  font-family: sans-serif;
+  text-align: center;
+}
+.texto{
+  font-family: sans-serif;
+    font-size: 45px;
+}
+
+.mensaje-resultado{
+  font-family: sans-serif;
+  text-align: center;
+}
+
+
+
+.input-field {
+  font-family: sans-serif;
+
+}
+
+
+.input-container {
+  z-index: 100;
+}
+
+.error-message {
+  font-family: sans-serif;
+  position: absolute;
+  top: -125px;
+  margin-left: 63%;
+  color: #ff0000; 
+  background-color: #ffe6e6; 
+  padding: 2px; 
+  border: 1px solid #ff0000; 
+  margin-top: 8px; 
+}
+
+@media (min-width: 320px) and (max-width: 481px){
+  
+}
