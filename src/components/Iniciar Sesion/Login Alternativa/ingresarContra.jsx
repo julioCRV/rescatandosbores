@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Paper from "@mui/material/Paper";
-import "./LOGINV2.css"
+
 import {
   TextField,
   Button,
