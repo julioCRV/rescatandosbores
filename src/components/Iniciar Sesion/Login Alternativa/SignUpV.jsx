@@ -203,25 +203,7 @@ export default function Login() {
     }
   };
 
-  useEffect(() => {
-    if (token) {
-      //console.log(token);
-      var valoresToken = JSON.parse(atob(token.split('.')[1]));
-      console.log(valoresToken);
-      console.log(valoresToken.username);
-      console.log(valoresToken.rol);
-      localStorage.setItem('email', JSON.stringify(valoresToken.email));
-      localStorage.setItem('username', JSON.stringify(valoresToken.username));
-      localStorage.setItem('password', JSON.stringify(valoresToken.password));
-      const user = { username: valoresToken.username, email: valoresToken.email, token: token};
-      handleLogin(user);
-      if (valoresToken.rol === 'administrador') {
-        console.log('Inicio de sesión como Administrador');
-      } else if (valoresToken.rol === 'usuario') {
-        console.log('Inicio de sesión como Usuario');
-      }
-    }
-  }, [token]);
+  
 
   const submitYsingup = () => {
     handleSubmit();

@@ -12,6 +12,7 @@ const ButtonLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('rol ');
+    localStorage.removeItem('email');
     const recordar = localStorage.getItem('recordar');
     if(recordar=='no'){
       localStorage.removeItem('email');

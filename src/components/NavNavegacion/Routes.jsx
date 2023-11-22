@@ -11,7 +11,7 @@ import Login from "../../components/Iniciar Sesion/Login Alternativa/LOGINV2";
 import Estadisticas from '../../components/Estadisticas/Estadisticas';
 import Recuperar from '../../components/Iniciar Sesion/Login Alternativa/recuperar';
 import Dashboard from '../../components/Estadisticas/Estadisticas';
-
+import IngresarContra from '../Iniciar Sesion/Login Alternativa/ingresarContra'
 function Router() {
     return (
         <Routes>
@@ -25,6 +25,7 @@ function Router() {
             <Route path='/editar-platillo/:id' element={<EditarPlatillos/>}/>
             <Route path='/iniciar-sesion' element={<Login/>}/>
             <Route path='/recuperar' element={<Recuperar/>}/>
+            <Route path='/recuperarContra' element={<IngresarContra/>}/>
         </Routes>
     );
 } 
