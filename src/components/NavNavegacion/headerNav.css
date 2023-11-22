@@ -1,5 +1,5 @@
 .selected-menu-item {
-  background-color: #31112C !important;
+  background-color: #31112C;
   color: #fff !important;
 }
 
@@ -10,8 +10,8 @@
 
 .menu-icon {
   color: #fff !important;
-
 }
+
 
 .menu-search-container {
   width: 50%;
@@ -49,17 +49,23 @@ body {
 @media (min-width: 320px) and (max-width: 481px){
   .menu {
     font-size: 10px;
-    margin-left: -30px;
-    height: 40px;
-    top: -28%;
+    margin-left:-25px;
+    height: 5px;
+    top: -6%;
     
   }
+
+  .selected-menu-item {
+    background-color: #7D0633;
+    color: #fff !important;
+  }
+
   .alMedio{
-    margin-top: -10px;
-    margin-left: -20px;
+    margin-top: -30px;
+    margin-left: -10px;
   }
   .header {
-      height: 40px;
+      height: 50px;
   }
 
   .prueba{

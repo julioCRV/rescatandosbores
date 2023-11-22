@@ -363,13 +363,17 @@ export default function Login() {
           style={{ textTransform: 'capitalize',backgroundColor:"#66072c"  }}
         >
           Iniciar sesión
-        </Button>
+        </Button>   
+      </div>
       
+      <div style={{ marginTop: "15px" }}>
+      <Link to='/recuperar'>
+            olvido su contraseña
+        </Link>
+      </div>
       </div>
 
-      
-      </div>
-<div className="intenta">
+    <div className="intenta">
       {/* Show Form Error if any */}
       {formValid && (
         <Stack sx={{  paddingTop: "10px" }} >
