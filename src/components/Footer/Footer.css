@@ -42,6 +42,7 @@
 @media (max-width:480px){
     .footerA{
         height: 20px;
+        width: 111%;
     }
     .textoPie{
         font-size: 8px;

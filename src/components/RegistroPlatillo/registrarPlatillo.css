@@ -7,11 +7,11 @@
 }
 
 /*Color de fondo de la pagina*/
-/* body {
+/*  body {
   font-family: Arial, sans-serif;
   background-color: #fbdcc4;
-  width: 100%;
-} */
+  width: 110%;
+}  */
 
 form {
   background-color: #fbdcc4;
@@ -30,7 +30,6 @@ form {
 .header {
   background-color: #7D0633;
   color: rgb(144, 32, 32);
-  width: 100%;
 }
 
 .footer {
@@ -136,7 +135,10 @@ form {
   .titulo-formato {
     font-size: 20px;
   }
-
+  .menu{
+    padding-right: 139%;
+    padding-bottom: 16%;
+  }
 /*   .button {
     margin-bottom: 10px;
     margin-left: 20%;

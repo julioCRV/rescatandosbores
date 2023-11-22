@@ -146,7 +146,6 @@ const App2 = () => {
              </Menu.Item>
              )}
            </SubMenu>
-
             {location.pathname === '/' && (
               <Menu.Item key="Buscar" className={`uno ${location.pathname === '/buscador' ? 'selected-menu-item' : ''}`} style={{  position: 'absolute', left:'81%'  }}>
                 <Link to="/buscador">
@@ -163,6 +162,7 @@ const App2 = () => {
       </Header>
       <Content className='content'>
         <Routes/>
+      <div className='relleno'>.</div>
       </Content>
     </Layout>
     
