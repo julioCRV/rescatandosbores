@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import Paper from "@mui/material/Paper";
-import "./DiseñoFormulario.css"
+import { Modal, Result } from 'antd';
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
 import {
   TextField,
   Button,
   Alert,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  Input,
   Stack,
 } from "@mui/material";
+
 
 const isEmail = (email) =>
   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
@@ -14,10 +23,79 @@ const isEmail = (email) =>
 const uri = 'http://18.116.106.247:3000/';
 
 export default function PasswordRecovery() {
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState(false);
   const [formError, setFormError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+
+  const [formValid, setFormValid] = useState();
+
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [passwordInput, setPasswordInput] = useState();
+
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorMax, setPasswordErrorMax] = useState(false);
+  const [passwordErrorMin, setPasswordErrorMin] = useState(false); 
+
+  const [passwordErrorSecond, setPasswordErrorSecond] = useState(false);
+  const [showPasswordSecond, setShowPasswordSecond] = React.useState(false);
+  const [passwordInputSecond, setPasswordInputSecond] = useState();
+  const [passwordErrorMaxSecond, setPasswordErrorMaxSecond] = useState(false);
+  const [passwordErrorMinSecond, setPasswordErrorMinSecond] = useState(false); 
+
+  const handlePassword = () => {
+    if (
+      !passwordInput ||
+      passwordInput.length > 16
+    ) {
+      setPasswordError(true);
+      setPasswordErrorMax(true);
+      return;
+    }
+    setPasswordError(false);
+    setPasswordErrorMax(false);
+    if (
+      !passwordInput ||
+      passwordInput.length < 8 
+    ) {
+      setPasswordError(true);
+      setPasswordErrorMin(true);
+      return;
+    }
+    setPasswordError(false);
+    setPasswordErrorMin(false);
+  };
+
+  const handlePasswordSecond = () => {
+    if (
+      !passwordInputSecond ||
+      passwordInputSecond.length > 16
+    ) {
+      setPasswordErrorSecond(true);
+      setPasswordErrorMaxSecond(true);
+      return;
+    }
+    setPasswordErrorSecond(false);
+    setPasswordErrorMaxSecond(false);
+    if (
+      !passwordInputSecond ||
+      passwordInputSecond.length < 8 
+    ) {
+      setPasswordErrorSecond(true);
+      setPasswordErrorMinSecond(true);
+      return;
+    }
+    setPasswordErrorSecond(false);
+    setPasswordErrorMinSecond(false);
+  };
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const handleClickShowPasswordSecond = () => setShowPasswordSecond((show) => !show);
+  const handleMouseDownPasswordSecond = (event) => {
+    event.preventDefault();
+  };
 
   const handleEmailChange = (event) => {
     const newEmail = event.target.value.trim();
@@ -25,34 +103,31 @@ export default function PasswordRecovery() {
     setEmailError(!isEmail(newEmail));
     setFormError('');
     setSuccessMessage('');
-  };
+};
 
   const handleSubmit = async () => {
-    if (!isEmail(email)) {
-      setFormError("Por favor, ingrese un correo electrónico válido.");
+    if(!passwordInput){
+      setPasswordError(true);
+      setFormValid(
+        "Contraseña obligatoria. Por favor ingrese una contraseña"
+      );
       return;
     }
 
-    // Lógica para enviar la solicitud de recuperación de contraseña al servidor
-    try {
-      const response = await fetch(uri + 'recuperarContra', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Error en la solicitud');
-      }
-
-      // Limpiar el formulario y mostrar el mensaje de éxito
-      setEmail('');
-      setSuccessMessage("Correo enviado con éxito a: " + email);
-    } catch (error) {
-      console.error("Error en la solicitud:", error);
-      setFormError("Hubo un error al procesar la solicitud. Por favor, inténtelo de nuevo.");
+     if (passwordErrorMax || !passwordInput) {
+      setPasswordError(true);
+      setFormValid(
+        "La contraseña debe ser menor o igual a 16 caracteres."
+      );
+      return;
+    }
+  
+    if (passwordErrorMin || !passwordInput) {
+      setPasswordError(true);
+      setFormValid(
+        "La contraseña debe ser mayor o igual a 8 caracteres."
+      );
+      return;
     }
   };
 
@@ -65,26 +140,69 @@ export default function PasswordRecovery() {
               <img class="imgA" src="/src/assets/logo.png" alt="logo" />
             </div>
             <h3>Reestablecer contraseña</h3>
-            <TextField
-              label="Contraseña"
-              fullWidth
-              error={emailError}
-              variant="standard"
-              sx={{ width: "100%" }}
-              value={email}
-              onChange={handleEmailChange}
-              style={{ marginTop: "15px" }}
-            />
-            <TextField
-              label="Confirmar contraseña"
-              fullWidth
-              error={emailError}
-              variant="standard"
-              sx={{ width: "100%" }}
-              value={email}
-              onChange={handleEmailChange}
-              style={{ marginTop: "15px" }}
-            />
+            <div style={{marginTop:"5px"}}>
+              <FormControl sx={{width:"100%"}} variant="standard" >
+                  <InputLabel
+                    error={passwordError}
+                    htmlFor="standard-adornment-password"
+                  >
+                    Contraseña
+                  </InputLabel>
+                  <Input
+                    error={passwordError}
+                    onBlur={handlePassword}
+                    id = "standard-adornment-password"
+                    type={showPassword ? "text": "password"}
+                    onChange={(event)=>{
+                      setPasswordInput(event.target.value)
+                    }}
+                    value={passwordInput}
+                    endAdornment={
+                         <InputAdornment position="end">
+                         <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                         >
+                            {showPassword? <VisibilityOff/>:<Visibility/>}
+                         </IconButton>
+                         </InputAdornment>
+              }
+              />
+              </FormControl>
+            </div>
+            {/* input confirmar contraseña */}
+            <div style={{marginTop:"5px"}}>
+              <FormControl sx={{width:"100%"}} variant="standard" >
+                  <InputLabel
+                    error={passwordErrorSecond}
+                    htmlFor="standard-adornment-password"
+                  >
+                    Confirmar Contraseña
+                  </InputLabel>
+                  <Input
+                    error={passwordErrorSecond}
+                    onBlur={handlePasswordSecond}
+                    id = "standard-adornment-password"
+                    type={showPasswordSecond ? "text": "password"}
+                    onChange={(event)=>{
+                      setPasswordInputSecond(event.target.value)
+                    }}
+                    value={passwordInputSecond}
+                    endAdornment={
+                         <InputAdornment position="end">
+                         <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPasswordSecond}
+                              onMouseDown={handleMouseDownPasswordSecond}
+                         >
+                            {showPasswordSecond? <VisibilityOff/>:<Visibility/>}
+                         </IconButton>
+                         </InputAdornment>
+              }
+              />
+              </FormControl>
+            </div>
           </div>
 
           <div style={{ marginTop: "30px" }}>
@@ -92,12 +210,12 @@ export default function PasswordRecovery() {
               variant="contained"
               fullWidth
               onClick={handleSubmit}
-              style={{ textTransform: 'capitalize', backgroundColor: "#66072c", marginTop: "15px" }}
+              style={{ textTransform: 'capitalize', backgroundColor: "#66072c" ,marginTop:"15px"}}
             >
               Reestablecer Contraseña
             </Button>
           </div>
-
+          
 
           {(formError || successMessage) && (
             <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
