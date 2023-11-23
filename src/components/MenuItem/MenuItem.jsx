@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 function MenuItem({ image, name, pagina, id}) {
   const [pagid, setPagid] = useState(null); // Inicializa platillos como null o 0, según lo que sea más apropiado para tu caso
   const token=localStorage.getItem('token');
-
+  const PARAGIT ='';
   useEffect(() => {
     async function fetchPlatillos() {
       try {
