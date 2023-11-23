@@ -406,7 +406,7 @@ export default function Login() {
           </Button>
         </div>
 
-        <div style={{ marginTop: "15px" }}>
+        <div align="center" style={{ marginTop: "15px" }}>
           <Link to='/recuperar'>
             olvido su contraseña
           </Link>

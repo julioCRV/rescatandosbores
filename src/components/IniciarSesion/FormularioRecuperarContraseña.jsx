@@ -3,6 +3,8 @@ import Paper from "@mui/material/Paper";
 import { Modal, Result } from 'antd';
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import {
   TextField,
@@ -15,6 +17,7 @@ import {
   Input,
   Stack,
 } from "@mui/material";
+import { faCompassDrafting } from "@fortawesome/free-solid-svg-icons";
 
 
 const isEmail = (email) =>
@@ -23,13 +26,18 @@ const isEmail = (email) =>
 const uri = 'http://18.116.106.247:3000/';
 
 export default function PasswordRecovery() {
+  const {tokenCodificado} = useParams();
+  const token = atob(tokenCodificado);
   const [formError, setFormError] = useState('');
+  const [formErrorSecond, setFormErrorSecond] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
   const [formValid, setFormValid] = useState();
+  const [success, setSuccess] = useState();
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [passwordInput, setPasswordInput] = useState();
+  const [visible, setVisible] = useState(false);
 
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMax, setPasswordErrorMax] = useState(false);
@@ -40,6 +48,28 @@ export default function PasswordRecovery() {
   const [passwordInputSecond, setPasswordInputSecond] = useState();
   const [passwordErrorMaxSecond, setPasswordErrorMaxSecond] = useState(false);
   const [passwordErrorMinSecond, setPasswordErrorMinSecond] = useState(false); 
+
+  function validarContraseña(contraseña) {
+   
+    handlePassword();
+    console.log('acaaaaaaaaaaa', passwordError, passwordErrorMax, passwordErrorMin)
+    // Verificar si contiene al menos una letra mayúscula
+    const tieneMayuscula = /[A-Z]/.test(contraseña);
+
+    // Verificar si contiene al menos un carácter especial
+    const tieneCaracterEspecial = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(contraseña);
+
+    // Verificar si contiene al menos un número
+    const tieneNumero = /\d/.test(contraseña);
+
+    // Verificar si cumple con todos los requisitos
+    // console.log(passwordError, 'max: ', passwordErrorMax, 'min: ', passwordErrorMin)
+    if (passwordError || passwordErrorMax || passwordErrorMin) {
+      return false;
+    } else {
+      return tieneMayuscula && tieneCaracterEspecial && tieneNumero;
+    }
+  }
 
   const handlePassword = () => {
     if (
@@ -63,6 +93,7 @@ export default function PasswordRecovery() {
     setPasswordError(false);
     setPasswordErrorMin(false);
   };
+
 
   const handlePasswordSecond = () => {
     if (
@@ -108,7 +139,7 @@ export default function PasswordRecovery() {
   const handleSubmit = async () => {
     if(!passwordInput){
       setPasswordError(true);
-      setFormValid(
+      setFormError(
         "Contraseña obligatoria. Por favor ingrese una contraseña"
       );
       return;
@@ -116,7 +147,7 @@ export default function PasswordRecovery() {
 
      if (passwordErrorMax || !passwordInput) {
       setPasswordError(true);
-      setFormValid(
+      setFormError(
         "La contraseña debe ser menor o igual a 16 caracteres."
       );
       return;
@@ -124,12 +155,108 @@ export default function PasswordRecovery() {
   
     if (passwordErrorMin || !passwordInput) {
       setPasswordError(true);
-      setFormValid(
+      setFormError(
         "La contraseña debe ser mayor o igual a 8 caracteres."
       );
       return;
     }
+
+    if(!passwordInputSecond){
+        setPasswordErrorSecond(true);
+        setFormErrorSecond(
+          "Confirmar contraseña obligatoria. Por favor ingrese confirmar contraseña"
+        );
+        return;
+      }
+  
+       if (passwordErrorMaxSecond || !passwordInputSecond) {
+        setPasswordError(true);
+        setFormErrorSecond(
+          "Confirmar contraseña debe ser menor o igual a 16 caracteres."
+        );
+        return;
+      }
+    
+      if (passwordErrorMinSecond|| !passwordInputSecond) {
+        setPasswordErrorSecond(true);
+        setFormErrorSecond(
+          "Confirmar contraseña debe ser mayor o igual a 8 caracteres."
+        );
+          return;
+        }
+
+        if (passwordInput!==passwordInputSecond) {
+          setPasswordError(true);
+          setFormError(
+            "Las contraseñas no coinciden."
+          );
+          return;
+        }   
+    
+    // VALIDADOR FINAL;
+       if (!validarContraseña(passwordInput)) {
+       	setPasswordError(true); 
+       	setFormError(
+       	 "La contrasenia debe tener al menos 1 mayuscula, 1 caracter especial y 1 numero"
+       	 );
+    	   return
+    }
+        
+
+    
+
+    console.log(token);
+    console.log(passwordInput);
+    try {
+      const response = await fetch(uri+'cambiarContra', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${token}`,
+        },
+        body: JSON.stringify({ password: passwordInput }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error en la solicitud');
+      }
+
+    const miToken = localStorage.getItem('token'); 
+    console.log(miToken)
+    if (token != undefined) {
+      showConfirmationModal();
+      setSuccess("Cambio de contraseña exitosamente");
+    } else {
+      setPasswordError(true);
+      setFormValid("Contraseña inválida. Por favor intente nuevamente");
+    } 
+
+      setPasswordError(false);
+      setFormError('');
+
+      setPasswordInput('');
+      setPasswordInputSecond('');
+      setSuccessMessage('Contraseña actualizada correctamente');
+      
+      
+     
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+      setFormError("Hubo un error al procesar la solicitud. Por favor, inténtelo de nuevo.");
+    }
   };
+
+  const showConfirmationModal = () => {
+    showModal();
+  };
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleOk = () => {
+    setVisible(false);
+  }
 
   return (
     <div className='contenedor-Div'>
@@ -215,6 +342,18 @@ export default function PasswordRecovery() {
               Reestablecer Contraseña
             </Button>
           </div>
+            
+        
+
+          <div className="intenta">
+        {/* Show Form Error if any */}
+        {formValid && (
+          <Stack sx={{ paddingTop: "10px" }} >
+            <Alert severity="error" size="small">
+              {formValid}
+            </Alert>
+          </Stack>
+        )}</div>
           
 
           {(formError || successMessage) && (
@@ -231,6 +370,44 @@ export default function PasswordRecovery() {
               )}
             </Stack>
           )}
+
+        {(formErrorSecond || successMessage) && (
+            <Stack sx={{ width: "100%", paddingTop: "10px" }} spacing={2}>
+              {formErrorSecond && (
+                <Alert severity="error" size="small">
+                  {formErrorSecond}
+                </Alert>
+              )}
+              {successMessage && (
+                <Alert severity="success" size="small">
+                  {successMessage}
+                </Alert>
+              )}
+            </Stack>
+          )}
+
+         {success && (
+        <Modal
+          visible={visible}
+          closable={false}
+          onOk={handleOk}
+          onCancel={handleOk}
+          width={400}
+          style={{ top: '50%', transform: 'translateY(-50%)' }} 
+          footer={[
+            <Link to='/Iniciar-sesion' key="ok">
+              <Button type="primary" onClick={handleOk}>
+                OK
+              </Button>
+            </Link>,
+          ]}
+        >
+          <Result
+            status="success"
+            title={<div style={{ fontSize: '20px' }}>Cambio de contraseña  exitosamente</div>}
+          />
+        </Modal>
+      )}
         </Paper>
       </div>
     </div>
