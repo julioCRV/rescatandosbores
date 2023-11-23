@@ -23,8 +23,8 @@ function MenuItem({ image, name, id, idPlatillo}) {
         //console.log(response)
         if (response.status=="200") {
           const data = await response.json();
-          console.log("ok: " + data.ok)
-          console.log("exito al obtener calificacion")
+          //console.log("ok: " + data.ok)
+          //console.log("exito al obtener calificacion")
           data.ok==1 && setLikeClick(true)
 
         } else {
@@ -54,11 +54,11 @@ function MenuItem({ image, name, id, idPlatillo}) {
         },
         method: 'PUT',
     });
-      console.log(response)
+      //console.log(response)
       if (response.ok) {
         const data = await response.json();
         setLikeClick(!likeClick);
-        console.log( data.message)
+        //console.log( data.message)
       } else {
         console.log("error al calificar platillo")
       }

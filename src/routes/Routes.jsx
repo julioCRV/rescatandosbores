@@ -11,7 +11,7 @@ import Login from "../components/IniciaRSesion/DiseñoFormulario";
 import Estadisticas from '../components/Estadisticas/Estadisticas';
 import Recuperar from '../components/IniciarSesion/FormularioEmail';
 import Dashboard from '../components/Estadisticas/Estadisticas';
-import IngresarContra from '../components/IniciarSesion/FormularioRecuperarContraseña'
+import FormularioRecuperar from '../components/IniciarSesion/FormularioRecuperarContraseña'
 function Router() {
     return (
         <Routes>
