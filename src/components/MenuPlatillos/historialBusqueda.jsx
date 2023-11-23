@@ -41,7 +41,8 @@ const SearchHistory = () => {
         renderItem={(item) => (
           <List.Item>
             <Space>
-              <HistoryOutlined />{item}
+              <HistoryOutlined />
+              {item}
             </Space>
           </List.Item>
         )}
