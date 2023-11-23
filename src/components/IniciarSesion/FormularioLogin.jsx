@@ -116,10 +116,10 @@ export default function Login() {
   //-------------------------------------------------------------------------------------------------
   //handle Submittion
   const handleSubmit = () => {
-    console.log('EMAIL ERROR:    ', emailError)
-    console.log('Input email: ', emailInput)
-    console.log('PASSWORD ERROR:      ', passwordError)
-    console.log('Impurt password: ', passwordInput)
+    // console.log('EMAIL ERROR:    ', emailError)
+    // console.log('Input email: ', emailInput)
+    // console.log('PASSWORD ERROR:      ', passwordError)
+    // console.log('Impurt password: ', passwordInput)
 
     setSuccess(null);
     //First of all Check for Errors
@@ -155,25 +155,19 @@ export default function Login() {
 
     if (!passwordInput) {
       setPasswordError(true);
-      setFormValid(
-        "Contraseña obligatoria. Por favor ingrese una contraseña"
-      );
+      setFormValid("Contraseña obligatoria. Por favor ingrese una contraseña" );
       return;
     }
     // If Password error is true
     if (passwordErrorMax || !passwordInput) {
       setPasswordError(true);
-      setFormValid(
-        "La contraseña debe ser menor o igual a 16 caracteres."
-      );
+      setFormValid("La contraseña debe ser menor o igual a 16 caracteres.");
       return;
     }
 
     if (passwordErrorMin || !passwordInput) {
       setPasswordError(true);
-      setFormValid(
-        "La contraseña debe ser mayor o igual a 8 caracteres."
-      );
+      setFormValid("La contraseña debe ser mayor o igual a 8 caracteres.");
       return;
     }
 
@@ -184,6 +178,7 @@ export default function Login() {
     if (miToken != undefined) {
       showConfirmationModal();
       setSuccess("Inicio de sesión realizado exitosamente");
+      reset();
     } else {
       setPasswordError(true);
       setFormValid("Contraseña inválida. Por favor intente nuevamente");
@@ -261,6 +256,7 @@ export default function Login() {
           if (rememberMe) {
             localStorage.setItem('emailSave', JSON.stringify(emailInput));
           }
+          
         })
         .catch(error => {
           console.error('Error en submitYlogin:', error);
@@ -273,6 +269,10 @@ export default function Login() {
   }
   };
 
+  const reset =() => {
+    setFormValid("ddd");
+    return ;
+  }
 
   function bloquearBoton() {
     // Deshabilitar el botón después de hacer clic
@@ -320,12 +320,18 @@ export default function Login() {
             value={emailInput}
             InputProps={{}}
             size="small"
-
-            onBlur={handleEmail}
+            // onBlur={handleEmail}
+            // onBlur={() => {
+            //   handleEmail();
+            //   reset();
+            // }}
+            // onFocus={reset}
             /*onChange={(e) => setUsername(e.target.value)} */
             onChange={(event) => {
+              reset();
+              submitYlogin();
               setEmailInput(event.target.value);
-              //submitYlogin();
+              
             }}
           />
         </div>
@@ -340,12 +346,14 @@ export default function Login() {
             <Input
               error={passwordError}
               onBlur={handlePassword}
+              onFocus={submitYlogin}
               id="standard-adornment-password"
               type={showPassword ? "text" : "password"}
               /*onChange={(e) => setPassword(e.target.value)}*/
               onChange={(event) => {
+                reset();
                 setPasswordInput(event.target.value.trim());
-                //submitYlogin();
+                submitYlogin();
               }}
               value={passwordInput}
               endAdornment={
@@ -386,11 +394,11 @@ export default function Login() {
           </Button>
         </div>
 
-        {/* <div style={{ marginTop: "15px" }}>
+        <div style={{ marginTop: "15px" }}>
           <Link to='/recuperar'>
             olvido su contraseña
           </Link>
-        </div> */}
+        </div>
       </div>
 
       <div className="intenta">

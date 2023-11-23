@@ -2,13 +2,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 90vh;
+  height: 100vh;
 }
 
 .contenedorLogin{
   
   padding: 30px;
-  padding-top: 60px;
+  padding-top: -60px;
   padding-bottom: 60px;
   width:380px; /* El div ocupa el 80% del ancho de su contenedor */
   height: 620px;
