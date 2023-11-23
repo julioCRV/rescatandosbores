@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button, Result } from 'antd';
 import { Link } from 'react-router-dom';
 import { LogoutOutlined } from '@ant-design/icons';
-import './HeaderNav.css'
+import './BarraNavegación.css'
 
 const ButtonLogout = () => {
   const [visible, setVisible] = useState(false);

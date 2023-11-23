@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState ,useRef } from 'react';
 import {  Button} from 'antd';
-import './menuPlatillos.css'
+import './MenuPlatillos.css'
 import { Link, useLocation } from 'react-router-dom';
 import { SearchOutlined } from '@ant-design/icons';
 import MenuItemLista from '../MenuItem/MenuItemLista';

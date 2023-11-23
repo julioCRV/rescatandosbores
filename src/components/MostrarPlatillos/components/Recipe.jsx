@@ -8,7 +8,7 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import {ModalConfirmation} from '../../ModalConfirmation/ModalConfirmation';
 import { Link } from 'react-router-dom';
 import { Content } from 'antd/es/layout/layout';
-import '../../NavNavegacion/headerNav.css'
+import '../../BarraNavegación/BarraNavegación.css'
 import Icon, { HeartOutlined } from '@ant-design/icons';
 import "../../MenuItem/MenuItem"
 

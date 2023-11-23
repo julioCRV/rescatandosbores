@@ -20,7 +20,7 @@ function MenuItem({ image, name, id, idPlatillo}) {
     async function fetchPlatillos() {
       try {
         const response = await fetch(`http://18.116.106.247:3000/obtenerCalificacion/${idPlatillo}`, axiosConfig);
-        console.log(response)
+        //console.log(response)
         if (response.status=="200") {
           const data = await response.json();
           console.log("ok: " + data.ok)
@@ -29,8 +29,8 @@ function MenuItem({ image, name, id, idPlatillo}) {
 
         } else {
           setLikeClick(false)
-          console.log("1 respuesta")
-          console.error('Errores');
+          //console.log("1 respuesta")
+          //console.error('Errores');
         }
       } catch (error) {
         console.error('Error en la solicitud:', error);

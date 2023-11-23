@@ -1,8 +1,8 @@
 
 import React from 'react';
 import '../App.css';
-import Header from '../components/MenuNavegacion/Header';
-import MenuNav from '../components/NavNavegacion/HeaderNav';
+import Header from '../components/Header/Header';
+import MenuNav from '../components/BarraNavegación/BarraNavegación';
 import Footer from '../components/Footer/Footer';
 
 
