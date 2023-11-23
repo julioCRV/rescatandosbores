@@ -11,7 +11,6 @@ import '../MenuItem/MenuItem.css'
 const MenuPlatillos= () => {
   const [platillos, setPlatillos] = useState([]);
   const token=localStorage.getItem('token');
-  
 
     useEffect(() => {
       async function fetchPlatillos() {
@@ -59,10 +58,6 @@ const MenuPlatillos= () => {
     </div>
    
     </>
-
-
-
-
   );
 };
 
