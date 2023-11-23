@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Layout, Menu, theme, Input, Button } from 'antd';
 import { HomeOutlined, UnorderedListOutlined, SearchOutlined, LoginOutlined } from '@ant-design/icons'; // Importa los íconos necesarios
 import { Link, useLocation } from 'react-router-dom';
-import Routes from '../../routes/Routes';
+import Routes from '../../routes/Routes'
 import './HeaderNav.css'
 import { Content } from 'antd/es/layout/layout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
