@@ -89,9 +89,7 @@ export default function Login() {
   };
 
   function validarContraseña(contraseña) {
-   
     handlePassword();
-    console.log('acaaaaaaaaaaa', passwordError, passwordErrorMax, passwordErrorMin)
     // Verificar si contiene al menos una letra mayúscula
     const tieneMayuscula = /[A-Z]/.test(contraseña);
 
@@ -101,13 +99,10 @@ export default function Login() {
     // Verificar si contiene al menos un número
     const tieneNumero = /\d/.test(contraseña);
 
-    // Verificar si cumple con todos los requisitos
-    // console.log(passwordError, 'max: ', passwordErrorMax, 'min: ', passwordErrorMin)
-    if (passwordError || passwordErrorMax || passwordErrorMin) {
-      return false;
-    } else {
-      return tieneMayuscula && tieneCaracterEspecial && tieneNumero;
-    }
+    // Verificar si cumple con todos los requisito
+    
+    return tieneMayuscula && tieneCaracterEspecial && tieneNumero;
+
   }
   //-------------------------------------------------------------------------------------------------
   //handle Submittion
@@ -127,19 +122,10 @@ export default function Login() {
       setFormValid("Campos obligatorios.Por favor ingrese un correo electrónico y contraseña");
       return;
     }
-    if (!emailInput && passwordInput) {
-      setEmailError(true);
-      setFormValid("Campos obligatorios.Por favor ingrese un correo electrónico");
-      return;
-    }
-    if (!passwordInput && emailInput) {
-      setPasswordError(true);
-      setFormValid("Campos obligatorios.Por favor ingrese una contraseña");
-      return;
-    }
+    
 
     // If Email error is true
-    if (emailInput) {
+    if (emailInput || emailError) {
       if (isEmail(emailInput) && !isEmailGmail(emailInput)) {
         setEmailError(true);
         setFormValid("El correo electrónico es inválido. Por favor ingrese solo correos con el dominio de @gmail.com ");
@@ -151,6 +137,16 @@ export default function Login() {
         return;
       }
 
+    }
+    if (!emailInput && passwordInput) {
+      setEmailError(true);
+      setFormValid("Campos obligatorios.Por favor ingrese un correo electrónico");
+      return;
+    }
+    if (!passwordInput && emailInput) {
+      setPasswordError(true);
+      setFormValid("Campos obligatorios.Por favor ingrese una contraseña");
+      return;
     }
 
     // If Password error is true
@@ -279,12 +275,11 @@ export default function Login() {
   }
 
   const reset2 = () => {
-    if (validarContraseña(passwordInput)) {
+    if (validarContraseña(passwordInput) && !passwordInput) {
       setPasswordError(false);
       setFormValid("");
       return;
     }
-    setPasswordError(true);
   }
 
   function bloquearBoton() {
@@ -342,7 +337,6 @@ export default function Login() {
               // submitYlogin();
               setEmailInput(event.target.value);
               handleSubmit();
-
             }}
 
           />
@@ -408,7 +402,7 @@ export default function Login() {
 
         <div align="center" style={{ marginTop: "15px" }}>
           <Link to='/recuperar'>
-            olvido su contraseña
+            Olvido su contraseña?
           </Link>
         </div>
       </div>

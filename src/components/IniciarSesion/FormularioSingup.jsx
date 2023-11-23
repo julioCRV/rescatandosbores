@@ -83,14 +83,14 @@ export default function Login() {
 
   // Validation for onBlur Password
   const handlePassword = () => {
-    if (!passwordInput || passwordInput.length > 16) {
+    if (!passwordInput || passwordInput.length > 15) {
       setPasswordError(true);
       setPasswordErrorMax(true);
       return;
     }
     setPasswordError(false);
     setPasswordErrorMax(false);
-    if (!passwordInput || passwordInput.length < 8) {
+    if (!passwordInput || passwordInput.length < 7) {
       setPasswordError(true);
       setPasswordErrorMin(true);
       return;
@@ -111,13 +111,10 @@ export default function Login() {
     // Verificar si contiene al menos un número
     const tieneNumero = /\d/.test(contraseña);
 
-    // Verificar si cumple con todos los requisitos
-    //console.log(passwordError, 'max: ', passwordErrorMax, 'min: ', passwordErrorMin)
-    if (passwordError || passwordErrorMax || passwordErrorMin) {
-      return false;
-    } else {
-      return tieneMayuscula && tieneCaracterEspecial && tieneNumero;
-    }
+    // Verificar si cumple con todos los requisito
+    
+    return tieneMayuscula && tieneCaracterEspecial && tieneNumero;
+
   }
 
   //-------------------------------------------------------------------------------------------------
@@ -216,12 +213,13 @@ export default function Login() {
     if (esEmailDuplicado) {
       setEmailError(true);
       setFormValid("El correo electrónico ya esta registrado. Por favor ingrese otro");
-    } else if (usernameDuplicado) {
+    } 
+    if (usernameDuplicado) {
       setUsernameError(true);
       setFormValid("El nombre de usuario ya está registrado. Por favor, elige otro.");
 
     } else {
-      localStorage.setItem('email', JSON.stringify(emailInput));
+      localStorage.setItem('emailSave', JSON.stringify(emailInput));
       showConfirmationModal();
       setSuccess("Inicio de sesión realizado exitosamente");
 
@@ -315,6 +313,23 @@ export default function Login() {
     //
   }
 
+  const reset = () => {
+    if (isEmailGmail(emailInput)) {
+      setEmailError(false);
+      setFormValid("");
+      return;
+    }
+  }
+
+  const reset2 = () => {
+    if (validarContraseña(passwordInput) && !passwordInput) {
+      setPasswordError(false);
+      setFormValid("");
+      return;
+    }
+    setPasswordError(true);
+  }
+
   return (
     <>
       <div>
@@ -331,7 +346,7 @@ export default function Login() {
             InputProps={{}}
             onChange={(event) => {
               setUsernameInput(event.target.value.trim());
-              //submitYsingup();
+              handleSubmit();
             }}
           />
         </div>
@@ -347,10 +362,14 @@ export default function Login() {
             value={emailInput}
             InputProps={{}}
             size="small"
-            onBlur={handleEmail}
+            onKeyDown={reset}
+            onBlur={() => {
+              handleEmail();
+              handleSubmit();
+            }}
             onChange={(event) => {
               setEmailInput(event.target.value);
-              //submitYsingup();
+              handleSubmit();
             }}
           />
         </div>
@@ -364,12 +383,16 @@ export default function Login() {
             </InputLabel>
             <Input
               error={passwordError}
-              onBlur={handlePassword}
+              onBlur={() => {
+                handlePassword();
+                handleSubmit();
+              }}
               id="standard-adornment-password"
               type={showPassword ? "text" : "password"}
+              onKeyDown={reset2}
               onChange={(event) => {
                 setPasswordInput(event.target.value.trim());
-                //submitYsingup();
+                handleSubmit();
               }}
               value={passwordInput}
               endAdornment={
