@@ -52,22 +52,21 @@ const ButtonLogout = () => {
 
   return (
     <div>
-
-
       <Button className={`${'menu'}`} style={{ width: '135%', marginLeft: '-20px' }} onClick={showConfirmationModal}><LogoutOutlined />Cerrar Sesión</Button>
-
       <Modal
-        title="Éxito al Cerrar Sesión"
         visible={visible}
+        closable={false}
         onOk={handleOk}
         onCancel={handleOk}
         footer={[
-          <Link to='/'>
+          <Link to='/' key="link">
             <Button key="ok" type="primary" onClick={handleOk}>
               OK
             </Button>
           </Link>,
         ]}
+        style={{ textAlign: 'center' }}
+        bodyStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
         <Result
           icon={<LogoutOutlined style={{ fontSize: '50px', color: '#52c41a' }} />}
@@ -78,6 +77,4 @@ const ButtonLogout = () => {
     </div>
   );
 };
-
-
 export default ButtonLogout;

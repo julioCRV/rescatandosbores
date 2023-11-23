@@ -4,7 +4,7 @@ import {Routes, Route} from 'react-router-dom';
 import Menu from '../components/MenuPlatillos/MenuPlatillos';
 import Home from '../Home/BannerPresentacion';
 import Buscador from '../components/Buscador/Buscador';
-import MyForm from '../components/RegistroPlatillo/registrarPlatillo';
+import MyForm from '../components/RegistroPlatillo/RegistrarPlatillo';
 import MostrarPlatillos from '../components/MostrarPlatillos/MostrarPlatillos';
 import EditarPlatillos from '../components/EditarPlatillo/EditarPlatillo';
 import Login from "../components/IniciaRSesion/DiseñoFormulario";

@@ -94,7 +94,25 @@ export default function Login() {
     setPasswordErrorMin(false);
   };
 
+  function validarContraseña(contraseña) {
+    handlePassword();
+    // Verificar si contiene al menos una letra mayúscula
+    const tieneMayuscula = /[A-Z]/.test(contraseña);
 
+    // Verificar si contiene al menos un carácter especial
+    const tieneCaracterEspecial = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(contraseña);
+
+    // Verificar si contiene al menos un número
+    const tieneNumero = /\d/.test(contraseña);
+
+    // Verificar si cumple con todos los requisitos
+    console.log(passwordError, 'max: ', passwordErrorMax, 'min: ', passwordErrorMin)
+    if (passwordError || passwordErrorMax || passwordErrorMin) {
+      return false;
+    } else {
+      return tieneMayuscula && tieneCaracterEspecial && tieneNumero;
+    }
+  }
   //-------------------------------------------------------------------------------------------------
   //handle Submittion
   const handleSubmit = () => {
@@ -233,6 +251,8 @@ export default function Login() {
   }, [token]);
 
   const submitYlogin = () => {
+    console.log('esta contra: ', passwordInput)
+    if (validarContraseña(passwordInput)) {
     try {
       handleLogin()
         .then(() => {
@@ -248,6 +268,9 @@ export default function Login() {
     } catch (error) {
       console.error('Error en submitYlogin:', error);
     }
+  }else{
+    handleSubmit();
+  }
   };
 
 
@@ -302,6 +325,7 @@ export default function Login() {
             /*onChange={(e) => setUsername(e.target.value)} */
             onChange={(event) => {
               setEmailInput(event.target.value);
+              //submitYlogin();
             }}
           />
         </div>
@@ -320,7 +344,8 @@ export default function Login() {
               type={showPassword ? "text" : "password"}
               /*onChange={(e) => setPassword(e.target.value)}*/
               onChange={(event) => {
-                setPasswordInput(event.target.value.trim())
+                setPasswordInput(event.target.value.trim());
+                //submitYlogin();
               }}
               value={passwordInput}
               endAdornment={
@@ -361,11 +386,11 @@ export default function Login() {
           </Button>
         </div>
 
-        <div style={{ marginTop: "15px" }}>
+        {/* <div style={{ marginTop: "15px" }}>
           <Link to='/recuperar'>
             olvido su contraseña
           </Link>
-        </div>
+        </div> */}
       </div>
 
       <div className="intenta">

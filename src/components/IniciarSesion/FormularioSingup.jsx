@@ -32,15 +32,16 @@ const isEmail = (email) =>
 export default function Login() {
   const [visible, setVisible] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
-  const [token, setToken] = useState();
 
   //Inputs
   const [usernameInput, setUsernameInput] = useState();
   const [emailInput, setEmailInput] = useState();
   const [passwordInput, setPasswordInput] = useState();
+  const [rememberMe, setRememberMe] = useState();
 
   // Inputs Errors
   const [usernameError, setUsernameError] = useState(false);
+  const [usernameErrorSize, setUsernameErrorSize] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMax, setPasswordErrorMax] = useState(false);
@@ -65,6 +66,7 @@ export default function Login() {
       setUsernameError(true);
       return;
     }
+
 
     setUsernameError(false);
   };
@@ -110,7 +112,7 @@ export default function Login() {
     const tieneNumero = /\d/.test(contraseña);
 
     // Verificar si cumple con todos los requisitos
-    console.log(passwordError, 'max: ', passwordErrorMax, 'min: ', passwordErrorMin)
+    //console.log(passwordError, 'max: ', passwordErrorMax, 'min: ', passwordErrorMin)
     if (passwordError || passwordErrorMax || passwordErrorMin) {
       return false;
     } else {
@@ -121,13 +123,15 @@ export default function Login() {
   //-------------------------------------------------------------------------------------------------
   //handle Submittion
   const handleSubmit = () => {
-    console.log('EMAIL ERROR:    ', emailError)
-    console.log('Input email: ', emailInput)
-    console.log('PASSWORD ERROR:      ', passwordError)
-    console.log('Impurt password: ', passwordInput)
+    // console.log('EMAIL ERROR:    ', emailError)
+    // console.log('Input email: ', emailInput)
+    // console.log('PASSWORD ERROR:      ', passwordError)
+    // console.log('Impurt password: ', passwordInput)
 
     setSuccess(null);
     //First of all Check for Errors
+
+
     // Si existe campos vacios
     if (!emailInput && !passwordInput) {
       if (!usernameInput) {
@@ -136,6 +140,17 @@ export default function Login() {
       setPasswordError(true);
       setEmailError(true);
       setFormValid("Por favor, completa todos los campos obligatorios");
+      return;
+    }
+    if (!usernameInput) {
+      setUsernameError(true);
+      setFormValid("Por favor ingrese un nombre de usuario");
+      return;
+    }
+    if (usernameInput.length < 4 || usernameInput.length > 20) {
+      setUsernameErrorSize(true);
+      setUsernameError(true);
+      setFormValid("El nombre de usuario debe tener entre 4 y 20 caracteres");
       return;
     }
 
@@ -184,21 +199,31 @@ export default function Login() {
       return;
     } else {
       if (!validarContraseña(passwordInput)) {
+        setPasswordError(true);
         setFormValid("La contraseña no cumple con los requisitos de validación");
         return;
       }
     }
 
+
     setFormValid(null);
     const esEmailDuplicado = JSON.parse(localStorage.getItem('emailDuplicado'));
+    const usernameDuplicado = JSON.parse(localStorage.getItem('usernameDuplicado'));
     console.log(esEmailDuplicado);
     // Show Successfull Submittion
-    if (!esEmailDuplicado) {
-      showConfirmationModal();
-      setSuccess("Inicio de sesión realizado exitosamente");
-    } else {
+
+    if (esEmailDuplicado) {
       setEmailError(true);
       setFormValid("El correo electrónico ya esta registrado. Por favor ingrese otro");
+    } else if (usernameDuplicado) {
+      setUsernameError(true);
+      setFormValid("El nombre de usuario ya está registrado. Por favor, elige otro.");
+
+    } else {
+      localStorage.setItem('email', JSON.stringify(emailInput));
+      showConfirmationModal();
+      setSuccess("Inicio de sesión realizado exitosamente");
+
     }
   };
   //-------------------------------------------------------------------------------------------------
@@ -210,10 +235,6 @@ export default function Login() {
     datos.append("usuario", usernameInput);
     datos.append("correo", emailInput);
     datos.append("contrasenia", passwordInput);
-
-    console.log(datos.get("usuario"));
-    console.log(datos.get("correo"));
-    console.log(datos.get("contrasenia"));
     const credentials = {
       username: datos.get("usuario"),
       email: datos.get("correo"),
@@ -232,19 +253,27 @@ export default function Login() {
       const data = await response.json();
       if (response.ok) {
         // El registro fue exitoso
-        localStorage.setItem('emailDuplicado', false);
+
         console.log('Usuario registrado correctamente:', data.message);
-      } else {
+      } else if (data.message.includes("username ya es")) {
         // Hubo un error en el registro
+        console.log('userrrrrrrrrrrrrrrrrrrr')
+        localStorage.setItem('usernameDuplicado', true);
+        console.error('Error al registrar usuario:', data.message);
+      } else {
         localStorage.setItem('emailDuplicado', true);
         console.error('Error al registrar usuario:', data.message);
       }
+
     } catch (error) {
       console.error('Error en la solicitud:', error);
     }
   };
 
   const submitYsingup = async () => {
+    localStorage.setItem('usernameDuplicado', false);
+    localStorage.setItem('emailDuplicado', false);
+    setFormValid("");
     console.log('esta contra: ', passwordInput)
     if (validarContraseña(passwordInput)) {
       try {
@@ -256,6 +285,18 @@ export default function Login() {
       }
     } else {
       handleSubmit();
+    }
+  };
+
+  //Recordar datos
+  const handleCheckboxChange = (event) => {
+    setRememberMe(event.target.checked);
+
+    // Guardar información cuando el checkbox está marcado
+    if (event.target.checked) {
+      localStorage.setItem('recordar', 'si');
+    } else {
+      localStorage.setItem('recordar', 'no');
     }
   };
 
@@ -285,11 +326,12 @@ export default function Login() {
             sx={{ width: "100%" }}
             size="small"
             value={usernameInput}
+            onBlur={handleUsername}
             InputProps={{}}
             onChange={(event) => {
-              setUsernameInput(event.target.value);
+              setUsernameInput(event.target.value.trim());
+              //submitYsingup();
             }}
-            onBlur={handleUsername}
           />
         </div>
 
@@ -307,6 +349,7 @@ export default function Login() {
             onBlur={handleEmail}
             onChange={(event) => {
               setEmailInput(event.target.value);
+              //submitYsingup();
             }}
           />
         </div>
@@ -325,6 +368,7 @@ export default function Login() {
               type={showPassword ? "text" : "password"}
               onChange={(event) => {
                 setPasswordInput(event.target.value.trim());
+                //submitYsingup();
               }}
               value={passwordInput}
               endAdornment={
@@ -340,6 +384,15 @@ export default function Login() {
               }
             />
           </FormControl>
+        </div>
+
+        <div style={{ fontSize: "10px" }}>
+          <Checkbox
+            {...label}
+            size="small"
+            onChange={handleCheckboxChange}
+          />
+          Recordar
         </div>
 
         <div style={{ marginTop: "10px" }}>
