@@ -37,6 +37,20 @@ const Recipe = () => {
       'Authorization': `${token}`,
     }
   };
+  const actualizarCalificacion = async()=>{
+    try {
+      const response = await fetch(`http://18.116.106.247:3000/obtenerCalificacion/${platilloData.identificador}`, axiosConfig);
+      console.log(response)
+      if (response.status=="200") {
+        const data = await response.json();
+        setNumeroLikes(data.nro);
+      } else {
+        console.error('Errores');
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+    }
+  }
   const like =  async () => {
     try {
       // Realizar la solicitud fetch aquí (reemplaza la URL con tu endpoint)
@@ -52,6 +66,7 @@ const Recipe = () => {
         const data = await response.json();
         setLikeClick(!likeClick);
         console.log("se cambio el estado " + data.message)
+        actualizarCalificacion();
       } else {
         console.log("error al calificar platillo")
       }
