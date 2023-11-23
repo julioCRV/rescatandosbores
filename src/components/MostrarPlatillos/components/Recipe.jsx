@@ -27,6 +27,8 @@ const Recipe = () => {
   });
   const [platillos, setPlatillos] = useState([]);
   const [esAdministrador, setAdministrador] = useState(false)
+  const [numeroLikes, setNumeroLikes] = useState(0);
+  const [continuar, setContinuar] = useState(false);
   const token=localStorage.getItem('token');
   
   const axiosConfig = {
@@ -76,6 +78,7 @@ const Recipe = () => {
           identificador: platillo.id,
           video: platillo.video,
         });
+        setContinuar(true);
       })
       .catch((error) => {
         console.log('Algun problema muy malevolo me hicieron:v')
@@ -84,26 +87,31 @@ const Recipe = () => {
   }, [id]);
   useEffect(() => {
     async function fetchPlatillos() {
-      try {
-        const response = await fetch(`http://18.116.106.247:3000/obtenerCalificacion/${platilloData.identificador}`, axiosConfig);
-        console.log(response)
-        if (response.status=="200") {
-          const data = await response.json();
-          console.log(data.ok)
-          console.log("exito al obtener calificacion")
-          data.ok==1 && setLikeClick(true)
-
-        } else {
-          setLikeClick(false)
-          console.log("1 respuesta")
-          console.error('Errores');
+      if(continuar==true){
+        setContinuar(false)
+        try {
+          const response = await fetch(`http://18.116.106.247:3000/obtenerCalificacion/${platilloData.identificador}`, axiosConfig);
+          console.log(response)
+          if (response.status=="200") {
+            const data = await response.json();
+            console.log(data.ok)
+            console.log("exito al obtener calificacion")
+            data.ok==1 ? setLikeClick(true):setLikeClick(false)
+            setNumeroLikes(data.nro)
+            console.log(numeroLikes)
+  
+          } else {
+            setLikeClick(false)
+            console.log("1 respuesta")
+            console.error('Errores');
+          }
+        } catch (error) {
+          console.error('Error en la solicitud:', error);
         }
-      } catch (error) {
-        console.error('Error en la solicitud:', error);
       }
     }
     fetchPlatillos()
-  }, []);
+  }, [continuar]);
   useEffect(() => {
     console.log(token)
     var valoresToken = JSON.parse(atob(token.split('.')[1]));
@@ -127,9 +135,10 @@ const Recipe = () => {
               <p>{platilloData.descripcion}</p>
             </div>
             <div className="recipe-buttons">
-            {!likeClick ? <HeartOutlined className="classHeart " onClick={like}/> : <HeartIcon onClick={like} style={{color:"red",}} className="classHeartLike"/>}
-            {//cambiar por admistrador para ver usuario final
-            }
+              <div className='recipe-reacion'>
+              {!likeClick ? <HeartOutlined className="classHeart " onClick={like}/> : <HeartIcon onClick={like} style={{color:"red",}} className="classHeartLike"/>}
+              <span>{numeroLikes}</span>
+              </div>
             {esAdministrador===true &&            <div className='buttonn'>
               <Link to={`/editar-platillo/${id}`}>
                 <Button type="primary" onClick={() => console.log('Editar')}>
