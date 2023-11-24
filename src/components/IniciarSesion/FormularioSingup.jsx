@@ -193,6 +193,7 @@ export default function Login() {
       setFormValid("La contraseña debe ser mayor o igual a 8 caracteres.");
       return;
     }
+    
     if (!passwordInput) {
       setPasswordError(true);
       setFormValid("Contraseña obligatoria. Por favor ingrese una contraseña");

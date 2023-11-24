@@ -43,6 +43,7 @@ export default function Login() {
 
   // Inputs Errors
   const [emailError, setEmailError] = useState(false);
+  const [emailErrorGmail, setEmailErrorGmail] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMax, setPasswordErrorMax] = useState(false);
   const [passwordErrorMin, setPasswordErrorMin] = useState(false);
@@ -62,8 +63,7 @@ export default function Login() {
 
   // Validation for onBlur Email
   const handleEmail = () => {
-    console.log(isEmailGmail(emailInput));
-    if (!isEmailGmail(emailInput)) {
+    if (!isEmail(emailInput)) {
       setEmailError(true);
       return;
     }
@@ -72,20 +72,14 @@ export default function Login() {
 
   // Validation for onBlur Password
   const handlePassword = () => {
-    if (
-      !passwordInput ||
-      passwordInput.length > 16
-    ) {
+    if (passwordInput && passwordInput.length > 15) {
       setPasswordError(true);
       setPasswordErrorMax(true);
       return;
     }
     setPasswordError(false);
     setPasswordErrorMax(false);
-    if (
-      !passwordInput ||
-      passwordInput.length < 8
-    ) {
+    if (passwordInput && passwordInput.length < 7) {
       setPasswordError(true);
       setPasswordErrorMin(true);
       return;
@@ -95,7 +89,9 @@ export default function Login() {
   };
 
   function validarContraseña(contraseña) {
+   
     handlePassword();
+    console.log('acaaaaaaaaaaa', passwordError, passwordErrorMax, passwordErrorMin)
     // Verificar si contiene al menos una letra mayúscula
     const tieneMayuscula = /[A-Z]/.test(contraseña);
 
@@ -106,7 +102,7 @@ export default function Login() {
     const tieneNumero = /\d/.test(contraseña);
 
     // Verificar si cumple con todos los requisitos
-    console.log(passwordError, 'max: ', passwordErrorMax, 'min: ', passwordErrorMin)
+    // console.log(passwordError, 'max: ', passwordErrorMax, 'min: ', passwordErrorMin)
     if (passwordError || passwordErrorMax || passwordErrorMin) {
       return false;
     } else {
@@ -123,51 +119,56 @@ export default function Login() {
 
     setSuccess(null);
     //First of all Check for Errors
-    // Si existe campos vacios
+
+    // Si existe campos vacios email o password
     if (!emailInput && !passwordInput) {
       setPasswordError(true);
       setEmailError(true);
       setFormValid("Campos obligatorios.Por favor ingrese un correo electrónico y contraseña");
       return;
     }
-
-    // If Email error is true
-    if (emailError || !emailInput) {
-
-      if (!passwordError && passwordInput && !emailInput) {
-        setEmailError(true);
-        setFormValid("Correo obligatorio. Por favor ingrese un correo electrónico");
-        return;
-      } else {
-        setEmailError(true);
-        if (passwordError) {
-          setPasswordError(true);
-        }
-        if (isEmail(emailInput)) {
-          setFormValid("El correo electrónico es inválido. Por favor ingrese solo correos con el dominio de @gmail.com ");
-          return;
-        } else {
-          setFormValid("Formato de correo inválido. Por favor ingrese un correo electrónico válido");
-          return;
-        }
-      }
-    }
-
-    if (!passwordInput) {
-      setPasswordError(true);
-      setFormValid("Contraseña obligatoria. Por favor ingrese una contraseña" );
+    if (!emailInput && passwordInput) {
+      setEmailError(true);
+      setFormValid("Campos obligatorios.Por favor ingrese un correo electrónico");
       return;
     }
+    if (!passwordInput && emailInput) {
+      setPasswordError(true);
+      setFormValid("Campos obligatorios.Por favor ingrese una contraseña");
+      return;
+    }
+
+    // If Email error is true
+    if (emailInput) {
+      if (isEmail(emailInput) && !isEmailGmail(emailInput)) {
+        setEmailError(true);
+        setFormValid("El correo electrónico es inválido. Por favor ingrese solo correos con el dominio de @gmail.com ");
+        return;
+      }
+      if (emailError) {
+        setEmailError(true);
+        setFormValid("Formato de correo inválido. Por favor ingrese un correo electrónico válido");
+        return;
+      }
+
+    }
+
     // If Password error is true
-    if (passwordErrorMax || !passwordInput) {
+    if (passwordErrorMax) {
       setPasswordError(true);
       setFormValid("La contraseña debe ser menor o igual a 16 caracteres.");
       return;
     }
 
-    if (passwordErrorMin || !passwordInput) {
+    if (passwordErrorMin) {
       setPasswordError(true);
       setFormValid("La contraseña debe ser mayor o igual a 8 caracteres.");
+      return;
+    }
+
+    if (!validarContraseña(passwordInput)) {
+      setPasswordError(true);
+      setFormValid("La contraseña no cumple con los requisitos de validación");
       return;
     }
 
@@ -246,32 +247,44 @@ export default function Login() {
   }, [token]);
 
   const submitYlogin = () => {
-    console.log('esta contra: ', passwordInput)
+    //console.log('esta contra: ', passwordInput)
     if (validarContraseña(passwordInput)) {
-    try {
-      handleLogin()
-        .then(() => {
-          // La función handleSubmit se ejecutará solo después de que handleLogin se haya completado
-          handleSubmit();
-          if (rememberMe) {
-            localStorage.setItem('emailSave', JSON.stringify(emailInput));
-          }
-          
-        })
-        .catch(error => {
-          console.error('Error en submitYlogin:', error);
-        });
-    } catch (error) {
-      console.error('Error en submitYlogin:', error);
+      try {
+        handleLogin()
+          .then(() => {
+            // La función handleSubmit se ejecutará solo después de que handleLogin se haya completado
+            handleSubmit();
+            if (rememberMe) {
+              localStorage.setItem('emailSave', JSON.stringify(emailInput));
+            }
+
+          })
+          .catch(error => {
+            console.error('Error en submitYlogin:', error);
+          });
+      } catch (error) {
+        console.error('Error en submitYlogin:', error);
+      }
+    } else {
+      handleSubmit();
     }
-  }else{
-    handleSubmit();
-  }
   };
 
-  const reset =() => {
-    setFormValid("ddd");
-    return ;
+  const reset = () => {
+    if (isEmailGmail(emailInput)) {
+      setEmailError(false);
+      setFormValid("");
+      return;
+    }
+  }
+
+  const reset2 = () => {
+    if (validarContraseña(passwordInput)) {
+      setPasswordError(false);
+      setFormValid("");
+      return;
+    }
+    setPasswordError(true);
   }
 
   function bloquearBoton() {
@@ -321,18 +334,17 @@ export default function Login() {
             InputProps={{}}
             size="small"
             // onBlur={handleEmail}
-            // onBlur={() => {
-            //   handleEmail();
-            //   reset();
-            // }}
-            // onFocus={reset}
+            onBlur={handleEmail}
+            onKeyDown={reset}
             /*onChange={(e) => setUsername(e.target.value)} */
             onChange={(event) => {
-              reset();
-              submitYlogin();
+              // reset();
+              // submitYlogin();
               setEmailInput(event.target.value);
-              
+              handleSubmit();
+
             }}
+
           />
         </div>
         <div style={{ marginTop: "5px" }}>
@@ -346,14 +358,14 @@ export default function Login() {
             <Input
               error={passwordError}
               onBlur={handlePassword}
-              onFocus={submitYlogin}
+              onKeyDown={reset2}
+              //onFocus={handleSubmit}
               id="standard-adornment-password"
               type={showPassword ? "text" : "password"}
               /*onChange={(e) => setPassword(e.target.value)}*/
               onChange={(event) => {
-                reset();
                 setPasswordInput(event.target.value.trim());
-                submitYlogin();
+                handleSubmit();
               }}
               value={passwordInput}
               endAdornment={

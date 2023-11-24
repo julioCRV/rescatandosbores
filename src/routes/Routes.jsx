@@ -25,7 +25,7 @@ function Router() {
             <Route path='/editar-platillo/:id' element={<EditarPlatillos/>}/>
             <Route path='/iniciar-sesion' element={<Login/>}/>
             <Route path='/recuperar' element={<Recuperar/>}/>
-            <Route path='/recuperarContra/:token' element={<FormularioRecuperar/>}/>
+            <Route path='/recuperarContra/:tokenCodificado' element={<FormularioRecuperar/>}/>
         </Routes>
     );
 } 
