@@ -165,8 +165,6 @@ const onFinish = async (values) => {
           { max: 50, message: 'El título no puede tener más de 50 caracteres' },
           { min: 6, message: 'El título debe tener al menos 6 caracteres' },
           { pattern: /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]*$/, message: 'Solo son permitidos caracteres alfabeticos en el título' }
-
-
         ]}
         labelCol={{ span: 6 }} // Configura el ancho de la etiqueta
         wrapperCol={{ span: 16 }} // Configura el ancho del campo de entrada

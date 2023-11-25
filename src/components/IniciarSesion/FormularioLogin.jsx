@@ -5,16 +5,8 @@ import './FormularioLogin.css'
 
 // Material UI Imports
 import {
-  TextField,
-  InputAdornment,
-  FormControl,
-  InputLabel,
-  IconButton,
-  Button,
-  Input,
-  Checkbox,
-  Alert,
-  Stack,
+  TextField, InputAdornment, FormControl, InputLabel,
+  IconButton, Button, Input, Checkbox, Alert, Stack, Typography
 } from "@mui/material";
 
 // Material UI Icon Imports
@@ -22,12 +14,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import LoginIcon from "@mui/icons-material/Login";
 
-// Email Validation
-const isEmailGmail = (email) =>
-  /^[A-Z0-9._%+-]+@gmail+\.com$/i.test(email);
 
-const isEmail = (email) =>
-  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
 
 export default function Login() {
   const [visible, setVisible] = useState(false);
@@ -47,8 +34,16 @@ export default function Login() {
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMax, setPasswordErrorMax] = useState(false);
   const [passwordErrorMin, setPasswordErrorMin] = useState(false);
+  const [passwordErrorMayusculas, setPasswordErrorMayusculas] = useState(false);
+  const [passwordErrorNumero, setPasswordErrorNumero] = useState(false);
+  const [passwordErrorCaracter, setPasswordErrorCaracter] = useState(false);
 
   // Overall Form Validity
+  const [formValidEmail, setFormValidEmail] = useState();
+  const [formValidPassword, setFormValidPassword] = useState();
+  const [formValidPasswordMayusculas, setFormValidPasswordMayusculas] = useState();
+  const [formValidPasswordNumero, setFormValidPasswordNumero] = useState();
+  const [formValidPasswordCaracter, setFormValidPasswordCaracter] = useState();
   const [formValid, setFormValid] = useState();
   const [success, setSuccess] = useState();
 
@@ -61,57 +56,106 @@ export default function Login() {
   // Label for Checkbox
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-  // Validation for onBlur Email
-  const handleEmail = () => {
-    if (!isEmail(emailInput)) {
-      setEmailError(true);
+  //-------------------------------------------------------------------------------------------------
+  const isEmailGmail = (email) =>
+    /^[A-Z0-9._%+-]+@gmail+\.com$/i.test(email);
+
+  const isEmail = (email) =>
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
+
+  const validarEmail = () => {
+    // console.log(emailInput);
+    // console.log(isEmailGmail(emailInput));
+    // Email Validation
+    if (isEmailGmail(emailInput)) {
+      setEmailError(false);
+      setFormValidEmail("");
       return;
     }
-    setEmailError(false);
+    if (isEmail(emailInput)) {
+      setEmailError(true);
+      setFormValidEmail("El correo electrónico es inválido. Por favor ingrese solo correos con el dominio de @gmail.com ");
+      return;
+    } else {
+      setEmailError(true);
+      setFormValidEmail("Formato de correo inválido. Por favor ingrese un correo electrónico válido");
+      return;
+    }
+  }
+
+  useEffect(() => {
+    validarEmail();
+  }, [emailInput]);
+
+  // Validación de inputs de contraseña
+  const validarPasswordTamañoMensajes = () => {
+    // console.log(passwordInput);
+    // console.log(isEmailGmail(emailInput));
+
+    if (passwordErrorMax) {
+      setPasswordError(true);
+      setFormValidPassword("La contraseña debe ser menor o igual a 16 caracteres.");
+      return;
+    }
+
+    if (passwordErrorMin) {
+      setPasswordError(true);
+      setFormValidPassword("La contraseña debe ser mayor o igual a 8 caracteres.");
+      return;
+    }
+    setPasswordErrorMax(false);
+    setPasswordErrorMin(false);
+  }
+
+  const validarPasswordRestricciones = (input) => {
+    const tieneMayuscula = /[A-Z]/.test(input);
+    const tieneCaracterEspecial = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(input);
+    const tieneNumero = /\d/.test(input);
+
+    // Actualizar estados según las restricciones
+    if (!tieneMayuscula) {
+      setFormValidPasswordMayusculas("No tiene mayusculas");
+      setPasswordErrorMayusculas(true);
+    } else {
+      setPasswordErrorMayusculas(false);
+    }
+    if (!tieneNumero) {
+      setFormValidPasswordNumero("No tiene Numero");
+      setPasswordErrorNumero(true);
+    } else {
+      setPasswordErrorNumero(false);
+    }
+    if (!tieneCaracterEspecial) {
+      setFormValidPasswordCaracter("No tiene caracter");
+      setPasswordErrorCaracter(true);
+    } else {
+      setPasswordErrorCaracter(false);
+    }
+
+    // Devolver si cumple con todos los requisitos
+    return tieneMayuscula && tieneCaracterEspecial && tieneNumero;
   };
 
-  // Validation for onBlur Password
-  const handlePassword = () => {
-    if (passwordInput && passwordInput.length > 15) {
+  const validarPasswordTamaño = () => {
+    if (passwordInput.length > 16) {
       setPasswordError(true);
       setPasswordErrorMax(true);
+      setPasswordErrorMin(false);
       return;
     }
-    setPasswordError(false);
-    setPasswordErrorMax(false);
-    if (passwordInput && passwordInput.length < 7) {
+    if (passwordInput.length < 7) {
+      setPasswordErrorMax(false);
       setPasswordError(true);
       setPasswordErrorMin(true);
       return;
     }
+    setPasswordErrorMax(false);
     setPasswordError(false);
     setPasswordErrorMin(false);
-  };
-
-  function validarContraseña(contraseña) {
-    handlePassword();
-    // Verificar si contiene al menos una letra mayúscula
-    const tieneMayuscula = /[A-Z]/.test(contraseña);
-
-    // Verificar si contiene al menos un carácter especial
-    const tieneCaracterEspecial = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(contraseña);
-
-    // Verificar si contiene al menos un número
-    const tieneNumero = /\d/.test(contraseña);
-
-    // Verificar si cumple con todos los requisito
-    
-    return tieneMayuscula && tieneCaracterEspecial && tieneNumero;
-
   }
-  //-------------------------------------------------------------------------------------------------
+
   //handle Submittion
   const handleSubmit = () => {
-    // console.log('EMAIL ERROR:    ', emailError)
-    // console.log('Input email: ', emailInput)
-    // console.log('PASSWORD ERROR:      ', passwordError)
-    // console.log('Impurt password: ', passwordInput)
-
     setSuccess(null);
     //First of all Check for Errors
 
@@ -122,49 +166,9 @@ export default function Login() {
       setFormValid("Campos obligatorios.Por favor ingrese un correo electrónico y contraseña");
       return;
     }
-    
 
-    // If Email error is true
-    if (emailInput || emailError) {
-      if (isEmail(emailInput) && !isEmailGmail(emailInput)) {
-        setEmailError(true);
-        setFormValid("El correo electrónico es inválido. Por favor ingrese solo correos con el dominio de @gmail.com ");
-        return;
-      }
-      if (emailError) {
-        setEmailError(true);
-        setFormValid("Formato de correo inválido. Por favor ingrese un correo electrónico válido");
-        return;
-      }
-
-    }
-    if (!emailInput && passwordInput) {
-      setEmailError(true);
-      setFormValid("Campos obligatorios.Por favor ingrese un correo electrónico");
-      return;
-    }
-    if (!passwordInput && emailInput) {
-      setPasswordError(true);
-      setFormValid("Campos obligatorios.Por favor ingrese una contraseña");
-      return;
-    }
-
-    // If Password error is true
-    if (passwordErrorMax) {
-      setPasswordError(true);
-      setFormValid("La contraseña debe ser menor o igual a 16 caracteres.");
-      return;
-    }
-
-    if (passwordErrorMin) {
-      setPasswordError(true);
-      setFormValid("La contraseña debe ser mayor o igual a 8 caracteres.");
-      return;
-    }
-
-    if (!validarContraseña(passwordInput)) {
-      setPasswordError(true);
-      setFormValid("La contraseña no cumple con los requisitos de validación");
+    if(emailError || passwordError){
+      setFormValid("")
       return;
     }
 
@@ -244,7 +248,7 @@ export default function Login() {
 
   const submitYlogin = () => {
     //console.log('esta contra: ', passwordInput)
-    if (validarContraseña(passwordInput)) {
+    if (loginExitoso()) {
       try {
         handleLogin()
           .then(() => {
@@ -261,18 +265,15 @@ export default function Login() {
       } catch (error) {
         console.error('Error en submitYlogin:', error);
       }
-    } else {
+    }else{
       handleSubmit();
     }
   };
 
-  const reset = () => {
-    if (isEmailGmail(emailInput)) {
-      setEmailError(false);
-      setFormValid("");
-      return;
-    }
-  }
+  const loginExitoso = () => {
+    return !emailError && !passwordError && !passwordErrorMayusculas && !passwordErrorNumero && !passwordErrorCaracter && !passwordErrorMax && !passwordErrorMin;
+  };
+  
 
   const reset2 = () => {
     if (validarContraseña(passwordInput) && !passwordInput) {
@@ -280,11 +281,6 @@ export default function Login() {
       setFormValid("");
       return;
     }
-  }
-
-  function bloquearBoton() {
-    // Deshabilitar el botón después de hacer clic
-    document.getElementById("botonLogin").disabled = true;
   }
 
   //Recordar datos
@@ -299,8 +295,6 @@ export default function Login() {
     }
   };
 
-
-
   const showConfirmationModal = () => {
     showModal();
   };
@@ -314,6 +308,28 @@ export default function Login() {
     //
   }
 
+  const validarPassword = () => {
+    console.log(passwordInput);
+    if (passwordInput) {
+      // setFormValidPassword("La contraseña debe ser mayor o igual a 8 caracteres.");
+      validarPasswordTamaño();
+      validarPasswordTamañoMensajes();
+      validarPasswordRestricciones(passwordInput);
+    } else {
+      setFormValidPassword("Ingrese una contraseña");
+      setPasswordErrorMayusculas(false);
+      setPasswordErrorNumero(false);
+      setPasswordErrorCaracter(false);
+    }
+  };
+
+  useEffect(() => {
+    validarPassword();
+    setPasswordError(!passwordInput || passwordInput.length < 8 || passwordInput.length > 16);
+  }, [passwordInput, passwordErrorMayusculas, passwordErrorNumero, passwordErrorCaracter]);
+
+
+
   return (
     <>
       <div>
@@ -326,22 +342,29 @@ export default function Login() {
             variant="standard"
             //sx={{ width: "100%" }}
             value={emailInput}
-            InputProps={{}}
-            size="small"
-            // onBlur={handleEmail}
-            onBlur={handleEmail}
-            onKeyDown={reset}
-            /*onChange={(e) => setUsername(e.target.value)} */
-            onChange={(event) => {
-              // reset();
-              // submitYlogin();
-              setEmailInput(event.target.value);
-              handleSubmit();
-            }}
+            // InputProps={{
+            //   onBlur: () => {
+            //   console.log('Email desde ONBLUR: ',emailInput)},
+            //   onFocus: () => {
+            //   console.log('Email desde ONFOCUS: ',emailInput)
+            //   }
+            // }}
 
+            size="small"
+            onChange={(event) => {
+              setEmailInput(event.target.value);
+              validarEmail();
+            }}
+          // onKeyDown={validarEmail}
           />
+          {emailError && (
+            <Typography variant="caption" color="error" style={{ marginTop: "5px" }}>
+              {formValidEmail}
+            </Typography>
+          )}
         </div>
-        <div style={{ marginTop: "5px" }}>
+
+        <div style={{ marginTop: "10px" }}>
           <FormControl sx={{ width: "100%" }} variant="standard">
             <InputLabel
               error={passwordError}
@@ -351,17 +374,18 @@ export default function Login() {
             </InputLabel>
             <Input
               error={passwordError}
-              onBlur={handlePassword}
-              onKeyDown={reset2}
+              // onBlur={handlePassword}
+              // onKeyDown={handleSubmit}
               //onFocus={handleSubmit}
+              value={passwordInput}
               id="standard-adornment-password"
               type={showPassword ? "text" : "password"}
               /*onChange={(e) => setPassword(e.target.value)}*/
               onChange={(event) => {
                 setPasswordInput(event.target.value.trim());
-                handleSubmit();
+                validarPassword();
               }}
-              value={passwordInput}
+
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -374,20 +398,44 @@ export default function Login() {
                 </InputAdornment>
               }
             />
+            <>
+              {passwordError && (
+                <Typography variant="caption" color="error" style={{ marginTop: "5px" }}>
+                  {formValidPassword}
+                </Typography>
+              )}
+              {passwordErrorMayusculas && (
+                <Typography variant="caption" color="error" style={{ marginTop: "5px" }}>
+                  - {formValidPasswordMayusculas}
+                </Typography>
+              )}
+              {passwordErrorNumero && (
+                <Typography variant="caption" color="error" style={{ marginTop: "5px" }}>
+                  - {formValidPasswordNumero}
+                </Typography>
+              )}
+              {passwordErrorCaracter && (
+                <Typography variant="caption" color="error" style={{ marginTop: "5px" }}>
+                  - {formValidPasswordCaracter}
+                </Typography>
+              )}
+            </>
+
           </FormControl>
         </div>
 
-        <div style={{ fontSize: "10px" }}>
-          <Checkbox
-            {...label}
-            size="small"
-            onChange={handleCheckboxChange}
-          />
-          Recordar
+        <div style={{ marginTop: "15px" }}>
+          <div style={{ fontSize: "15px" }}>
+            <Checkbox
+              {...label}
+              size="small"
+              onChange={handleCheckboxChange}
+            />
+            Recordar
+          </div>
         </div>
 
         <div style={{ marginTop: "15px" }}>
-
           <Button
             id="botonLogin"
             variant="contained"
