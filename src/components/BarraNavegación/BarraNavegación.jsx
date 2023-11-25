@@ -46,7 +46,7 @@ const App2 = () => {
   };
 
   const mostrarBotonLL = () => {
-    console.log('controlando desde aqui: ', miToken);
+    //console.log('controlando desde aqui: ', miToken);
     if (miToken != null || miToken != undefined) {
       setisBotonLogout(true);
       setisBotonLogin(false);

@@ -5,7 +5,7 @@ import Menu from '../components/MenuPlatillos/menuPlatillos';
 import Home from '../Home/BannerPresentacion';
 import Buscador from '../components/Buscador/Buscador';
 import MyForm from '../components/RegistroPlatillo/FormularioRegistro';
-import MostrarPlatillos from '../components/MostrarPlatillos/MostrarPlatillos';
+import MostrarPlatillos from '../components/MostrarPlatillos/mostrarPlatillos';
 import EditarPlatillos from '../components/EditarPlatillo/EditarPlatillo';
 import Login from "../components/IniciarSesion/DiseñoFormulario";
 import Estadisticas from '../components/Estadisticas/Estadisticas';

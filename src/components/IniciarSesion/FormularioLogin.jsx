@@ -76,12 +76,12 @@ export default function Login() {
       setEmailError(true);
       setFormValidEmail("El correo electrónico es inválido. Por favor ingrese solo correos con el dominio de @gmail.com ");
       return;
-    } 
-    if (!emailInput){
+    }
+    if (!emailInput) {
       setEmailError(true);
       setFormValidEmail("Ingrese un correo electrónico");
       return;
-    }else {
+    } else {
       setFormValid("");
       setEmailError(true);
       setFormValidEmail("Formato de correo inválido. Por favor ingrese un correo electrónico válido");
@@ -176,7 +176,7 @@ export default function Login() {
       return;
     }
 
-    if(emailError || passwordError){
+    if (emailError || passwordError) {
       setFormValid("")
       return;
     }
@@ -202,8 +202,8 @@ export default function Login() {
     datos.append("usuario", emailInput);
     datos.append("contrasenia", passwordInput);
 
-    console.log(datos.get("usuario"));
-    console.log(datos.get("contrasenia"));
+    //console.log(datos.get("usuario"));
+    //console.log(datos.get("contrasenia"));
     const credentials = {
       email: datos.get("usuario"),
       password: datos.get("contrasenia"),
@@ -227,7 +227,7 @@ export default function Login() {
       })
       .then(data => {
         setToken(data.token);
-        console.log(data.token.username);
+        //console.log(data.token.username);
         localStorage.setItem('token', data.token);
         // Puedes hacer algo con el token, como almacenarlo en el estado o en localStorage
       })
@@ -241,17 +241,17 @@ export default function Login() {
     if (token) {
       //console.log(token);
       var valoresToken = JSON.parse(atob(token.split('.')[1]));
-      console.log(valoresToken);
-      console.log('acaaaaaaaaaaaaaaa', valoresToken.username)
+      //console.log(valoresToken);
+      //console.log('acaaaaaaaaaaaaaaa', valoresToken.username)
       //console.log(valoresToken.email);
-      console.log(valoresToken.rol);
+      //console.log(valoresToken.rol);
       localStorage.setItem('email', JSON.stringify(valoresToken.email));
       localStorage.setItem('rol', JSON.stringify(valoresToken.rol));
       localStorage.setItem('username', JSON.stringify(valoresToken.username));
-      console.log('USernameeeeeeeeeeeeeee:', valoresToken.username);
+      //console.log('USernameeeeeeeeeeeeeee:', valoresToken.username);
       localStorage.setItem('password', passwordInput)
       const user = { username: valoresToken.email, role: valoresToken.rol, token: token };
-      console.log('Inicio de sesión como:', valoresToken.rol);
+      //console.log('Inicio de sesión como:', valoresToken.rol);
     }
   }, [token]);
 
@@ -262,11 +262,11 @@ export default function Login() {
         handleLogin()
           .then(() => {
             // La función handleSubmit se ejecutará solo después de que handleLogin se haya completado
+            console.log(rememberMe)
             handleSubmit();
             if (rememberMe) {
               localStorage.setItem('emailSave', JSON.stringify(emailInput));
             }
-
           })
           .catch(error => {
             console.error('Error en submitYlogin:', error);
@@ -274,7 +274,7 @@ export default function Login() {
       } catch (error) {
         console.error('Error en submitYlogin:', error);
       }
-    }else{
+    } else {
       handleSubmit();
     }
   };
@@ -282,15 +282,6 @@ export default function Login() {
   const loginExitoso = () => {
     return !emailError && !passwordError && !passwordErrorMayusculas && !passwordErrorNumero && !passwordErrorCaracter && !passwordErrorMax && !passwordErrorMin;
   };
-  
-
-  const reset2 = () => {
-    if (validarContraseña(passwordInput) && !passwordInput) {
-      setPasswordError(false);
-      setFormValid("");
-      return;
-    }
-  }
 
   //Recordar datos
   const handleCheckboxChange = (event) => {
@@ -318,9 +309,10 @@ export default function Login() {
   }
 
   const validarPassword = () => {
-    console.log(passwordInput);
+    //console.log(passwordInput);
     if (passwordInput) {
-    //  setFormValidPassword("La contraseña debe ser mayor o igual a 8 caracteres.");
+      set
+      //  setFormValidPassword("La contraseña debe ser mayor o igual a 8 caracteres.");
       validarPasswordTamaño();
       // validarPasswordTamañoMensajes();
       validarPasswordRestricciones(passwordInput);
@@ -337,11 +329,18 @@ export default function Login() {
     setPasswordError(!passwordInput || passwordInput.length < 8 || passwordInput.length > 16);
   }, [passwordInput, passwordErrorMayusculas, passwordErrorNumero, passwordErrorCaracter]);
 
-
+  const pressEnter = (event) => {
+    // Verifica si la tecla presionada es 'Enter'
+    if (event.key === 'Enter') {
+      submitYlogin();
+      // console.log('Se presionó Enter');
+    }
+  };
 
   return (
     <>
       <div>
+
         <div style={{ marginTop: "5px" }}>
           <TextField
             label="Correo electrónico"
@@ -356,7 +355,7 @@ export default function Login() {
               setEmailInput(event.target.value);
               validarEmail();
             }}
-          onKeyDown={submitYlogin}
+            onKeyDown={pressEnter}
           />
           {emailError && (
             <Typography variant="caption" color="error" style={{ marginTop: "5px" }}>
@@ -382,12 +381,11 @@ export default function Login() {
               id="standard-adornment-password"
               type={showPassword ? "text" : "password"}
               /*onChange={(e) => setPassword(e.target.value)}*/
-              onKeyDown={submitYlogin}
               onChange={(event) => {
                 setPasswordInput(event.target.value.trim());
                 validarPassword();
               }}
-
+              onKeyDown={pressEnter}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -422,7 +420,6 @@ export default function Login() {
                 </Typography>
               )}
             </>
-
           </FormControl>
         </div>
 
