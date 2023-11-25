@@ -410,7 +410,7 @@ export default function Login() {
           </FormControl>
         </div>
 
-        <div style={{ fontSize: "10px" }}>
+        <div style={{ fontSize: "15px" }}>
           <Checkbox
             {...label}
             size="small"

@@ -1,13 +1,13 @@
 import Reac, {useState} from 'react'; 
 import {Routes, Route} from 'react-router-dom';
 
-import Menu from '../components/MenuPlatillos/MenuPlatillos';
+import Menu from '../components/MenuPlatillos/menuPlatillosenuPlatillos';
 import Home from '../Home/BannerPresentacion';
 import Buscador from '../components/Buscador/Buscador';
 import MyForm from '../components/RegistroPlatillo/FormularioRegistro';
 import MostrarPlatillos from '../components/MostrarPlatillos/MostrarPlatillos';
 import EditarPlatillos from '../components/EditarPlatillo/EditarPlatillo';
-import Login from "../components/IniciaRSesion/DiseñoFormulario";
+import Login from "../components/IniciarSesion/DiseñoFormulario";
 import Estadisticas from '../components/Estadisticas/Estadisticas';
 import Recuperar from '../components/IniciarSesion/FormularioEmail';
 import Dashboard from '../components/Estadisticas/Estadisticas';

@@ -76,7 +76,13 @@ export default function Login() {
       setEmailError(true);
       setFormValidEmail("El correo electrónico es inválido. Por favor ingrese solo correos con el dominio de @gmail.com ");
       return;
-    } else {
+    } 
+    if (!emailInput){
+      setEmailError(true);
+      setFormValidEmail("Ingrese un correo electrónico");
+      return;
+    }else {
+      setFormValid("");
       setEmailError(true);
       setFormValidEmail("Formato de correo inválido. Por favor ingrese un correo electrónico válido");
       return;
@@ -103,6 +109,7 @@ export default function Login() {
       setFormValidPassword("La contraseña debe ser mayor o igual a 8 caracteres.");
       return;
     }
+    setPasswordError(false);
     setPasswordErrorMax(false);
     setPasswordErrorMin(false);
   }
@@ -114,19 +121,19 @@ export default function Login() {
 
     // Actualizar estados según las restricciones
     if (!tieneMayuscula) {
-      setFormValidPasswordMayusculas("No tiene mayusculas");
+      setFormValidPasswordMayusculas("La contraseña debe incluir al menos 1 letra Mayuscula");
       setPasswordErrorMayusculas(true);
     } else {
       setPasswordErrorMayusculas(false);
     }
     if (!tieneNumero) {
-      setFormValidPasswordNumero("No tiene Numero");
+      setFormValidPasswordNumero("La contraseña debe incluir al menos 1 número");
       setPasswordErrorNumero(true);
     } else {
       setPasswordErrorNumero(false);
     }
     if (!tieneCaracterEspecial) {
-      setFormValidPasswordCaracter("No tiene caracter");
+      setFormValidPasswordCaracter("La contraseña debe incluir al menos un caracter: -/:;&@.,?!%*.");
       setPasswordErrorCaracter(true);
     } else {
       setPasswordErrorCaracter(false);
@@ -141,12 +148,14 @@ export default function Login() {
       setPasswordError(true);
       setPasswordErrorMax(true);
       setPasswordErrorMin(false);
+      setFormValidPassword("La contraseña debe ser menor o igual a 16 caracteres.");
       return;
     }
     if (passwordInput.length < 7) {
       setPasswordErrorMax(false);
       setPasswordError(true);
       setPasswordErrorMin(true);
+      setFormValidPassword("La contraseña debe ser mayor o igual a 8 caracteres.");
       return;
     }
     setPasswordErrorMax(false);
@@ -311,9 +320,9 @@ export default function Login() {
   const validarPassword = () => {
     console.log(passwordInput);
     if (passwordInput) {
-      // setFormValidPassword("La contraseña debe ser mayor o igual a 8 caracteres.");
+    //  setFormValidPassword("La contraseña debe ser mayor o igual a 8 caracteres.");
       validarPasswordTamaño();
-      validarPasswordTamañoMensajes();
+      // validarPasswordTamañoMensajes();
       validarPasswordRestricciones(passwordInput);
     } else {
       setFormValidPassword("Ingrese una contraseña");
@@ -342,20 +351,12 @@ export default function Login() {
             variant="standard"
             //sx={{ width: "100%" }}
             value={emailInput}
-            // InputProps={{
-            //   onBlur: () => {
-            //   console.log('Email desde ONBLUR: ',emailInput)},
-            //   onFocus: () => {
-            //   console.log('Email desde ONFOCUS: ',emailInput)
-            //   }
-            // }}
-
             size="small"
             onChange={(event) => {
               setEmailInput(event.target.value);
               validarEmail();
             }}
-          // onKeyDown={validarEmail}
+          onKeyDown={submitYlogin}
           />
           {emailError && (
             <Typography variant="caption" color="error" style={{ marginTop: "5px" }}>
@@ -381,6 +382,7 @@ export default function Login() {
               id="standard-adornment-password"
               type={showPassword ? "text" : "password"}
               /*onChange={(e) => setPassword(e.target.value)}*/
+              onKeyDown={submitYlogin}
               onChange={(event) => {
                 setPasswordInput(event.target.value.trim());
                 validarPassword();
@@ -455,7 +457,7 @@ export default function Login() {
         </div>
       </div>
 
-      <div className="intenta">
+      <div>
         {/* Show Form Error if any */}
         {formValid && (
           <Stack sx={{ paddingTop: "10px" }} >
