@@ -1,7 +1,7 @@
 import Reac, {useState} from 'react'; 
 import {Routes, Route} from 'react-router-dom';
 
-import Menu from '../components/MenuPlatillos/menuPlatillosenuPlatillos';
+import Menu from '../components/MenuPlatillos/menuPlatillos';
 import Home from '../Home/BannerPresentacion';
 import Buscador from '../components/Buscador/Buscador';
 import MyForm from '../components/RegistroPlatillo/FormularioRegistro';
